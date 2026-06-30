@@ -9,6 +9,12 @@ export function operatorEmail(businessName: string): string {
 
 export const PRIMARY_OPERATOR_EMAIL = operatorEmail("Sahyadri Trails");
 
+/** Demo credentials for judges / local testing (shown on operator sign-in) */
+export const DEMO_OPERATOR_CREDENTIALS = {
+  email: PRIMARY_OPERATOR_EMAIL,
+  password: "password",
+} as const;
+
 export const DEMO_OPERATOR_EMAILS = [
   operatorEmail("Sahyadri Trails"),
   operatorEmail("Konkan Wave Adventures"),

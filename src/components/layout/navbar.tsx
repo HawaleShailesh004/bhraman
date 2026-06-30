@@ -12,7 +12,7 @@ const LINKS = [
   { href: "/discover", label: "Discover" },
   { href: "/plan", label: "Plan with AI" },
   { href: "/#destinations", label: "Destinations" },
-  { href: "/operator", label: "For Operators" },
+  { href: "/operator/enter", label: "For Operators" },
 ];
 
 const clerkConfigured = Boolean(

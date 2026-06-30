@@ -41,7 +41,7 @@ export default function TravelerSignInPage({ searchParams }: SignInPageProps) {
         />
         <p className="mt-6 text-center text-sm text-mist">
           Running trips?{" "}
-          <Link href="/operator/sign-in" className="font-semibold text-amber-deep">
+          <Link href="/operator/enter" className="font-semibold text-amber-deep">
             Operator sign in
           </Link>
         </p>

@@ -6,6 +6,7 @@ const isOperatorAuthRoute = createRouteMatcher([
   "/operator/sign-in(.*)",
   "/operator/sign-up(.*)",
   "/operator/unauthorized",
+  "/operator/enter",
 ]);
 
 const isOperatorAppRoute = createRouteMatcher(["/operator(.*)"]);

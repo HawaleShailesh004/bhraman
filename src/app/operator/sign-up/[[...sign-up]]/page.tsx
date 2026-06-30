@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { clerkAppearance } from "@/lib/clerk-appearance";
 import { getSessionOperator, isClerkEnabled } from "@/lib/auth";
-import { PRIMARY_OPERATOR_EMAIL } from "@/lib/operator-emails";
+import { OperatorDemoCredentialsCard } from "@/components/operator/operator-demo-credentials";
 
 export default async function OperatorSignUpPage() {
   if (!isClerkEnabled()) {
@@ -19,7 +19,7 @@ export default async function OperatorSignUpPage() {
     if (session) {
       redirect("/operator");
     }
-    redirect("/operator/unauthorized");
+    redirect("/operator/enter");
   }
 
   return (
@@ -42,17 +42,20 @@ export default async function OperatorSignUpPage() {
           </p>
         </div>
 
-        <div className="mb-5 space-y-2 rounded-[14px] border border-line bg-white p-4 text-sm text-[#54635A]">
-          {[
-            `Use your operator email (e.g. ${PRIMARY_OPERATOR_EMAIL})`,
-            "If Clerk sends a verification code, enter 424242 in dev",
-            "After sign up you will be sent to the sign-in page",
-          ].map((line) => (
+        <div className="mb-5 space-y-3">
+          <OperatorDemoCredentialsCard />
+          <div className="space-y-2 rounded-[14px] border border-line bg-white p-4 text-sm text-[#54635A]">
+            {[
+              "Use the demo email and password above",
+              "If Clerk sends a verification code, enter 424242",
+              "After sign up you will be sent to operator sign-in",
+            ].map((line) => (
             <div key={line} className="flex items-start gap-2">
               <Check size={15} className="mt-0.5 shrink-0 text-forest" />
               <span>{line}</span>
             </div>
           ))}
+          </div>
         </div>
 
         <SignUp

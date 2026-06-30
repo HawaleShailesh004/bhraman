@@ -28,7 +28,7 @@ export default function BecomeOperatorPage() {
               across Maharashtra. We bring the bookings - you run the trips.
             </p>
             <Link
-              href="/operator/sign-in"
+              href="/operator/enter"
               className="inline-flex items-center gap-2 rounded-full bg-amber px-7 py-4 font-bold text-[#3A2406] shadow-[0_8px_24px_rgba(224,138,43,0.4)] transition-transform hover:-translate-y-0.5"
             >
               Operator sign in
@@ -140,7 +140,7 @@ export default function BecomeOperatorPage() {
             ))}
           </div>
           <Link
-            href="/operator/sign-in"
+            href="/operator/enter"
             className="mt-10 inline-flex items-center gap-2 rounded-full bg-ink px-7 py-4 font-bold text-paper transition-transform hover:-translate-y-0.5"
           >
             Operator sign in

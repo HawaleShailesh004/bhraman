@@ -46,21 +46,84 @@ See [`.env.example`](.env.example) for the full list.
 
 ---
 
-## Demo accounts
+## Demo credentials
 
-After seeding, these emails exist in the database:
+| Role | Email | Password |
+|------|-------|----------|
+| **Operator** | `sahyadri-trails@example.com` | `password` |
+| **Traveler** | `demo@bhraman.app` | _(create via `/sign-up`)_ |
 
-| Role | Email | How to sign in |
-|------|-------|----------------|
-| **Traveler** | `demo@bhraman.app` | `/sign-up` or `/sign-in` with Clerk (same email) |
-| **Operator** | `sahyadri-trails@example.com` | `/operator/sign-up` first, then `/operator/sign-in` |
+These are also shown on **`/operator/sign-in`** and **`/operator/sign-up`**.
 
-**Operator sign-up tips:**
-1. Use the exact operator email above (or other `slug@example.com` from seed)
-2. If Clerk asks for a verification code in dev, enter **`424242`**
-3. After sign-up you are redirected to sign-in, then `/operator`
+---
 
-Other operator emails: `konkan-wave-adventures@example.com`, `maval-adventure-co@example.com`, etc.
+## How to test the app
+
+### 1. Setup (once)
+
+```bash
+npm install
+cp .env.example .env
+npx prisma db push
+npm run db:seed
+npm run db:images
+npm run dev
+```
+
+### 2. Browse as a guest
+
+| Step | URL | What to check |
+|------|-----|----------------|
+| Home | `/` | Hero, featured listings |
+| Discover | `/discover` | Filters, listing cards with photo badges |
+| Listing | `/discover` → any card | Hero, gallery strip, itinerary, weather, booking panel |
+| AI planner | `/plan` | Chat; ask e.g. “easy trek near Pune this weekend” |
+
+### 3. Test traveler flow
+
+1. Go to **`/sign-up`** and register with `demo@bhraman.app` (or any email)
+2. Open a listing → **Reserve now** → **`/book/[slug]`**
+3. Pick group size + slot → pay with Razorpay test card
+4. Confirm on **`/booking/[ref]`**
+5. View history at **`/bookings`**
+
+### 4. Test operator flow (demo account)
+
+**Credentials:** `sahyadri-trails@example.com` / `password`
+
+**First time only — create Clerk account:**
+
+1. **`/operator/sign-up`**
+2. Email: `sahyadri-trails@example.com` · Password: `password`
+3. Verification code (if prompted): **`424242`**
+4. You are redirected to **`/operator/sign-in`** → sign in with same credentials
+5. Dashboard: **`/operator`**
+
+**Already registered — sign in:**
+
+1. **`/operator/sign-in`**
+2. Use email + password above → **`/operator`**
+
+**From navbar while signed in as traveler:**
+
+1. Click **For Operators** → **`/operator/enter`**
+2. Dialog explains you will be signed out as traveler
+3. Confirm → **`/operator/sign-in`** with demo credentials shown
+4. Sign in as operator
+
+### 5. Operator dashboard
+
+| Page | URL |
+|------|-----|
+| Overview | `/operator` |
+| Bookings | `/operator/bookings` |
+| Listings | `/operator/listings` |
+| Availability | `/operator/availability` |
+| Payouts | `/operator/payouts` |
+
+### 6. Other operator demo emails
+
+`konkan-wave-adventures@example.com`, `maval-adventure-co@example.com`, etc. — same flow; sign up in Clerk first with that exact email.
 
 ---
 

@@ -3,18 +3,20 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { SignIn } from "@clerk/nextjs";
 import { Logo } from "@/components/ui/logo";
+import { OperatorDemoCredentialsCard } from "@/components/operator/operator-demo-credentials";
 import { clerkAppearance } from "@/lib/clerk-appearance";
 import { getSessionOperator, isClerkEnabled } from "@/lib/auth";
-import { PRIMARY_OPERATOR_EMAIL } from "@/lib/operator-emails";
 
 type OperatorSignInPageProps = {
-  searchParams: { registered?: string };
+  searchParams: { registered?: string; switched?: string };
 };
 
 export default async function OperatorSignInPage({
   searchParams,
 }: OperatorSignInPageProps) {
   const justRegistered = searchParams.registered === "1";
+  const switchedFromTraveler = searchParams.switched === "1";
+
   if (!isClerkEnabled()) {
     redirect("/operator");
   }
@@ -25,7 +27,7 @@ export default async function OperatorSignInPage({
     if (session) {
       redirect("/operator");
     }
-    redirect("/operator/unauthorized");
+    redirect("/operator/enter");
   }
 
   return (
@@ -47,37 +49,37 @@ export default async function OperatorSignInPage({
           </p>
         </div>
 
-        {justRegistered ? (
-          <div className="mb-5 rounded-[14px] border border-forest/30 bg-[#EAF1EC] px-4 py-3 text-sm text-forest">
-            <p className="font-semibold">Account created successfully.</p>
-            <p className="mt-1 text-[#33433A]">
-              Sign in below with the same email and password to open your operator
-              dashboard.
+        <div className="mb-5 space-y-3">
+          <OperatorDemoCredentialsCard />
+
+          {justRegistered ? (
+            <div className="rounded-[14px] border border-forest/30 bg-[#EAF1EC] px-4 py-3 text-sm text-forest">
+              <p className="font-semibold">Account created successfully.</p>
+              <p className="mt-1 text-[#33433A]">
+                Sign in below with the same email and password.
+              </p>
+            </div>
+          ) : null}
+
+          {switchedFromTraveler ? (
+            <div className="rounded-[14px] border border-line bg-white px-4 py-3 text-sm text-[#54635A]">
+              <p className="font-semibold text-ink">Signed out of traveler account.</p>
+              <p className="mt-1">
+                Use the demo operator credentials above to sign in.
+              </p>
+            </div>
+          ) : null}
+
+          {!justRegistered && !switchedFromTraveler ? (
+            <p className="text-sm text-mist">
+              No account yet?{" "}
+              <Link href="/operator/sign-up" className="font-semibold text-amber-deep">
+                Sign up first
+              </Link>{" "}
+              with the demo email, then return here.
             </p>
-          </div>
-        ) : (
-        <div className="mb-5 rounded-[14px] border border-amber/40 bg-[#FFF8EE] px-4 py-3 text-sm text-[#54635A] space-y-2">
-          <p className="font-semibold text-ink">
-            New here? You must sign up once before sign in works.
-          </p>
-          <p>
-            Use{" "}
-            <Link href="/operator/sign-up" className="font-semibold text-amber-deep">
-              Sign up
-            </Link>{" "}
-            with your operator email, then sign in here.
-          </p>
-          <p>
-            Demo:{" "}
-            <code className="text-xs bg-paper px-1.5 py-0.5 rounded break-all">
-              {PRIMARY_OPERATOR_EMAIL}
-            </code>
-            {" · "}
-            verification code{" "}
-            <code className="text-xs bg-paper px-1 rounded">424242</code> if asked
-          </p>
+          ) : null}
         </div>
-        )}
 
         <SignIn
           appearance={clerkAppearance}
