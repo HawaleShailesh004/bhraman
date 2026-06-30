@@ -1,0 +1,351 @@
+{
+  "ajanta-caves": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Ajanta_caves_panorama_2010.jpg/1280px-Ajanta_caves_panorama_2010.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Ajanta_Caves%2C_India%2C_Panoramic_view_of_Ajanta_basalt_cliffs_and_caves.jpg/1280px-Ajanta_Caves%2C_India%2C_Panoramic_view_of_Ajanta_basalt_cliffs_and_caves.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Cave_26%2C_Ajanta.jpg/1280px-Cave_26%2C_Ajanta.jpg"
+    ]
+  },
+  "andharban-forest": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/AndharBan_valley.jpg/1280px-AndharBan_valley.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/AndharBan.jpg/1280px-AndharBan.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/AndharBan_View.jpg/1280px-AndharBan_View.jpg"
+    ]
+  },
+  "anjaneri-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Anjineri_fort_Nasik.jpg/1280px-Anjineri_fort_Nasik.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Anjaneri.jpg/1280px-Anjaneri.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Anjaneri_lake_nashik.jpg/1280px-Anjaneri_lake_nashik.jpg"
+    ]
+  },
+  "bhandardara-arthur-lake": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Bhandardara_Lake.jpg/1280px-Bhandardara_Lake.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Arthur_Lake.JPG/1280px-Arthur_Lake.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Arthur_Lake.jpg/1280px-Arthur_Lake.jpg"
+    ]
+  },
+  "bhivpuri-waterfall": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Bhivpuri-Waterfall.jpg/1280px-Bhivpuri-Waterfall.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Bhivpuri_View.jpg/1280px-Bhivpuri_View.jpg"
+    ]
+  },
+  "bhimashankar": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Bhimashankar.jpg/1280px-Bhimashankar.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Bhimashankar_temple%2C_Maharashtra.JPG/1280px-Bhimashankar_temple%2C_Maharashtra.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Bhimashankar_temple.JPG/1280px-Bhimashankar_temple.JPG"
+    ]
+  },
+  "daulatabad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Daulatabad_Fort_vrvbajel0924_%28248%29.jpg/1280px-Daulatabad_Fort_vrvbajel0924_%28248%29.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Daulatabad_Fort_vrvbajel0924_%28258%29.jpg/1280px-Daulatabad_Fort_vrvbajel0924_%28258%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Daulatabad_Fort_vrvbajel0924_%28274%29.jpg/1280px-Daulatabad_Fort_vrvbajel0924_%28274%29.jpg"
+    ]
+  },
+  "devbagh-backwaters": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Devbag_Backwaters.jpg/1280px-Devbag_Backwaters.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Sangam_at_devbagh_photo_by_Rahul_kharade_(bhandup)_-_panoramio_(2).jpg/1280px-Sangam_at_devbagh_photo_by_Rahul_kharade_(bhandup)_-_panoramio_(2).jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Devbagh.jpg/1280px-Devbagh.jpg"
+    ]
+  },
+  "devkund-waterfall": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Devkund_waterfalls.jpg/1280px-Devkund_waterfalls.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Devkund_Waterfall.JPG/1280px-Devkund_Waterfall.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Devkund_Ambika_Temple.JPG/1280px-Devkund_Ambika_Temple.JPG"
+    ]
+  },
+  "ellora-caves": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Ellora_Caves%2C_India%2C_Kailasanatha_Temple_2.jpg/1280px-Ellora_Caves%2C_India%2C_Kailasanatha_Temple_2.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Ellora_Caves%2C_India%2C_Nandi_Mandapa_hall%2C_Basalt_columns%2C_Cave_15.jpg/1280px-Ellora_Caves%2C_India%2C_Nandi_Mandapa_hall%2C_Basalt_columns%2C_Cave_15.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Ellora_Caves%2C_India%2C_Dashavatara_Temple%2C_Cave_15.jpg/1280px-Ellora_Caves%2C_India%2C_Dashavatara_Temple%2C_Cave_15.jpg"
+    ]
+  },
+  "ganpatipule-beach": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Ganpatipule_-_panoramio.jpg/1280px-Ganpatipule_-_panoramio.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Ganpatipule_sea_%284%29.jpg/1280px-Ganpatipule_sea_%284%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Ganpatipule_sea_%287%29.jpg/1280px-Ganpatipule_sea_%287%29.jpg"
+    ]
+  },
+  "hadsar-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Hadsar1.jpg/1280px-Hadsar1.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Hadsar3.jpg/1280px-Hadsar3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Hadsar_fort.jpg/1280px-Hadsar_fort.jpg"
+    ]
+  },
+  "harihar-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Harihar_fort_1.jpg/1280px-Harihar_fort_1.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Hariharfort.jpg/1280px-Hariharfort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Harihar_-_First_Views_%2811253834036%29.jpg/1280px-Harihar_-_First_Views_%2811253834036%29.jpg"
+    ]
+  },
+  "harishchandragad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Kalbhairav_pinnacle_Scj.jpg/1280px-Kalbhairav_pinnacle_Scj.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/RECO0513.JPG/1280px-RECO0513.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/RECO0303.JPG/1280px-RECO0303.JPG"
+    ]
+  },
+  "kaas-plateau": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Kaas_Plateau.jpg/1280px-Kaas_Plateau.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Kas_plateau.JPG/1280px-Kas_plateau.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Impatiens_Lawii_Kaas_Plateau_%28107933135%29.jpeg/1280px-Impatiens_Lawii_Kaas_Plateau_%28107933135%29.jpeg"
+    ]
+  },
+  "kalsubai-peak": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Kalsubai_summit.jpg/1280px-Kalsubai_summit.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Kalasubai_top_temple.jpg/1280px-Kalasubai_top_temple.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Kalasubai_from_base.jpg/1280px-Kalasubai_from_base.jpg"
+    ]
+  },
+  "kamshet-paragliding": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kamshet.jpg/1280px-Kamshet.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Near_Kamshet_2_tunnel_on_Mumbai_Pune_Expressway.JPG/1280px-Near_Kamshet_2_tunnel_on_Mumbai_Pune_Expressway.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Bedse_Caves.jpg/1280px-Bedse_Caves.jpg"
+    ]
+  },
+  "karla-caves-lonavala": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/KARLA%27S_CAVES.JPG/1280px-KARLA%27S_CAVES.JPG",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Entrance_of_Karla_Caves.jpg/1280px-Entrance_of_Karla_Caves.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Karla_Caves_-_2025_-_02.jpg/1280px-Karla_Caves_-_2025_-_02.jpg"
+    ]
+  },
+  "karnala-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Karnala_fort_2.jpg/1280px-Karnala_fort_2.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Karnala_fort_walls.jpg/1280px-Karnala_fort_walls.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Karnala_fort_bastion.jpg/1280px-Karnala_fort_bastion.jpg"
+    ]
+  },
+  "korigad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Korigad_sometimes.jpg/1280px-Korigad_sometimes.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Korigad_Fort_20180923_135720.jpg/1280px-Korigad_Fort_20180923_135720.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Korigad_Fort_20180923_135817.jpg/1280px-Korigad_Fort_20180923_135817.jpg"
+    ]
+  },
+  "kothaligad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Kothaligad_with_Cannon_gun.JPG/1280px-Kothaligad_with_Cannon_gun.JPG",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Flora_near_Peth_Fort_%28Kothaligad%29_in_Western_Ghats.jpg/1280px-Flora_near_Peth_Fort_%28Kothaligad%29_in_Western_Ghats.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Citadel_of_Peth_Fort_%28Kothaligad%29_in_Western_Ghats.png/1280px-Citadel_of_Peth_Fort_%28Kothaligad%29_in_Western_Ghats.png"
+    ]
+  },
+  "kundalika-rafting-kolad": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/River_Kundalika_By_Anis_Shaikh_12.jpg/1280px-River_Kundalika_By_Anis_Shaikh_12.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kundalika.jpg/1280px-Kundalika.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Roha_today.jpg/1280px-Roha_today.jpg"
+    ]
+  },
+  "lenyadri-caves": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Lenyadri_interior.jpg/1280px-Lenyadri_interior.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Lenyadri_crop.jpg/1280px-Lenyadri_crop.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Lenyadri_Group_Of_Caves.JPG/1280px-Lenyadri_Group_Of_Caves.JPG"
+    ]
+  },
+  "lohagad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Lohagad_fort_in_August.JPG/1280px-Lohagad_fort_in_August.JPG",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Lohagad_Fort.jpg/1280px-Lohagad_Fort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Lohagad_fort_N-MH-M8-6.JPG/1280px-Lohagad_fort_N-MH-M8-6.JPG"
+    ]
+  },
+  "mahuli-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Mahuli_fort.jpg/1280px-Mahuli_fort.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Mahuli_Fort_From_Pivali_End.JPG/1280px-Mahuli_Fort_From_Pivali_End.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Mahuli_Fort_View_From_Pivali_Village.JPG/1280px-Mahuli_Fort_View_From_Pivali_Village.JPG"
+    ]
+  },
+  "malshej-ghat": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Bonnet_macaque_at_Malshej_Ghat%2C_India..jpg/1280px-Bonnet_macaque_at_Malshej_Ghat%2C_India..jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Malshej_Hills.jpg/1280px-Malshej_Hills.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/NH222_Highway_through_Malshej_Ghat_Maharashtra_India.jpg/1280px-NH222_Highway_through_Malshej_Ghat_Maharashtra_India.jpg"
+    ]
+  },
+  "naneghat-pass": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Naneghat_Junnar_Pune_%281%29_01.jpg/1280px-Naneghat_Junnar_Pune_%281%29_01.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Naneghat_Junnar_Pune_%281%29_05.jpg/1280px-Naneghat_Junnar_Pune_%281%29_05.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Naneghat_Junnar_Pune_%281%29_06.jpg/1280px-Naneghat_Junnar_Pune_%281%29_06.jpg"
+    ]
+  },
+  "panchgani-paragliding": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/View_from_Panchgani%2C_Maharashtra.jpg/1280px-View_from_Panchgani%2C_Maharashtra.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Panchghani_Hill.jpg/1280px-Panchghani_Hill.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Table_Top_View_from_Panchgani_Pune.jpg/1280px-Table_Top_View_from_Panchgani_Pune.jpg"
+    ]
+  },
+  "panhala-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Remotest_Rampart_on_Panhala.jpg/1280px-Remotest_Rampart_on_Panhala.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Panhala_vaghdarwaja.jpg/1280px-Panhala_vaghdarwaja.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Bajiprabhu_Deshpande_Statue_in_Panhala_Fort.JPG/1280px-Bajiprabhu_Deshpande_Statue_in_Panhala_Fort.JPG"
+    ]
+  },
+  "pawna-lake": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Pawna_Lake_near_Lohagadh_Fort_by_NishantAChavan.JPG/1280px-Pawna_Lake_near_Lohagadh_Fort_by_NishantAChavan.JPG",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Pawna_lake_as_seen_from_Lohagadh_Fort%2CPune.JPG/1280px-Pawna_lake_as_seen_from_Lohagadh_Fort%2CPune.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Beautiful_view_at_Pawna_Lake%2C_Lonavala.jpg/1280px-Beautiful_view_at_Pawna_Lake%2C_Lonavala.jpg"
+    ]
+  },
+  "prabalgad-kalavantin": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Kalavantinicha_Durga.jpg/1280px-Kalavantinicha_Durga.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/..._Kalavantin_from_Prabalgad_%287544768190%29.jpg/1280px-..._Kalavantin_from_Prabalgad_%287544768190%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/..._Kalavantin_and_Prabalgad_%286781298373%29.jpg/1280px-..._Kalavantin_and_Prabalgad_%286781298373%29.jpg"
+    ]
+  },
+  "raigad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Raigad_fort_towers.jpg/1280px-Raigad_fort_towers.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Shivaji_Maharaj_Raigad.jpg/1280px-Shivaji_Maharaj_Raigad.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Raigad-fort-entrance.jpg/1280px-Raigad-fort-entrance.jpg"
+    ]
+  },
+  "rajgad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/One_rajgad_gate.jpg/1280px-One_rajgad_gate.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Rajgad_after_monsoon.jpg/1280px-Rajgad_after_monsoon.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Rajgad_2012.JPG/1280px-Rajgad_2012.JPG"
+    ]
+  },
+  "rajmachi-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Rajmachi_Fort.JPG/1280px-Rajmachi_Fort.JPG",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/RajmachiView_from_Trek_Point.JPG/1280px-RajmachiView_from_Trek_Point.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/RajmachiView_from_Rajmachi_Village.JPG/1280px-RajmachiView_from_Rajmachi_Village.JPG"
+    ]
+  },
+  "ratangad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Ratangad_entrance.jpg/1280px-Ratangad_entrance.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Ladder_Trail.jpg/1280px-Ladder_Trail.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Chor_Darwaza.jpg/1280px-Chor_Darwaza.jpg"
+    ]
+  },
+  "salher-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Salher_Fort.jpg/1280px-Salher_Fort.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Salher_fort.jpg/1280px-Salher_fort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Salher_Fort_KADA.jpg/1280px-Salher_Fort_KADA.jpg"
+    ]
+  },
+  "sandhan-valley": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Sandan3.jpg/1280px-Sandan3.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Welcome_to_Vally_of_Shadow...%21.jpg/1280px-Welcome_to_Vally_of_Shadow...%21.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Waterfall_rapplling_..%21.jpg/1280px-Waterfall_rapplling_..%21.jpg"
+    ]
+  },
+  "sarasgad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Sunsetviewpali.jpg/1280px-Sunsetviewpali.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/..._fort_entrance_of_Sarasgad_%285025627374%29.jpg/1280px-..._fort_entrance_of_Sarasgad_%285025627374%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Sarasgad_-_Ruins_Of_Fort.jpg/1280px-Sarasgad_-_Ruins_Of_Fort.jpg"
+    ]
+  },
+  "shivneri-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Shivneri_Fort.jpg/1280px-Shivneri_Fort.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Trupti_Sarode_2_Kadelot_point_at_Shivneri_fort.jpg/1280px-Trupti_Sarode_2_Kadelot_point_at_Shivneri_fort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Shivneri_Fort3_by_Bajirao_Nawale.jpg/1280px-Shivneri_Fort3_by_Bajirao_Nawale.jpg"
+    ]
+  },
+  "sinhagad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Sinhagad_Fort_%2847642%29.jpg/1280px-Sinhagad_Fort_%2847642%29.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sinhagad_Fort_%2825824%29.jpg/1280px-Sinhagad_Fort_%2825824%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Sinhagad_Fort_%2890210%29.jpg/1280px-Sinhagad_Fort_%2890210%29.jpg"
+    ]
+  },
+  "sudhagad-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Sudhagad_entrance.jpg/1280px-Sudhagad_entrance.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Chor_vaat_sudhagad.jpg/1280px-Chor_vaat_sudhagad.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Hiking_up_the_stairs_of_Sudhagad_fort.jpg/1280px-Hiking_up_the_stairs_of_Sudhagad_fort.jpg"
+    ]
+  },
+  "tapola-shivsagar-lake": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Tapola.jpg/1280px-Tapola.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Bamnoli_view_at_Shivsagar_lake.jpg/1280px-Bamnoli_view_at_Shivsagar_lake.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Bamnoli_lake%2C_Satara_-_vrvbsatara102k23iph_(1).jpg/1280px-Bamnoli_lake%2C_Satara_-_vrvbsatara102k23iph_(1).jpg"
+    ]
+  },
+  "tarkarli-coast": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Tarkarli_beach.JPG/1280px-Tarkarli_beach.JPG",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Tarkarli_Beach.JPG/1280px-Tarkarli_Beach.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Beaches_in_India%2C_Tarkarli_Maharashtra_2012.jpg/1280px-Beaches_in_India%2C_Tarkarli_Maharashtra_2012.jpg"
+    ]
+  },
+  "thoseghar-waterfall": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Thoseghar_Waterfalls_-_Satara%2C_Pune.jpg/1280px-Thoseghar_Waterfalls_-_Satara%2C_Pune.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/%E0%B2%A4%E0%B3%8B%E0%B2%B6%E0%B3%86%E0%B2%98%E0%B2%B0%E0%B3%8D_%E0%B2%9C%E0%B2%B2%E0%B2%AA%E0%B2%BE%E0%B2%A4.JPG/1280px-%E0%B2%A4%E0%B3%8B%E0%B2%B6%E0%B3%86%E0%B2%98%E0%B2%B0%E0%B3%8D_%E0%B2%9C%E0%B2%B2%E0%B2%AA%E0%B2%BE%E0%B2%A4.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Monsoon_Waterfall.jpg/1280px-Monsoon_Waterfall.jpg"
+    ]
+  },
+  "tikona-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Tikona_fort_ramparts.jpg/1280px-Tikona_fort_ramparts.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Tikona_fort.jpg/1280px-Tikona_fort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Tikona-fort-rain.JPG/1280px-Tikona-fort-rain.JPG"
+    ]
+  },
+  "torna-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Torna_entrance.jpg/1280px-Torna_entrance.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Torna_Fort.png/1280px-Torna_Fort.png",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Torna_Fort.JPG/1280px-Torna_Fort.JPG"
+    ]
+  },
+  "tungareshwar-sanctuary": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tungareshwar_Wildlife_Sanctuary_%2828673818300%29.jpg/1280px-Tungareshwar_Wildlife_Sanctuary_%2828673818300%29.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tungareshwar_Wildlife_Sanctuary_%2828883262071%29.jpg/1280px-Tungareshwar_Wildlife_Sanctuary_%2828883262071%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Tungareshwar_Wildlife_Sanctuary_%2828343357103%29.jpg/1280px-Tungareshwar_Wildlife_Sanctuary_%2828343357103%29.jpg"
+    ]
+  },
+  "vasota-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Vasota.jpg/1280px-Vasota.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/View_from_vasota_fort.jpg/1280px-View_from_vasota_fort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/View_of_koyna_river.jpg/1280px-View_of_koyna_river.jpg"
+    ]
+  },
+  "vihigaon-waterfall": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Igatpuri_waterfall.jpg/1280px-Igatpuri_waterfall.jpg",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Bhavli_Dam_(22).jpg/1280px-Bhavli_Dam_(22).jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bhavli_Dam_(45).jpg/1280px-Bhavli_Dam_(45).jpg"
+    ]
+  },
+  "visapur-fort": {
+    "primary": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Visapur.JPG/1280px-Visapur.JPG",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Visapur_fort_Ramparts.JPG/1280px-Visapur_fort_Ramparts.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Visapur_Fort.JPG/1280px-Visapur_Fort.JPG"
+    ]
+  }
+}
