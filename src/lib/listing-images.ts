@@ -1,0 +1,71 @@
+/**
+ * Real place photos (Wikimedia Commons) mapped to each listing via place slug.
+ */
+
+import placeImages from "../../prisma/data/place-images.json";
+import seedData from "../../prisma/data/seed-data.json";
+import { slugify } from "@/lib/slugify";
+
+export type ListingImageSet = {
+  heroImageUrl: string;
+  galleryUrls?: string[];
+};
+
+type PlaceImageEntry = {
+  primary: string;
+  gallery?: string[];
+};
+
+function imagesForPlace(placeSlug: string, listingIndex: number): ListingImageSet | null {
+  const place = (placeImages as Record<string, PlaceImageEntry>)[placeSlug];
+  if (!place?.primary) return null;
+
+  const pool = [place.primary, ...(place.gallery ?? [])].filter(Boolean);
+  const heroImageUrl = pool[listingIndex % pool.length] ?? place.primary;
+  const galleryUrls = pool.filter((url) => url !== heroImageUrl).slice(0, 2);
+
+  return {
+    heroImageUrl,
+    galleryUrls: galleryUrls.length ? galleryUrls : [heroImageUrl],
+  };
+}
+
+function buildListingImageMap(): Record<string, ListingImageSet> {
+  const map: Record<string, ListingImageSet> = {};
+  const perPlaceIndex: Record<string, number> = {};
+
+  for (const destination of seedData.destinations) {
+    const placeSlug = destination.place.slug;
+    perPlaceIndex[placeSlug] ??= 0;
+
+    for (const listing of destination.listings) {
+      const listingSlug = slugify(listing.title);
+      const images = imagesForPlace(placeSlug, perPlaceIndex[placeSlug]);
+      perPlaceIndex[placeSlug] += 1;
+      if (images) map[listingSlug] = images;
+    }
+  }
+
+  return map;
+}
+
+/** Per-listing fixes when place pool order picks a broken or mismatched photo */
+const LISTING_OVERRIDES: Record<string, ListingImageSet> = {
+  "devbagh-beachside-camping-retreat": {
+    heroImageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Devbagh.jpg/1280px-Devbagh.jpg",
+    galleryUrls: [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Devbag_Backwaters.jpg/1280px-Devbag_Backwaters.jpg",
+      "https://images.unsplash.com/photo-1478131143081-80f7f84b84e7?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+};
+
+export const LISTING_IMAGES: Record<string, ListingImageSet> = {
+  ...buildListingImageMap(),
+  ...LISTING_OVERRIDES,
+};
+
+export function getListingImages(slug: string): ListingImageSet | null {
+  return LISTING_IMAGES[slug] ?? null;
+}
