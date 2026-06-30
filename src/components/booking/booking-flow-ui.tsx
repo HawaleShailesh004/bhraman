@@ -285,7 +285,27 @@ function BookingFlowContent({
           order_id: data.razorpayOrderId,
           prefill: { name: lead.name, email: lead.email },
           notes: { bookingRef: data.bookingRef },
-          handler: () => router.push(`/booking/${data.bookingRef}`),
+          handler: async (response: {
+            razorpay_payment_id: string;
+            razorpay_order_id: string;
+            razorpay_signature: string;
+          }) => {
+            try {
+              await fetch("/api/bookings/verify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  bookingRef: data.bookingRef,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                }),
+              });
+            } catch {
+              // Still redirect — booking page will sync from Razorpay on load
+            }
+            router.push(`/booking/${data.bookingRef}`);
+          },
           modal: {
             ondismiss: () => router.push(`/booking/${data.bookingRef}`),
           },

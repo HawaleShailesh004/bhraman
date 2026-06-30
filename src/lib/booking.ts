@@ -1,6 +1,8 @@
 import "server-only";
 
 import { BookingStatus, PaymentStatus, SlotStatus } from "@prisma/client";
+import { sendBookingConfirmation } from "@/lib/email";
+import { fetchCapturedPaymentForOrder } from "@/lib/razorpay";
 import { prisma } from "@/lib/prisma";
 import { computeRefund, type CancellationPolicy } from "@/lib/refunds";
 
@@ -104,6 +106,54 @@ export async function createBooking(input: CreateBookingInput) {
     }
 
     return booking;
+  });
+}
+
+export async function confirmCapturedPayment(input: {
+  razorpayOrderId: string;
+  razorpayPaymentId: string;
+}) {
+  const existing = await prisma.payment.findUnique({
+    where: { razorpayOrderId: input.razorpayOrderId },
+  });
+
+  if (!existing) {
+    return { confirmed: false as const, reason: "PAYMENT_NOT_FOUND" as const };
+  }
+
+  if (existing.status === "CAPTURED") {
+    return { confirmed: true as const, alreadyConfirmed: true as const };
+  }
+
+  await prisma.$transaction(async (tx) => {
+    await tx.payment.update({
+      where: { razorpayOrderId: input.razorpayOrderId },
+      data: {
+        status: PaymentStatus.CAPTURED,
+        razorpayPaymentId: input.razorpayPaymentId,
+      },
+    });
+
+    await tx.booking.update({
+      where: { id: existing.bookingId },
+      data: { status: BookingStatus.CONFIRMED },
+    });
+  });
+
+  await sendBookingConfirmation(existing.bookingId);
+
+  return { confirmed: true as const, alreadyConfirmed: false as const };
+}
+
+export async function syncPendingPayment(razorpayOrderId: string) {
+  const captured = await fetchCapturedPaymentForOrder(razorpayOrderId);
+  if (!captured) {
+    return { confirmed: false as const, reason: "NOT_CAPTURED" as const };
+  }
+
+  return confirmCapturedPayment({
+    razorpayOrderId: captured.orderId,
+    razorpayPaymentId: captured.paymentId,
   });
 }
 
