@@ -1,0 +1,45 @@
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+const isOperatorAuthRoute = createRouteMatcher([
+  "/operator/sign-in(.*)",
+  "/operator/sign-up(.*)",
+]);
+
+const isOperatorAppRoute = createRouteMatcher(["/operator(.*)"]);
+
+const isTravelerProtectedRoute = createRouteMatcher([
+  "/bookings(.*)",
+  "/booking/(.*)",
+]);
+
+const clerkConfigured = Boolean(
+  process.env.CLERK_SECRET_KEY &&
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+);
+
+export default clerkConfigured
+  ? clerkMiddleware(async (auth, req) => {
+      if (isTravelerProtectedRoute(req)) {
+        await auth().protect({
+          unauthenticatedUrl: "/sign-in",
+        });
+      }
+
+      if (isOperatorAppRoute(req) && !isOperatorAuthRoute(req)) {
+        await auth().protect({
+          unauthenticatedUrl: "/operator/sign-in",
+        });
+      }
+    })
+  : function middleware(_req: NextRequest) {
+      return NextResponse.next();
+    };
+
+export const config = {
+  matcher: [
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/(api|trpc)(.*)",
+  ],
+};
