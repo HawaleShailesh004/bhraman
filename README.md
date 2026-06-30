@@ -50,7 +50,7 @@ See [`.env.example`](.env.example) for the full list.
 
 | Role | Email | Password |
 |------|-------|----------|
-| **Operator** | `sahyadri-trails@example.com` | `password` |
+| **Operator** | `konkan-wave-adventures@example.com` | `password` |
 | **Traveler** | `demo@bhraman.app` | _(create via `/sign-up`)_ |
 
 These are also shown on **`/operator/sign-in`** and **`/operator/sign-up`**.
@@ -89,12 +89,12 @@ npm run dev
 
 ### 4. Test operator flow (demo account)
 
-**Credentials:** `sahyadri-trails@example.com` / `password`
+**Credentials:** `konkan-wave-adventures@example.com` / `password`
 
 **First time only — create Clerk account:**
 
 1. **`/operator/sign-up`**
-2. Email: `sahyadri-trails@example.com` · Password: `password`
+2. Email: `konkan-wave-adventures@example.com` · Password: `password`
 3. Verification code (if prompted): **`424242`**
 4. You are redirected to **`/operator/sign-in`** → sign in with same credentials
 5. Dashboard: **`/operator`**

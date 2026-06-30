@@ -16,11 +16,23 @@ type PlaceImageEntry = {
   gallery?: string[];
 };
 
+function uniqueUrls(urls: string[]): string[] {
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const url of urls) {
+    if (url && !seen.has(url)) {
+      seen.add(url);
+      result.push(url);
+    }
+  }
+  return result;
+}
+
 function imagesForPlace(placeSlug: string, listingIndex: number): ListingImageSet | null {
   const place = (placeImages as Record<string, PlaceImageEntry>)[placeSlug];
   if (!place?.primary) return null;
 
-  const pool = [...new Set([place.primary, ...(place.gallery ?? [])])].filter(Boolean);
+  const pool = uniqueUrls([place.primary, ...(place.gallery ?? [])]);
   const heroImageUrl = pool[listingIndex % pool.length] ?? place.primary;
 
   const galleryUrls: string[] = [];
