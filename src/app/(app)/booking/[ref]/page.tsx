@@ -65,7 +65,7 @@ export default async function BookingConfirmationPage({
         : "info";
 
   return (
-    <main className="min-h-screen bg-paper px-6 py-12">
+    <main className="min-h-screen bg-paper px-6 pt-28 pb-12">
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow">Booking</p>
         <h1 className="sec-title">Your booking details</h1>
