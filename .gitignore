@@ -60,3 +60,6 @@ tools/wikimedia/finalize-log.txt
 .idea/
 .vscode/
 *.swp
+
+# local implementation notes (not for repo)
+implementation.md
