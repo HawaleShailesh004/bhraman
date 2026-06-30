@@ -20,13 +20,20 @@ function imagesForPlace(placeSlug: string, listingIndex: number): ListingImageSe
   const place = (placeImages as Record<string, PlaceImageEntry>)[placeSlug];
   if (!place?.primary) return null;
 
-  const pool = [place.primary, ...(place.gallery ?? [])].filter(Boolean);
+  const pool = [...new Set([place.primary, ...(place.gallery ?? [])])].filter(Boolean);
   const heroImageUrl = pool[listingIndex % pool.length] ?? place.primary;
-  const galleryUrls = pool.filter((url) => url !== heroImageUrl).slice(0, 2);
+
+  const galleryUrls: string[] = [];
+  for (let offset = 1; galleryUrls.length < 3 && offset < pool.length + 3; offset++) {
+    const url = pool[(listingIndex + offset) % pool.length];
+    if (url !== heroImageUrl && !galleryUrls.includes(url)) {
+      galleryUrls.push(url);
+    }
+  }
 
   return {
     heroImageUrl,
-    galleryUrls: galleryUrls.length ? galleryUrls : [heroImageUrl],
+    galleryUrls,
   };
 }
 
@@ -56,7 +63,7 @@ const LISTING_OVERRIDES: Record<string, ListingImageSet> = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Devbagh.jpg/1280px-Devbagh.jpg",
     galleryUrls: [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Devbag_Backwaters.jpg/1280px-Devbag_Backwaters.jpg",
-      "https://images.unsplash.com/photo-1478131143081-80f7f84b84e7?auto=format&fit=crop&w=1200&q=80",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Sangam_at_devbagh_photo_by_Rahul_kharade_(bhandup)_-_panoramio_(2).jpg/1280px-Sangam_at_devbagh_photo_by_Rahul_kharade_(bhandup)_-_panoramio_(2).jpg",
     ],
   },
 };

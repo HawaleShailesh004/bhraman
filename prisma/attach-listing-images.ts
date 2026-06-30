@@ -29,7 +29,7 @@ async function main() {
       where: { id: listing.id },
       data: {
         heroImageUrl: images.heroImageUrl,
-        galleryUrls: images.galleryUrls ?? [images.heroImageUrl],
+        galleryUrls: images.galleryUrls ?? [],
       },
     });
     console.log(`  ✓ ${listing.title}`);

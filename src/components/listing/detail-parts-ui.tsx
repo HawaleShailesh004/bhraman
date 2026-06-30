@@ -16,7 +16,7 @@ import {
 import type { ListingDetailData } from "@/types/listing";
 import type { WeatherSignal } from "@/lib/weather";
 import { formatInr } from "@/lib/format";
-import { listingImageStyle, operatorInitials } from "@/lib/ui-present";
+import { operatorInitials } from "@/lib/ui-present";
 import { StarRating } from "@/components/ui/primitives";
 import type { ReviewData } from "@/types/listing";
 
@@ -301,17 +301,6 @@ export function InclusionsUi({ listing }: { listing: ListingDetailData }) {
           ))}
         </div>
       </div>
-    </div>
-  );
-}
-
-export function ListingHeroImage({ listing }: { listing: ListingDetailData }) {
-  return (
-    <div
-      className="relative h-[68vh] min-h-[480px] overflow-hidden"
-      style={listingImageStyle(listing.category.slug, listing.heroImageUrl)}
-    >
-      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/20" />
     </div>
   );
 }

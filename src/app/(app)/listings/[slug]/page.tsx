@@ -7,11 +7,11 @@ import {
   BookingPanelUi,
   InclusionsUi,
   ItineraryTimelineUi,
-  ListingHeroImage,
   OperatorBlockUi,
   ReviewsUi,
   WeatherSignalUi,
 } from "@/components/listing/detail-parts-ui";
+import { ListingMediaGallery } from "@/components/listing/listing-media-gallery";
 import { getListingDetail } from "@/lib/listings";
 import { getWeatherSignal } from "@/lib/weather";
 
@@ -33,9 +33,9 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
   return (
     <main className="min-h-screen bg-paper pb-28 lg:pb-16">
       <section className="relative">
-        <ListingHeroImage listing={listing} />
-        <div className="absolute bottom-0 left-0 right-0">
-          <div className="max-w-6xl mx-auto px-6 pb-8">
+        <ListingMediaGallery listing={listing}>
+          <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
+            <div className="max-w-6xl mx-auto px-6 pb-8 pointer-events-auto">
             <nav className="flex items-center gap-1.5 text-white/80 text-sm mb-4">
               <Link href="/" className="hover:text-white">
                 Home
@@ -75,8 +75,9 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
                 </span>
               ) : null}
             </div>
+            </div>
           </div>
-        </div>
+        </ListingMediaGallery>
       </section>
 
       <section className="max-w-6xl mx-auto px-6 py-12 grid lg:grid-cols-[1fr_360px] gap-10">

@@ -214,7 +214,7 @@ async function main() {
         update: images
           ? {
               heroImageUrl: images.heroImageUrl,
-              galleryUrls: images.galleryUrls ?? [images.heroImageUrl],
+              galleryUrls: images.galleryUrls ?? [],
             }
           : {},
         create: {
@@ -236,9 +236,7 @@ async function main() {
           meetingPoint: l.meetingPoint ?? null,
           cancellationPolicy: l.cancellationPolicy ?? DEFAULT_POLICY,
           heroImageUrl: images?.heroImageUrl ?? null,
-          galleryUrls: images
-            ? (images.galleryUrls ?? [images.heroImageUrl])
-            : [],
+          galleryUrls: images?.galleryUrls ?? [],
           status: ListingStatus.PUBLISHED,
           itinerary: {
             create: l.itinerary.map((s) => ({

@@ -2,12 +2,21 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Users, BadgeCheck } from "lucide-react";
+import { MapPin, Clock, Users, BadgeCheck, Images } from "lucide-react";
 import type { ListingCardData } from "@/types/listing";
 import { formatInr } from "@/lib/format";
 import { listingImageStyle } from "@/lib/ui-present";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { DifficultyMeter, StarRating } from "@/components/ui/primitives";
+
+function photoCount(listing: ListingCardData): number {
+  const urls = new Set<string>();
+  if (listing.heroImageUrl) urls.add(listing.heroImageUrl);
+  for (const url of listing.galleryUrls ?? []) {
+    if (url) urls.add(url);
+  }
+  return urls.size;
+}
 
 export function ListingCardUi({
   listing,
@@ -16,10 +25,15 @@ export function ListingCardUi({
   listing: ListingCardData;
   index?: number;
 }) {
+  const photos = photoCount(listing);
+  const peekUrl = listing.galleryUrls?.find((u) => u && u !== listing.heroImageUrl);
   const imageStyle = listingImageStyle(
     listing.category.slug,
     listing.heroImageUrl
   );
+  const peekStyle = peekUrl
+    ? listingImageStyle(listing.category.slug, peekUrl)
+    : null;
 
   return (
     <motion.div
@@ -36,9 +50,21 @@ export function ListingCardUi({
         <div
           className="overflow-hidden rounded-[var(--radius-card)] border border-line/80 bg-white shadow-[var(--shadow-sm)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-md)]"
         >
-          <div className="relative h-40 overflow-hidden" style={imageStyle}>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
-            <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
+          <div className="relative h-44 overflow-hidden">
+            {peekStyle ? (
+              <div
+                className="absolute inset-0 scale-[0.92] translate-x-2 translate-y-1 opacity-0 transition-all duration-300 group-hover:opacity-55 group-hover:translate-x-3"
+                style={peekStyle}
+                aria-hidden
+              />
+            ) : null}
+            <div
+              className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.03]"
+              style={imageStyle}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
+            </div>
+            <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2 z-10">
               <span className="inline-flex items-center gap-1 rounded-full bg-ink/90 px-2.5 py-1 text-[10px] font-semibold text-paper backdrop-blur">
                 <CategoryIcon slug={listing.category.slug} size={11} />
                 {listing.category.name}
@@ -47,6 +73,12 @@ export function ListingCardUi({
                 <DifficultyMeter difficulty={listing.difficulty} showLabel={false} />
               </span>
             </div>
+            {photos > 1 ? (
+              <span className="absolute bottom-3 right-3 z-10 inline-flex items-center gap-1 rounded-full bg-ink/85 px-2.5 py-1 text-[10px] font-semibold text-paper backdrop-blur">
+                <Images size={11} />
+                {photos} photos
+              </span>
+            ) : null}
           </div>
 
           <div className="space-y-3 p-4 sm:p-5">

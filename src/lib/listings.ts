@@ -25,6 +25,7 @@ const cardSelect = {
   minGroupSize: true,
   maxGroupSize: true,
   heroImageUrl: true,
+  galleryUrls: true,
   category: { select: { slug: true, name: true, icon: true } },
   place: { select: { name: true, city: true, district: true } },
   operator: {

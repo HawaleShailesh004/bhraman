@@ -23,6 +23,7 @@ export type ListingCardData = {
   minGroupSize: number;
   maxGroupSize: number;
   heroImageUrl: string | null;
+  galleryUrls?: string[];
   category: {
     slug: string;
     name: string;
