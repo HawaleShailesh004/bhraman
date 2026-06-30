@@ -16,7 +16,7 @@ export default async function OperatorDashboardLayout({
 
     const session = await getSessionOperator();
     if (!session) {
-      redirect("/operator/sign-in?error=not_operator");
+      redirect("/operator/unauthorized");
     }
 
     return (

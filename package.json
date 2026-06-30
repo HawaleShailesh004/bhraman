@@ -11,6 +11,7 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
     "db:images": "tsx prisma/attach-listing-images.ts",
+    "db:operators": "tsx prisma/update-operator-emails.ts",
     "db:studio": "prisma studio"
   },
   "prisma": {

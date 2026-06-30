@@ -13,6 +13,10 @@ import {
 import { readFileSync } from "fs";
 import { join } from "path";
 import { getListingImages } from "../src/lib/listing-images";
+import {
+  legacyOperatorEmail,
+  operatorEmail,
+} from "../src/lib/operator-emails";
 
 const prisma = new PrismaClient();
 
@@ -140,12 +144,21 @@ async function main() {
   console.log("→ operators");
   const operatorByName: Record<string, string> = {};
   for (const op of raw.operators) {
-    const email = `${slugify(op.businessName)}@bhraman-operators.demo`;
-    const user = await prisma.user.upsert({
-      where: { email },
-      update: {},
-      create: { email, name: op.businessName, role: UserRole.OPERATOR },
+    const email = operatorEmail(op.businessName);
+    const legacyEmail = legacyOperatorEmail(op.businessName);
+
+    const existing = await prisma.user.findFirst({
+      where: { OR: [{ email }, { email: legacyEmail }] },
     });
+
+    const user = existing
+      ? await prisma.user.update({
+          where: { id: existing.id },
+          data: { email, name: op.businessName, role: UserRole.OPERATOR },
+        })
+      : await prisma.user.create({
+          data: { email, name: op.businessName, role: UserRole.OPERATOR },
+        });
     const operator = await prisma.operator.upsert({
       where: { userId: user.id },
       update: {

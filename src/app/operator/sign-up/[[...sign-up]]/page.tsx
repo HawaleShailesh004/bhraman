@@ -1,14 +1,25 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { SignUp } from "@clerk/nextjs";
 import { Check } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { clerkAppearance } from "@/lib/clerk-appearance";
-import { isClerkEnabled } from "@/lib/auth";
+import { getSessionOperator, isClerkEnabled } from "@/lib/auth";
+import { PRIMARY_OPERATOR_EMAIL } from "@/lib/operator-emails";
 
-export default function OperatorSignUpPage() {
+export default async function OperatorSignUpPage() {
   if (!isClerkEnabled()) {
     redirect("/operator");
+  }
+
+  const { userId } = await auth();
+  if (userId) {
+    const session = await getSessionOperator();
+    if (session) {
+      redirect("/operator");
+    }
+    redirect("/operator/unauthorized");
   }
 
   return (
@@ -33,9 +44,9 @@ export default function OperatorSignUpPage() {
 
         <div className="mb-5 space-y-2 rounded-[14px] border border-line bg-white p-4 text-sm text-[#54635A]">
           {[
-            "Use the email your operator profile was registered with",
-            "New partners apply first — we verify within 48 hours",
-            "Traveler accounts cannot access the operator dashboard",
+            `Use your operator email (e.g. ${PRIMARY_OPERATOR_EMAIL})`,
+            "If Clerk sends a verification code, enter 424242 in dev",
+            "After sign up you will be sent to the sign-in page",
           ].map((line) => (
             <div key={line} className="flex items-start gap-2">
               <Check size={15} className="mt-0.5 shrink-0 text-forest" />
@@ -49,8 +60,8 @@ export default function OperatorSignUpPage() {
           routing="path"
           path="/operator/sign-up"
           signInUrl="/operator/sign-in"
-          forceRedirectUrl="/operator"
-          fallbackRedirectUrl="/become-operator"
+          forceRedirectUrl="/operator/sign-up/complete"
+          fallbackRedirectUrl="/operator/sign-in"
         />
 
         <p className="mt-6 text-center text-sm text-mist">

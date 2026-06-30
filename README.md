@@ -28,7 +28,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | Role | Email |
 |------|-------|
 | Traveler | `demo@bhraman.app` |
-| Operator | `sahyadri-trails@bhraman-operators.demo` |
+| Operator | `sahyadri-trails@example.com` (sign up at `/operator/sign-up` first; OTP `424242` if prompted) |
 
 With Clerk enabled, sign in using these emails to link existing DB users.
 

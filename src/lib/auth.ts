@@ -3,6 +3,7 @@ import "server-only";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { UserRole } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { PRIMARY_OPERATOR_EMAIL } from "@/lib/operator-emails";
 
 export class ForbiddenError extends Error {
   constructor(message = "FORBIDDEN") {
@@ -17,7 +18,7 @@ export class UnauthorizedError extends Error {
 }
 
 const DEFAULT_TRAVELER_EMAIL = "demo@bhraman.app";
-const DEFAULT_OPERATOR_EMAIL = "sahyadri-trails@bhraman-operators.demo";
+const DEFAULT_OPERATOR_EMAIL = PRIMARY_OPERATOR_EMAIL;
 
 export function isClerkEnabled() {
   return Boolean(

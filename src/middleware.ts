@@ -5,6 +5,7 @@ import type { NextRequest } from "next/server";
 const isOperatorAuthRoute = createRouteMatcher([
   "/operator/sign-in(.*)",
   "/operator/sign-up(.*)",
+  "/operator/unauthorized",
 ]);
 
 const isOperatorAppRoute = createRouteMatcher(["/operator(.*)"]);

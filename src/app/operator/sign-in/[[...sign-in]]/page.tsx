@@ -1,21 +1,31 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { SignIn } from "@clerk/nextjs";
 import { Logo } from "@/components/ui/logo";
 import { clerkAppearance } from "@/lib/clerk-appearance";
-import { isClerkEnabled } from "@/lib/auth";
+import { getSessionOperator, isClerkEnabled } from "@/lib/auth";
+import { PRIMARY_OPERATOR_EMAIL } from "@/lib/operator-emails";
 
 type OperatorSignInPageProps = {
-  searchParams: { error?: string };
+  searchParams: { registered?: string };
 };
 
-export default function OperatorSignInPage({
+export default async function OperatorSignInPage({
   searchParams,
 }: OperatorSignInPageProps) {
-  const notOperator = searchParams.error === "not_operator";
-
+  const justRegistered = searchParams.registered === "1";
   if (!isClerkEnabled()) {
     redirect("/operator");
+  }
+
+  const { userId } = await auth();
+  if (userId) {
+    const session = await getSessionOperator();
+    if (session) {
+      redirect("/operator");
+    }
+    redirect("/operator/unauthorized");
   }
 
   return (
@@ -37,16 +47,37 @@ export default function OperatorSignInPage({
           </p>
         </div>
 
-        {notOperator ? (
-          <div className="mb-5 rounded-[14px] border border-clay/30 bg-[#F7E4DF] px-4 py-3 text-sm text-clay">
-            This account is not registered as an operator. Use a verified operator
-            email or{" "}
-            <Link href="/become-operator" className="font-semibold underline">
-              apply to partner
-            </Link>
-            .
+        {justRegistered ? (
+          <div className="mb-5 rounded-[14px] border border-forest/30 bg-[#EAF1EC] px-4 py-3 text-sm text-forest">
+            <p className="font-semibold">Account created successfully.</p>
+            <p className="mt-1 text-[#33433A]">
+              Sign in below with the same email and password to open your operator
+              dashboard.
+            </p>
           </div>
-        ) : null}
+        ) : (
+        <div className="mb-5 rounded-[14px] border border-amber/40 bg-[#FFF8EE] px-4 py-3 text-sm text-[#54635A] space-y-2">
+          <p className="font-semibold text-ink">
+            New here? You must sign up once before sign in works.
+          </p>
+          <p>
+            Use{" "}
+            <Link href="/operator/sign-up" className="font-semibold text-amber-deep">
+              Sign up
+            </Link>{" "}
+            with your operator email, then sign in here.
+          </p>
+          <p>
+            Demo:{" "}
+            <code className="text-xs bg-paper px-1.5 py-0.5 rounded break-all">
+              {PRIMARY_OPERATOR_EMAIL}
+            </code>
+            {" · "}
+            verification code{" "}
+            <code className="text-xs bg-paper px-1 rounded">424242</code> if asked
+          </p>
+        </div>
+        )}
 
         <SignIn
           appearance={clerkAppearance}
