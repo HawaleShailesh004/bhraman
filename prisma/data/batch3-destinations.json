@@ -1,0 +1,629 @@
+{
+  "destinations": [
+    {
+      "place": {
+        "slug": "bhimashankar",
+        "name": "Bhimashankar",
+        "city": "Khandas",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 19.132,
+        "longitude": 73.554,
+        "elevationM": 929,
+        "description": "Bhimashankar combines dense Western Ghats forest, one of the 12 Jyotirlinga shrines, and two classic approach trails from Khandas village. Trekkers come for the ladder-assisted Shidi Ghat route, the easier Ganesh Ghat route, and mist-laden sanctuary forest.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 6, 7, 8, 9],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Bhimashankar_Wildlife_Sanctuary",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Bhimashankar via Ganesh Ghat Day Trek",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 10,
+          "basePrice": 1299,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Forest ascent from Khandas on the longer but safer Ganesh Ghat route.",
+          "description": "This route is ideal for fit beginners who want the Bhimashankar experience without the exposed ladder sections of Shidi Ghat. The day includes a sanctuary ascent, temple visit, and descent with managed breaks and pace control.",
+          "inclusions": ["Certified trek leader", "Breakfast", "Packed lunch", "First-aid support"],
+          "exclusions": ["Transport to Khandas", "Temple donations", "Personal insurance"],
+          "thingsToCarry": ["2L water", "Trekking shoes", "Rain layer", "Cap", "Energy snacks"],
+          "meetingPoint": "Khandas village bridge, Bhimashankar trek road",
+          "itinerary": [
+            { "order": 1, "timeLabel": "5:30 AM", "title": "Assemble at Khandas", "description": "Attendance, breakfast, and route briefing." },
+            { "order": 2, "timeLabel": "6:00 AM", "title": "Start Ganesh Ghat ascent", "description": "Steady climb through forest and open patches." },
+            { "order": 3, "timeLabel": "10:00 AM", "title": "Reach Bhimashankar", "description": "Temple visit and rest break." },
+            { "order": 4, "timeLabel": "11:00 AM", "title": "Optional Gupt Bhimashankar walk", "description": "Short trail if conditions permit." },
+            { "order": 5, "timeLabel": "1:00 PM", "title": "Descend to Khandas", "description": "Return by the same route." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        },
+        {
+          "title": "Bhimashankar Shidi Ghat Challenge",
+          "categorySlug": "trekking",
+          "difficulty": "CHALLENGING",
+          "durationHours": 11,
+          "basePrice": 1499,
+          "minGroupSize": 4,
+          "maxGroupSize": 16,
+          "summary": "Steep Bhimashankar ascent via ladders, rock patches, and forest traverses.",
+          "description": "The Shidi Ghat route is the more technical classic, with exposed sections and ladders that demand sure footing. Best for experienced monsoon trekkers or strong first-timers with guide support.",
+          "inclusions": ["Certified trek leader", "Breakfast", "Packed lunch", "Safety briefing"],
+          "exclusions": ["Transport", "Personal climbing gloves", "Temple donations"],
+          "thingsToCarry": ["Grip gloves", "3L water", "Trekking shoes", "Rain jacket", "Headlamp for delays"],
+          "meetingPoint": "Khandas village trail fork near small bridge",
+          "itinerary": [
+            { "order": 1, "timeLabel": "5:00 AM", "title": "Trail start", "description": "Early departure to avoid bottlenecks." },
+            { "order": 2, "timeLabel": "7:30 AM", "title": "Ladder section", "description": "Guide-supervised ascent through exposed patch." },
+            { "order": 3, "timeLabel": "10:00 AM", "title": "Temple plateau", "description": "Rest and temple visit." },
+            { "order": 4, "timeLabel": "11:30 AM", "title": "Start descent via Ganesh Ghat", "description": "Safer descent route." },
+            { "order": 5, "timeLabel": "4:00 PM", "title": "Return to Khandas", "description": "Trip ends at base." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 40, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "sinhagad-fort",
+        "name": "Sinhagad Fort",
+        "city": "Donaje",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.36566,
+        "longitude": 73.75527,
+        "elevationM": 1317,
+        "description": "Sinhagad is Pune's most iconic fort escape, remembered for Tanaji Malusare and the 1670 battle of Kondhana. The fort's accessible base, windy ramparts, and city proximity make it a popular sunrise and night-trek destination.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 6, 7, 8, 9],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Sinhagad",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Sinhagad Sunrise Trek from Base Village",
+          "categorySlug": "fort",
+          "difficulty": "EASY",
+          "durationHours": 4,
+          "basePrice": 699,
+          "minGroupSize": 4,
+          "maxGroupSize": 30,
+          "summary": "Short pre-dawn climb for sunrise, fort history, and hot local breakfast.",
+          "description": "A beginner-friendly early morning ascent from the Pune Darwaza side with time at the top for sunrise and guided storytelling. This is one of the easiest fort outings near Pune with strong local demand year-round.",
+          "inclusions": ["Trek leader", "Breakfast", "Basic first aid"],
+          "exclusions": ["Transport to base", "Fort parking/entry charges if applicable"],
+          "thingsToCarry": ["1.5L water", "Torch", "Light jacket", "Walking shoes"],
+          "meetingPoint": "Sinhagad base parking near Pune Darwaza approach",
+          "itinerary": [
+            { "order": 1, "timeLabel": "5:00 AM", "title": "Meet at base", "description": "Briefing before ascent." },
+            { "order": 2, "timeLabel": "5:15 AM", "title": "Start trek", "description": "Climb by main trail." },
+            { "order": 3, "timeLabel": "6:15 AM", "title": "Sunrise at top", "description": "Viewpoint and fort walk." },
+            { "order": 4, "timeLabel": "7:30 AM", "title": "Breakfast stop", "description": "Local poha or curd at top stall." },
+            { "order": 5, "timeLabel": "8:30 AM", "title": "Descend", "description": "Return to base." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "raigad-fort",
+        "name": "Raigad Fort",
+        "city": "Pachad",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.2335,
+        "longitude": 73.4406,
+        "elevationM": 820,
+        "description": "Raigad was the capital of the Maratha Empire and the site of Shivaji Maharaj's coronation in 1674. Visitors come for the grand Maha Darwaja approach, royal ruins, Hirkani Buruj, and ropeway-assisted access from Pachad.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Raigad_Fort",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Raigad Fort Heritage Climb from Pachad",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 7,
+          "basePrice": 1099,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Classic stair climb to Maharashtra's most important Maratha capital fort.",
+          "description": "Climb the historic stair route from Pachad with a heritage-focused guide covering the coronation court, market area, and Hirkani Buruj. Best in winter and post-monsoon conditions.",
+          "inclusions": ["Heritage guide", "Packed lunch", "First aid"],
+          "exclusions": ["Transport to Pachad", "Ropeway ticket", "Entry fees if applicable"],
+          "thingsToCarry": ["2L water", "Cap", "Trekking shoes", "Snacks"],
+          "meetingPoint": "Pachad village, Raigad fort base steps",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:00 AM", "title": "Base briefing", "description": "History overview before climb." },
+            { "order": 2, "timeLabel": "7:30 AM", "title": "Begin ascent", "description": "Stair climb toward Maha Darwaja." },
+            { "order": 3, "timeLabel": "10:00 AM", "title": "Explore fort core", "description": "Durbar, Jagdishwar temple, Gangasagar lake." },
+            { "order": 4, "timeLabel": "1:00 PM", "title": "Lunch break", "description": "Rest on plateau." },
+            { "order": 5, "timeLabel": "2:00 PM", "title": "Descend to Pachad", "description": "Return by same route." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        },
+        {
+          "title": "Raigad Ropeway + Fort Exploration",
+          "categorySlug": "fort",
+          "difficulty": "EASY",
+          "durationHours": 5,
+          "basePrice": 1399,
+          "minGroupSize": 2,
+          "maxGroupSize": 18,
+          "summary": "Easier Raigad day with ropeway ascent and full heritage circuit on top.",
+          "description": "Designed for families and travelers short on time, this option uses the ropeway to maximize top exploration time. Good fit for mixed-age groups who still want the Raigad story in full.",
+          "inclusions": ["Guide", "Ropeway coordination", "Lunch"],
+          "exclusions": ["Ropeway ticket if dynamic pricing applies", "Transport"],
+          "thingsToCarry": ["Water bottle", "Cap", "Comfortable walking shoes"],
+          "meetingPoint": "Raigad ropeway base station, Hirakaniwadi",
+          "itinerary": [
+            { "order": 1, "timeLabel": "8:30 AM", "title": "Meet at ropeway base", "description": "Ticket coordination and briefing." },
+            { "order": 2, "timeLabel": "9:00 AM", "title": "Ropeway ride", "description": "Quick ascent to fort top." },
+            { "order": 3, "timeLabel": "9:30 AM", "title": "Guided fort walk", "description": "Royal court, queen's quarters, viewpoints." },
+            { "order": 4, "timeLabel": "1:00 PM", "title": "Lunch", "description": "Rest before descent." },
+            { "order": 5, "timeLabel": "2:30 PM", "title": "Return ropeway", "description": "End at base station." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "shivneri-fort",
+        "name": "Shivneri Fort",
+        "city": "Junnar",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 19.199,
+        "longitude": 73.8595,
+        "elevationM": 1050,
+        "description": "Shivneri is the birthplace of Chhatrapati Shivaji Maharaj and one of the most important heritage forts near Junnar. Its broad steps, strong fortification, and child-friendly top circuit make it a heritage-rich but approachable day trip.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Shivneri_Fort",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Shivneri Birthplace Fort Walk",
+          "categorySlug": "fort",
+          "difficulty": "EASY",
+          "durationHours": 4,
+          "basePrice": 749,
+          "minGroupSize": 4,
+          "maxGroupSize": 25,
+          "summary": "Easy fort climb centered on Shivaji Maharaj's birthplace and fort gates.",
+          "description": "This heritage walk uses Shivneri's main stepped access, making it suitable for families and school groups. The guide focuses on the fort's seven gates, water systems, and historical importance.",
+          "inclusions": ["Guide", "Snacks", "Basic first aid"],
+          "exclusions": ["Transport", "Entry/parking if levied"],
+          "thingsToCarry": ["1.5L water", "Cap", "Walking shoes"],
+          "meetingPoint": "Shivneri Fort parking, Junnar approach road",
+          "itinerary": [
+            { "order": 1, "timeLabel": "8:00 AM", "title": "Meet at parking", "description": "Intro and ticket coordination." },
+            { "order": 2, "timeLabel": "8:20 AM", "title": "Ascend main steps", "description": "Walk through gate sequence." },
+            { "order": 3, "timeLabel": "9:30 AM", "title": "Top circuit", "description": "Birthplace site, tanks, and viewpoints." },
+            { "order": 4, "timeLabel": "11:00 AM", "title": "Descend", "description": "Return to base." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "vihigaon-waterfall",
+        "name": "Vihigaon Waterfall",
+        "city": "Vihigaon",
+        "district": "Nashik",
+        "state": "Maharashtra",
+        "latitude": 19.6691,
+        "longitude": 73.5064,
+        "elevationM": 580,
+        "description": "Also called Ashoka Waterfall, Vihigaon is a monsoon adventure spot near Kasara and Igatpuri known for its 120-foot cascade and guided waterfall rappelling. It attracts day-trippers from Mumbai, Thane, and Nashik during the rainy season.",
+        "bestMonths": [6, 7, 8, 9],
+        "region": "Northern Western Ghats",
+        "source": "https://www.lets2gether.blog/2025/08/how-to-reach-ashoka-waterfall-from-mumbai-pune-karnataka.html",
+        "confidence": "NEEDS_VERIFICATION"
+      },
+      "listings": [
+        {
+          "title": "Vihigaon Waterfall Rappelling Day Trip",
+          "categorySlug": "rappelling",
+          "difficulty": "CHALLENGING",
+          "durationHours": 8,
+          "basePrice": 1499,
+          "minGroupSize": 4,
+          "maxGroupSize": 25,
+          "summary": "Seasonal 120-foot waterfall rappel with instructors and village access support.",
+          "description": "A short village approach leads to the rappel point where certified instructors rig a controlled descent beside active monsoon flow. Suitable for first-timers comfortable with heights.",
+          "inclusions": ["Rappelling gear", "Instructor support", "Breakfast", "Lunch", "First aid"],
+          "exclusions": ["Transport to Vihigaon", "Photos/video", "Personal rain gear"],
+          "thingsToCarry": ["Quick-dry clothes", "Extra clothes", "Trekking sandals", "Waterproof bag"],
+          "meetingPoint": "Vihigaon village school parking area",
+          "itinerary": [
+            { "order": 1, "timeLabel": "8:00 AM", "title": "Village arrival", "description": "Registration and breakfast." },
+            { "order": 2, "timeLabel": "8:45 AM", "title": "Approach walk", "description": "Short descent to waterfall base." },
+            { "order": 3, "timeLabel": "9:30 AM", "title": "Safety demo", "description": "Harness fitting and rappel briefing." },
+            { "order": 4, "timeLabel": "10:00 AM", "title": "Rappelling session", "description": "One-by-one guided descents." },
+            { "order": 5, "timeLabel": "2:00 PM", "title": "Lunch and dispersal", "description": "Return to village." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Western Ghats Outdoors"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "tapola-shivsagar-lake",
+        "name": "Tapola & Shivsagar Lake",
+        "city": "Tapola",
+        "district": "Satara",
+        "state": "Maharashtra",
+        "latitude": 17.8155,
+        "longitude": 73.6402,
+        "elevationM": 753,
+        "description": "Tapola is a lakeside village often called Mini Kashmir of Maharashtra, known for the long Shivsagar reservoir formed by Koyna backwaters. The calm water and scenic valley make it a strong fit for kayaking, boating, and overnight camps.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Western Ghats",
+        "source": "https://www.beyondyatra.com/destination/tapola",
+        "confidence": "NEEDS_VERIFICATION"
+      },
+      "listings": [
+        {
+          "title": "Tapola Lakeside Camping with Bonfire",
+          "categorySlug": "camping",
+          "difficulty": "EASY",
+          "durationHours": 18,
+          "basePrice": 1499,
+          "minGroupSize": 2,
+          "maxGroupSize": 30,
+          "summary": "Overnight river-camp stay on Shivsagar backwaters with meals and lake sunset.",
+          "description": "Popular for couples and groups looking for a quieter alternative to Mahabaleshwar stays. Camps usually include tent accommodation, dinner, breakfast, and supervised lakeside leisure time.",
+          "inclusions": ["Tent stay", "Dinner", "Breakfast", "Bonfire weather permitting", "Camp host"],
+          "exclusions": ["Transport to Tapola", "Water sports add-ons", "Personal toiletries"],
+          "thingsToCarry": ["Warm layer", "Torch", "Comfortable clothes", "Mosquito repellent"],
+          "meetingPoint": "Tapola river camp reception, operator pin shared after booking",
+          "itinerary": [
+            { "order": 1, "timeLabel": "4:00 PM", "title": "Camp check-in", "description": "Tent allocation and tea." },
+            { "order": 2, "timeLabel": "5:30 PM", "title": "Lakefront free time", "description": "Sunset by the water." },
+            { "order": 3, "timeLabel": "8:00 PM", "title": "Dinner and bonfire", "description": "Shared camp evening." },
+            { "order": 4, "timeLabel": "7:30 AM", "title": "Breakfast and checkout", "description": "End of stay." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 80, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        },
+        {
+          "title": "Tapola Shivsagar Kayaking Session",
+          "categorySlug": "kayaking",
+          "difficulty": "EASY",
+          "durationHours": 3,
+          "basePrice": 999,
+          "minGroupSize": 2,
+          "maxGroupSize": 12,
+          "summary": "Beginner-friendly paddle on calm reservoir water with instructor support.",
+          "description": "Morning slots use calmer water and better light on the lake. Ideal for first-timers who want a safe flat-water kayaking experience without white water conditions.",
+          "inclusions": ["Kayak", "Paddle", "Life jacket", "Instructor briefing"],
+          "exclusions": ["Camping stay", "Transport", "Photos"],
+          "thingsToCarry": ["Quick-dry clothes", "Cap", "Sunscreen", "Towel"],
+          "meetingPoint": "Tapola lakeside launch point near main camp belt",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:00 AM", "title": "Report at launch point", "description": "Gear fitting and briefing." },
+            { "order": 2, "timeLabel": "7:30 AM", "title": "Paddle practice", "description": "Basic strokes and balance drill." },
+            { "order": 3, "timeLabel": "8:00 AM", "title": "Guided lake loop", "description": "Short scenic paddle." },
+            { "order": 4, "timeLabel": "9:00 AM", "title": "Session end", "description": "Gear return and wrap-up." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "ajanta-caves",
+        "name": "Ajanta Caves",
+        "city": "Lenapur",
+        "district": "Aurangabad",
+        "state": "Maharashtra",
+        "latitude": 20.55333,
+        "longitude": 75.70028,
+        "elevationM": 430,
+        "description": "Ajanta's 30 Buddhist rock-cut caves curve around a horseshoe-shaped cliff above the Waghora river, preserving some of India's greatest ancient murals. It is a UNESCO site and one of Maharashtra's most important cave heritage destinations.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Deccan Plateau",
+        "source": "https://culture.gov.in/ajanta-caves",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Ajanta Caves Heritage Circuit",
+          "categorySlug": "caving",
+          "difficulty": "EASY",
+          "durationHours": 5,
+          "basePrice": 999,
+          "minGroupSize": 4,
+          "maxGroupSize": 18,
+          "summary": "Guided walk through key painted caves, chaityas, and river-curve viewpoints.",
+          "description": "Focused on major painted caves and their Buddhist iconography, this tour suits travelers who want depth without covering all 30 caves. Best done in cooler months due to open walking sections.",
+          "inclusions": ["Licensed guide", "Bottled water", "Heritage commentary"],
+          "exclusions": ["ASI entry ticket", "Transport from Aurangabad/Jalgaon", "Meals"],
+          "thingsToCarry": ["Comfortable shoes", "Water bottle", "Sun protection", "No flash photography"],
+          "meetingPoint": "Ajanta visitor center shuttle arrival point",
+          "itinerary": [
+            { "order": 1, "timeLabel": "9:00 AM", "title": "Visitor center meet", "description": "Orientation and ticket coordination." },
+            { "order": 2, "timeLabel": "9:30 AM", "title": "Shuttle to cave zone", "description": "Reach main entry." },
+            { "order": 3, "timeLabel": "10:00 AM", "title": "Cave circuit", "description": "Painted cave highlights and chaitya halls." },
+            { "order": 4, "timeLabel": "1:00 PM", "title": "Viewpoint and return", "description": "Wrap-up and descend." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "bhandardara-arthur-lake",
+        "name": "Bhandardara & Arthur Lake",
+        "city": "Bhandardara",
+        "district": "Ahmednagar",
+        "state": "Maharashtra",
+        "latitude": 19.5245,
+        "longitude": 73.7776,
+        "elevationM": 750,
+        "description": "Bhandardara is a classic Sahyadri reservoir getaway centered on Arthur Lake and Wilson Dam, surrounded by peaks like Kalsubai and Ratangad. The area is widely used for lakeside camping, boating, and beginner flat-water paddling.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4],
+        "region": "Northern Western Ghats",
+        "source": "https://www.lets2gether.blog/2025/07/How%20to%20Reach%20Wilson%20Dam%20%20Arthur%20Lake.html",
+        "confidence": "NEEDS_VERIFICATION"
+      },
+      "listings": [
+        {
+          "title": "Bhandardara Lakeside Camping",
+          "categorySlug": "camping",
+          "difficulty": "EASY",
+          "durationHours": 18,
+          "basePrice": 1399,
+          "minGroupSize": 2,
+          "maxGroupSize": 35,
+          "summary": "Arthur Lake tent stay with BBQ dinner, bonfire, and mountain sunrise.",
+          "description": "This is a popular weekend package around Arthur Lake campsites, especially in the post-monsoon and winter window. Great for low-effort nature trips with nearby views of Ratangad and Kalsubai ranges.",
+          "inclusions": ["Tent stay", "BBQ snacks", "Dinner", "Breakfast", "Campfire weather permitting"],
+          "exclusions": ["Transport", "Boating add-ons", "Personal bedding extras in winter"],
+          "thingsToCarry": ["Warm layer", "Torch", "Reusable bottle", "Comfortable footwear"],
+          "meetingPoint": "Arthur Lake campsite gate, exact pin shared after booking",
+          "itinerary": [
+            { "order": 1, "timeLabel": "4:00 PM", "title": "Check-in", "description": "Tent allocation and tea." },
+            { "order": 2, "timeLabel": "6:00 PM", "title": "Lake sunset", "description": "Free time by campsite." },
+            { "order": 3, "timeLabel": "8:00 PM", "title": "Dinner and campfire", "description": "Group evening by the lake." },
+            { "order": 4, "timeLabel": "7:30 AM", "title": "Breakfast", "description": "Checkout afterward." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 80, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Western Ghats Outdoors"
+        },
+        {
+          "title": "Arthur Lake Kayaking Experience",
+          "categorySlug": "kayaking",
+          "difficulty": "EASY",
+          "durationHours": 2,
+          "basePrice": 899,
+          "minGroupSize": 2,
+          "maxGroupSize": 10,
+          "summary": "Short flat-water kayaking session with scenic reservoir backdrop.",
+          "description": "A relaxed paddle on Arthur Lake for guests staying in or around Bhandardara. Works well as a morning add-on before driving back to Mumbai, Pune, or Nashik.",
+          "inclusions": ["Kayak", "Life jacket", "Instructor briefing"],
+          "exclusions": ["Camping stay", "Transport", "Photos"],
+          "thingsToCarry": ["Quick-dry clothes", "Cap", "Towel", "Sunscreen"],
+          "meetingPoint": "Arthur Lake boating point near campsite cluster",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:00 AM", "title": "Report and briefing", "description": "Gear setup and paddling basics." },
+            { "order": 2, "timeLabel": "7:30 AM", "title": "Kayak loop", "description": "Guided session on calm section of lake." },
+            { "order": 3, "timeLabel": "8:30 AM", "title": "Return", "description": "Session closes at launch point." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Western Ghats Outdoors"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "devbagh-backwaters",
+        "name": "Devbagh Beach & Karli Backwaters",
+        "city": "Devbag",
+        "district": "Sindhudurg",
+        "state": "Maharashtra",
+        "latitude": 16.026,
+        "longitude": 73.487,
+        "elevationM": 3,
+        "description": "Devbagh sits where the Karli River meets the Arabian Sea near Malvan, creating a calm backwater zone beside open coast. It is known for kayaking, boat rides, dolphin spotting, and quieter stays than central Tarkarli.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Konkan Coast",
+        "source": "https://www.gosahin.com/places-to-visit/devbagh-beach-malvan/",
+        "confidence": "NEEDS_VERIFICATION"
+      },
+      "listings": [
+        {
+          "title": "Devbagh Backwater Kayaking",
+          "categorySlug": "kayaking",
+          "difficulty": "EASY",
+          "durationHours": 2,
+          "basePrice": 999,
+          "minGroupSize": 2,
+          "maxGroupSize": 12,
+          "summary": "Gentle paddle through Karli backwaters near the Devbagh sangam.",
+          "description": "This sheltered water session is suitable for beginners and families, especially in winter and summer mornings. The route stays in calmer backwater sections rather than rough open sea.",
+          "inclusions": ["Kayak", "Paddle", "Life jacket", "Local guide"],
+          "exclusions": ["Transport to Devbagh", "Photos", "Meals"],
+          "thingsToCarry": ["Cap", "Quick-dry clothes", "Towel", "Sunscreen"],
+          "meetingPoint": "Devbagh sangam-side boat point",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:00 AM", "title": "Launch briefing", "description": "Paddle basics and route intro." },
+            { "order": 2, "timeLabel": "7:30 AM", "title": "Backwater paddle", "description": "Guided loop past mangrove-lined sections." },
+            { "order": 3, "timeLabel": "8:30 AM", "title": "Return to jetty", "description": "Gear handover and finish." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        },
+        {
+          "title": "Devbagh Beachside Camping Retreat",
+          "categorySlug": "camping",
+          "difficulty": "EASY",
+          "durationHours": 18,
+          "basePrice": 1699,
+          "minGroupSize": 2,
+          "maxGroupSize": 20,
+          "summary": "Beach-backwater overnight stay with seafood dinner and sunrise shoreline walk.",
+          "description": "A softer adventure product for travelers combining coastal scenery with outdoor stay. Offered in the dry season when sea conditions are stable and mosquito levels more manageable.",
+          "inclusions": ["Tent or basic beach camp stay", "Dinner", "Breakfast", "Camp host"],
+          "exclusions": ["Transport", "Water sports add-ons", "Personal expenses"],
+          "thingsToCarry": ["Light cotton clothes", "Repellent", "Torch", "Flip-flops"],
+          "meetingPoint": "Devbagh campsite access road, final pin shared after booking",
+          "itinerary": [
+            { "order": 1, "timeLabel": "4:00 PM", "title": "Check-in", "description": "Camp setup and welcome tea." },
+            { "order": 2, "timeLabel": "6:00 PM", "title": "Sangam sunset", "description": "Short guided walk to confluence point." },
+            { "order": 3, "timeLabel": "8:00 PM", "title": "Dinner", "description": "Simple Malvani meal at camp." },
+            { "order": 4, "timeLabel": "7:00 AM", "title": "Sunrise walk and breakfast", "description": "Checkout by morning." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 80, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "rajgad-fort",
+        "name": "Rajgad Fort",
+        "city": "Gunjavane",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.24599,
+        "longitude": 73.68219,
+        "elevationM": 1376,
+        "description": "Rajgad, the first capital of Shivaji Maharaj for nearly 26 years, is among the grandest fort treks near Pune with expansive plateaus and multiple machis. It is a serious fort outing with long approaches and strong wind exposure in winter.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Rajgad",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Rajgad Fort Full-Day Trek via Gunjavane",
+          "categorySlug": "fort",
+          "difficulty": "CHALLENGING",
+          "durationHours": 10,
+          "basePrice": 1299,
+          "minGroupSize": 4,
+          "maxGroupSize": 18,
+          "summary": "Long classic Rajgad climb to Bale Killa and major machis from Gunjavane base.",
+          "description": "This is one of the best serious fort days from Pune, covering the fort's history, water tanks, and wide ridge systems. Strong fitness is required because the day is long even on the easiest commonly used route.",
+          "inclusions": ["Certified trek leader", "Breakfast", "Packed lunch", "First aid"],
+          "exclusions": ["Transport", "Personal hiking poles", "Insurance"],
+          "thingsToCarry": ["3L water", "Trekking shoes", "Sun cap", "Energy bars", "Windcheater"],
+          "meetingPoint": "Gunjavane village temple square",
+          "itinerary": [
+            { "order": 1, "timeLabel": "5:30 AM", "title": "Assemble at Gunjavane", "description": "Briefing and start." },
+            { "order": 2, "timeLabel": "8:30 AM", "title": "Reach Padmavati area", "description": "Breakfast and short rest." },
+            { "order": 3, "timeLabel": "10:00 AM", "title": "Bale Killa ascent", "description": "Top citadel and viewpoints." },
+            { "order": 4, "timeLabel": "12:30 PM", "title": "Machi exploration", "description": "Fort circuit with lunch." },
+            { "order": 5, "timeLabel": "2:30 PM", "title": "Descend", "description": "Return to Gunjavane." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "salher-fort",
+        "name": "Salher Fort",
+        "city": "Waghambe",
+        "district": "Nashik",
+        "state": "Maharashtra",
+        "latitude": 20.72226,
+        "longitude": 73.94546,
+        "elevationM": 1566,
+        "description": "Salher is the highest fort in the Sahyadri mountains and the second-highest peak in Maharashtra after Kalsubai. The Baglan-region giant is known for its history, massive plateau, and twin-fort pairing with nearby Salota.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Baglan Range",
+        "source": "https://en.wikipedia.org/wiki/Salher",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Salher Fort Summit Trek from Waghambe",
+          "categorySlug": "trekking",
+          "difficulty": "CHALLENGING",
+          "durationHours": 9,
+          "basePrice": 1499,
+          "minGroupSize": 4,
+          "maxGroupSize": 16,
+          "summary": "Climb Maharashtra's highest fort on a long Baglan-region mountain day.",
+          "description": "A long ascent with broad views, rock-cut steps, and a vast top section that feels different from compact Pune forts. Best in winter with clear skies and low heat load.",
+          "inclusions": ["Trek leader", "Breakfast", "Packed lunch", "First aid"],
+          "exclusions": ["Transport to Waghambe", "Accommodation before trek"],
+          "thingsToCarry": ["3L water", "Trekking shoes", "Cap", "Electrolytes", "Jacket in winter"],
+          "meetingPoint": "Waghambe village trail start",
+          "itinerary": [
+            { "order": 1, "timeLabel": "6:00 AM", "title": "Start from Waghambe", "description": "Early ascent for weather advantage." },
+            { "order": 2, "timeLabel": "9:00 AM", "title": "Col and upper steps", "description": "Steeper summit push." },
+            { "order": 3, "timeLabel": "10:30 AM", "title": "Fort plateau", "description": "Explore tanks and summit area." },
+            { "order": 4, "timeLabel": "12:00 PM", "title": "Lunch", "description": "Rest with views toward Salota." },
+            { "order": 5, "timeLabel": "1:00 PM", "title": "Descend", "description": "Return to base." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "panchgani-paragliding",
+        "name": "Panchgani Paragliding",
+        "city": "Dandeghar",
+        "district": "Satara",
+        "state": "Maharashtra",
+        "latitude": 17.9435,
+        "longitude": 73.8316,
+        "elevationM": 1100,
+        "description": "Panchgani is one of Maharashtra's established free-flight centers, with takeoff points like Harrison's Folly overlooking the Krishna valley. Flights typically run October to early June depending on wind, offering a southern-state counterpart to Kamshet.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Western Ghats",
+        "source": "https://pwca.events/2025-indian-pre-world-cup-panchgani-open-gin-edition/",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Panchgani Tandem Paragliding Flight",
+          "categorySlug": "paragliding",
+          "difficulty": "EASY",
+          "durationHours": 2,
+          "basePrice": 3999,
+          "minGroupSize": 1,
+          "maxGroupSize": 8,
+          "summary": "Tandem flight over Krishna valley from Harrison's Folly sector.",
+          "description": "A supervised tandem experience with trained pilot, hilltop launch, and landing retrieval. Best outside monsoon, with actual airtime depending on thermal conditions and the day's site.",
+          "inclusions": ["Pilot", "Harness and helmet", "Site shuttle", "Basic briefing"],
+          "exclusions": ["GoPro/video add-on", "Transport to Panchgani", "Waiting-time meals"],
+          "thingsToCarry": ["Closed shoes", "Light jacket", "Sunglasses strap", "Government ID"],
+          "meetingPoint": "Dandeghar paragliding base near Harrison's Folly approach",
+          "itinerary": [
+            { "order": 1, "timeLabel": "9:30 AM", "title": "Base check-in", "description": "Weight check and waiver." },
+            { "order": 2, "timeLabel": "10:00 AM", "title": "Drive to takeoff", "description": "Move to active flying site." },
+            { "order": 3, "timeLabel": "10:30 AM", "title": "Tandem flight", "description": "Approx. 8-12 minute flight, conditions permitting." },
+            { "order": 4, "timeLabel": "11:00 AM", "title": "Landing and return", "description": "Pickup back to base." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 0, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    }
+  ]
+}

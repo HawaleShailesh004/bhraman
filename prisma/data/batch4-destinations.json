@@ -1,0 +1,536 @@
+{
+  "destinations": [
+    {
+      "place": {
+        "slug": "torna-fort",
+        "name": "Torna Fort",
+        "city": "Velhe",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.27607,
+        "longitude": 73.62272,
+        "elevationM": 1403,
+        "description": "Torna, or Prachandagad, was the first fort captured by Shivaji Maharaj and remains the highest hill fort in Pune district. Its long ridges, huge spread, and strong wind exposure make it one of the most rewarding full-day treks near Pune.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Torna_Fort",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Torna Fort Full-Day Trek from Velhe",
+          "categorySlug": "trekking",
+          "difficulty": "CHALLENGING",
+          "durationHours": 10,
+          "basePrice": 1299,
+          "minGroupSize": 4,
+          "maxGroupSize": 18,
+          "summary": "Classic Velhe ascent to Pune district's highest hill fort.",
+          "description": "A long climb from Velhe to the sprawling Torna plateau, covering major fort sections and wind-exposed viewpoints. Best suited to trekkers with prior one-day fort experience and decent endurance.",
+          "inclusions": ["Certified trek leader", "Breakfast", "Packed lunch", "First-aid support"],
+          "exclusions": ["Transport to Velhe", "Personal hiking gear", "Travel insurance"],
+          "thingsToCarry": ["3L water", "Trekking shoes", "Cap", "Windcheater", "Energy snacks"],
+          "meetingPoint": "Velhe village bus stand, Torna base road",
+          "itinerary": [
+            { "order": 1, "timeLabel": "5:30 AM", "title": "Meet at Velhe", "description": "Registration and route briefing." },
+            { "order": 2, "timeLabel": "6:00 AM", "title": "Start ascent", "description": "Steady climb from base village." },
+            { "order": 3, "timeLabel": "9:30 AM", "title": "Reach fort top", "description": "Explore major fort points and rest." },
+            { "order": 4, "timeLabel": "12:30 PM", "title": "Lunch on plateau", "description": "Packed lunch break." },
+            { "order": 5, "timeLabel": "1:30 PM", "title": "Begin descent", "description": "Return to Velhe by the same route." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "korigad-fort",
+        "name": "Korigad Fort",
+        "city": "Peth Shahpur",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.62028,
+        "longitude": 73.38556,
+        "elevationM": 923,
+        "description": "Korigad is an approachable fort south of Lonavala near Aamby Valley, known for its intact walls, broad top, and monsoon greenery. The easy access from Peth Shahpur makes it a favorite for beginners and casual weekend groups.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Korigad",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Korigad Beginner Fort Trek",
+          "categorySlug": "fort",
+          "difficulty": "EASY",
+          "durationHours": 5,
+          "basePrice": 799,
+          "minGroupSize": 4,
+          "maxGroupSize": 25,
+          "summary": "Short and scenic fort outing with intact ramparts near Lonavala.",
+          "description": "An easy fort walk using the main stepped route from Peth Shahpur, followed by a relaxed top circuit across the broad plateau. Ideal for first-time fort trekkers and mixed-experience groups.",
+          "inclusions": ["Local guide", "Veg lunch", "Basic first aid"],
+          "exclusions": ["Transport from Lonavala", "Parking fees", "Personal snacks"],
+          "thingsToCarry": ["1.5L water", "Walking shoes", "Rain poncho in monsoon", "Cap"],
+          "meetingPoint": "Peth Shahpur village parking near trail start",
+          "itinerary": [
+            { "order": 1, "timeLabel": "8:00 AM", "title": "Base meet", "description": "Intro and start from Peth Shahpur." },
+            { "order": 2, "timeLabel": "8:30 AM", "title": "Stone step climb", "description": "Easy ascent to fort wall." },
+            { "order": 3, "timeLabel": "10:00 AM", "title": "Fort circuit", "description": "Temple, lakes, and wall walk." },
+            { "order": 4, "timeLabel": "12:00 PM", "title": "Descend and lunch", "description": "Return to village and lunch." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Maval Adventure Co."
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "prabalgad-kalavantin",
+        "name": "Prabalgad & Kalavantin Durg",
+        "city": "Thakurwadi",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.98284,
+        "longitude": 73.21989,
+        "elevationM": 686,
+        "description": "The Prabalmachi plateau links the broad Prabalgad massif with the exposed Kalavantin pinnacle near Panvel. The destination is famous for its steep carved steps, strong views toward Matheran, and demanding monsoon trail conditions.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Kalavantin_Durg",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Kalavantin Durg Pinnacle Trek",
+          "categorySlug": "trekking",
+          "difficulty": "CHALLENGING",
+          "durationHours": 8,
+          "basePrice": 1199,
+          "minGroupSize": 4,
+          "maxGroupSize": 18,
+          "summary": "Steep summit push from Prabalmachi to the famous Kalavantin steps.",
+          "description": "This route begins at Thakurwadi, climbs to Prabalmachi, then continues to the exposed upper staircase of Kalavantin. It is not recommended in heavy rain because of exposure and no railings.",
+          "inclusions": ["Trek leader", "Breakfast", "Packed lunch", "First aid"],
+          "exclusions": ["Transport to Thakurwadi", "Personal gloves", "Insurance"],
+          "thingsToCarry": ["2.5L water", "Grip shoes", "Cap", "Gloves", "Light daypack"],
+          "meetingPoint": "Thakurwadi base village, Prabalmachi trail arch",
+          "itinerary": [
+            { "order": 1, "timeLabel": "6:00 AM", "title": "Start from Thakurwadi", "description": "Ascent toward Prabalmachi." },
+            { "order": 2, "timeLabel": "8:00 AM", "title": "Reach Prabalmachi", "description": "Breakfast and short halt." },
+            { "order": 3, "timeLabel": "9:00 AM", "title": "Kalavantin summit push", "description": "Single-file movement on exposed steps." },
+            { "order": 4, "timeLabel": "11:00 AM", "title": "Descend to Prabalmachi", "description": "Regroup and lunch." },
+            { "order": 5, "timeLabel": "1:00 PM", "title": "Return to base", "description": "Descend to Thakurwadi." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 40, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        },
+        {
+          "title": "Prabalgad Fort Exploration via Prabalmachi",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 9,
+          "basePrice": 1099,
+          "minGroupSize": 4,
+          "maxGroupSize": 18,
+          "summary": "Longer plateau traverse to the larger but less exposed Prabalgad fort.",
+          "description": "For groups that want the historical fort zone without committing to the Kalavantin pinnacle staircase. The day covers the forested ascent, Prabalmachi settlement, and fort exploration with a guide.",
+          "inclusions": ["Trek leader", "Breakfast", "Packed lunch"],
+          "exclusions": ["Transport", "Personal gear", "Photos"],
+          "thingsToCarry": ["2.5L water", "Trekking shoes", "Snacks", "Cap"],
+          "meetingPoint": "Thakurwadi village parking",
+          "itinerary": [
+            { "order": 1, "timeLabel": "6:00 AM", "title": "Begin ascent", "description": "Move to Prabalmachi via forest trail." },
+            { "order": 2, "timeLabel": "8:00 AM", "title": "Reach machi", "description": "Breakfast and orientation." },
+            { "order": 3, "timeLabel": "9:00 AM", "title": "Continue to Prabalgad", "description": "Explore fort area and viewpoints." },
+            { "order": 4, "timeLabel": "12:30 PM", "title": "Lunch", "description": "Rest before descent." },
+            { "order": 5, "timeLabel": "2:00 PM", "title": "Descend to base", "description": "Return to Thakurwadi." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 40, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "naneghat-pass",
+        "name": "Naneghat",
+        "city": "Ghatghar",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 19.29194,
+        "longitude": 73.67597,
+        "elevationM": 750,
+        "description": "Naneghat is an ancient Satavahana-era trade pass linking the Konkan coast with Junnar and the Deccan interior. The cave, stone trail, and vast escarpment views make it one of Maharashtra's most historic and atmospheric mountain passes.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 6, 7, 8, 9],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Naneghat",
+        "confidence": "NEEDS_VERIFICATION"
+      },
+      "listings": [
+        {
+          "title": "Naneghat Cave & Pass Trek",
+          "categorySlug": "caving",
+          "difficulty": "MODERATE",
+          "durationHours": 6,
+          "basePrice": 899,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Historic pass walk with Satavahana cave stop and Konkan-edge viewpoints.",
+          "description": "This heritage-style trek combines a moderate mountain walk with time at the ancient toll-pass cave. It works especially well in monsoon and post-monsoon when the cliffs and valleys are at their most dramatic.",
+          "inclusions": ["Guide", "Packed snacks", "First aid"],
+          "exclusions": ["Transport to Ghatghar", "Meals", "Rain gear"],
+          "thingsToCarry": ["2L water", "Trekking shoes", "Rain jacket", "Camera"],
+          "meetingPoint": "Naneghat parking area near Ghatghar-side approach",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:00 AM", "title": "Meet at pass entrance", "description": "Briefing on route and heritage context." },
+            { "order": 2, "timeLabel": "7:30 AM", "title": "Walk to cave zone", "description": "Reach inscriptions and pass section." },
+            { "order": 3, "timeLabel": "9:30 AM", "title": "Escarpment viewpoints", "description": "Guided ridge walk and photo halt." },
+            { "order": 4, "timeLabel": "11:30 AM", "title": "Return", "description": "Walk back to start point." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "ratangad-fort",
+        "name": "Ratangad Fort",
+        "city": "Ratanwadi",
+        "district": "Ahmednagar",
+        "state": "Maharashtra",
+        "latitude": 19.5,
+        "longitude": 73.69,
+        "elevationM": 1297,
+        "description": "Ratangad, the Jewel of the Sahyadris, rises above the Bhandardara region and is known for its cave, bastions, and the famous Nedhe rock window. It is one of the strongest medium-difficulty fort treks in the northern Western Ghats.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Northern Western Ghats",
+        "source": "https://en.wikipedia.org/wiki/Ratangad",
+        "confidence": "NEEDS_VERIFICATION"
+      },
+      "listings": [
+        {
+          "title": "Ratangad Fort Trek via Ratanwadi",
+          "categorySlug": "fort",
+          "difficulty": "CHALLENGING",
+          "durationHours": 9,
+          "basePrice": 1399,
+          "minGroupSize": 4,
+          "maxGroupSize": 18,
+          "summary": "Forest climb to Ratangad's caves, bastions, and Nedhe viewpoint.",
+          "description": "The route starts near Amruteshwar temple at Ratanwadi and passes through forest before gaining the fort. Great choice for trekkers wanting a serious day trek with classic Bhandardara scenery.",
+          "inclusions": ["Trek leader", "Breakfast", "Packed lunch", "First aid"],
+          "exclusions": ["Transport to Ratanwadi", "Temple donations", "Insurance"],
+          "thingsToCarry": ["3L water", "Trekking shoes", "Cap", "Electrolytes", "Wind layer"],
+          "meetingPoint": "Ratanwadi village near Amruteshwar temple",
+          "itinerary": [
+            { "order": 1, "timeLabel": "6:00 AM", "title": "Meet at Ratanwadi", "description": "Route briefing and start." },
+            { "order": 2, "timeLabel": "8:30 AM", "title": "Enter upper fort zone", "description": "Reach cave area and regroup." },
+            { "order": 3, "timeLabel": "10:00 AM", "title": "Nedhe viewpoint", "description": "Short exploration of upper sections." },
+            { "order": 4, "timeLabel": "12:00 PM", "title": "Lunch break", "description": "Rest before descent." },
+            { "order": 5, "timeLabel": "1:00 PM", "title": "Descend", "description": "Return to village by same route." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Western Ghats Outdoors"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "alang-madan-kulang",
+        "name": "Alang–Madan–Kulang",
+        "city": "Ambewadi",
+        "district": "Nashik",
+        "state": "Maharashtra",
+        "latitude": 19.5827,
+        "longitude": 73.6612,
+        "elevationM": 1479,
+        "description": "AMK is Maharashtra's benchmark extreme trek: a technical three-fort traverse in the Kalsubai range with rock patches, rappels, cave stays, and exposed traverses. Only experienced trekkers with guide support and technical gear should attempt it.",
+        "bestMonths": [10, 11, 12, 1, 2],
+        "region": "Kalsubai Range",
+        "source": "https://indiahikes.com/documented-trek/alang-madan-kulang-trek",
+        "confidence": "NEEDS_VERIFICATION"
+      },
+      "listings": [
+        {
+          "title": "AMK Technical Traverse Weekend",
+          "categorySlug": "trekking",
+          "difficulty": "EXTREME",
+          "durationHours": 30,
+          "basePrice": 4999,
+          "minGroupSize": 6,
+          "maxGroupSize": 12,
+          "summary": "Two-day technical traverse across Alang, Madan, and Kulang with rope sections.",
+          "description": "This is a mountaineering-style Sahyadri trek requiring rope management, cave camping, and confidence on exposed rock. The package includes technical leaders and shared gear, but assumes prior trekking experience.",
+          "inclusions": ["Technical trek leaders", "Shared rope gear", "Cave stay", "Meals during trek", "First aid"],
+          "exclusions": ["Transport to base", "Personal harness if required", "Sleeping bag"],
+          "thingsToCarry": ["Helmet", "Harness or rental confirmation", "3L water capacity", "Headlamp", "Trekking gloves", "Sleeping bag"],
+          "meetingPoint": "Ambewadi base village, AMK start point",
+          "itinerary": [
+            { "order": 1, "timeLabel": "6:00 AM", "title": "Start approach", "description": "Move from base to first fort section." },
+            { "order": 2, "timeLabel": "11:00 AM", "title": "Technical climb block", "description": "Use ropes on exposed sections." },
+            { "order": 3, "timeLabel": "7:00 PM", "title": "Cave halt", "description": "Dinner and overnight stay." },
+            { "order": 4, "timeLabel": "6:00 AM", "title": "Resume traverse", "description": "Continue toward final fort." },
+            { "order": 5, "timeLabel": "4:00 PM", "title": "Descend to base", "description": "End of AMK circuit." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 72, "beforeCutoffPct": 100, "afterCutoffPct": 30, "noShowPct": 0 },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "sudhagad-fort",
+        "name": "Sudhagad Fort",
+        "city": "Pachhapur",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.53883,
+        "longitude": 73.32036,
+        "elevationM": 590,
+        "description": "Sudhagad, once considered as a possible Maratha capital, is a broad fort plateau near Pali with temples, old wada remains, and multiple access routes. Its easier gradients and roomy top make it a strong overnight or long day-trek option.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Sudhagad",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Sudhagad Fort Plateau Trek",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 8,
+          "basePrice": 999,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Wide-plateau fort trek with wada ruins and Bhorai temple stop.",
+          "description": "The route from Pachhapur or Dhondse gives a long but manageable climb to a very open fort top. Good for trekkers who want more exploration time on the summit than on narrow pinnacle forts.",
+          "inclusions": ["Guide", "Breakfast", "Packed lunch", "First aid"],
+          "exclusions": ["Transport", "Temple donations", "Camping gear"],
+          "thingsToCarry": ["2.5L water", "Trekking shoes", "Cap", "Snacks"],
+          "meetingPoint": "Pachhapur village, Sudhagad base trail",
+          "itinerary": [
+            { "order": 1, "timeLabel": "6:30 AM", "title": "Base meet", "description": "Briefing and start from village." },
+            { "order": 2, "timeLabel": "9:00 AM", "title": "Reach fort top", "description": "Explore temple, tanks, and wada area." },
+            { "order": 3, "timeLabel": "12:00 PM", "title": "Lunch on plateau", "description": "Rest before descent." },
+            { "order": 4, "timeLabel": "1:00 PM", "title": "Descend", "description": "Return to base." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 48, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "sarasgad-fort",
+        "name": "Sarasgad Fort",
+        "city": "Pali",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.54261,
+        "longitude": 73.22797,
+        "elevationM": 488,
+        "description": "Sarasgad rises sharply above Pali and is often called the twin of Sudhagad, with carved steps and a compact hill-fort profile. It is a shorter but steeper climb that works well for half-day fort exploration near the Ballaleshwar temple circuit.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 6, 7, 8, 9],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Sarasgad",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Sarasgad Half-Day Fort Trek",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 5,
+          "basePrice": 799,
+          "minGroupSize": 4,
+          "maxGroupSize": 18,
+          "summary": "Short but steep ascent from Pali to a compact watch-fort with rock steps.",
+          "description": "A good stamina-building fort trek with a quicker summit than larger Sahyadri forts. Popular as a one-morning objective for Mumbai and Pune groups combining Pali and nearby fort country.",
+          "inclusions": ["Guide", "Snacks", "Basic first aid"],
+          "exclusions": ["Transport to Pali", "Temple parking/entry", "Meals"],
+          "thingsToCarry": ["1.5L water", "Grip shoes", "Cap", "Rain protection in monsoon"],
+          "meetingPoint": "Pali village near Ballaleshwar temple lane",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:00 AM", "title": "Meet at Pali", "description": "Route overview and start." },
+            { "order": 2, "timeLabel": "8:00 AM", "title": "Climb to Dindi Darwaja", "description": "Stone steps and gate section." },
+            { "order": 3, "timeLabel": "9:00 AM", "title": "Fort top walk", "description": "Cave and viewpoint exploration." },
+            { "order": 4, "timeLabel": "10:30 AM", "title": "Descend", "description": "Return to village." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "anjaneri-fort",
+        "name": "Anjaneri Fort",
+        "city": "Anjaneri",
+        "district": "Nashik",
+        "state": "Maharashtra",
+        "latitude": 19.92,
+        "longitude": 73.57,
+        "elevationM": 1280,
+        "description": "Anjaneri, in the Trimbakeshwar range, is associated with Hanuman's birthplace traditions and is known for temple ruins, caves, and open plateaus. The trek is short but rewarding, especially in monsoon and post-monsoon seasons.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2],
+        "region": "Trimbakeshwar Range",
+        "source": "https://en.wikipedia.org/wiki/Anjaneri",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Anjaneri Temple Plateau Trek",
+          "categorySlug": "trekking",
+          "difficulty": "EASY",
+          "durationHours": 4,
+          "basePrice": 749,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Quick Nashik-side trek to temple ruins and high grassland viewpoints.",
+          "description": "This is a good half-day outing from Nashik or Trimbak with a combination of steps, temple sites, and open plateau walking. Works well for families with basic fitness.",
+          "inclusions": ["Guide", "Snacks", "Basic first aid"],
+          "exclusions": ["Transport", "Temple donations", "Meals"],
+          "thingsToCarry": ["1.5L water", "Walking shoes", "Cap", "Rain layer in monsoon"],
+          "meetingPoint": "Anjaneri village forest department entry area",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:30 AM", "title": "Meet at village", "description": "Briefing and trail start." },
+            { "order": 2, "timeLabel": "8:15 AM", "title": "Anjani Mata section", "description": "Temple visit and rest." },
+            { "order": 3, "timeLabel": "9:00 AM", "title": "Upper plateau", "description": "Short fort and viewpoint walk." },
+            { "order": 4, "timeLabel": "10:30 AM", "title": "Descend", "description": "Return to base." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "hadsar-fort",
+        "name": "Hadsar Fort",
+        "city": "Hadsar",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 19.27031,
+        "longitude": 73.80258,
+        "elevationM": 975,
+        "description": "Hadsar is a sharp Junnar-region fort that once guarded ancient trade routes near Naneghat. It is especially admired for its carved entrance and the thrilling alternate rock route that appeals to stronger trekkers.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Junnar Hills",
+        "source": "https://en.wikipedia.org/wiki/Hadsar",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Hadsar Fort Rock-Cut Gate Trek",
+          "categorySlug": "fort",
+          "difficulty": "CHALLENGING",
+          "durationHours": 6,
+          "basePrice": 949,
+          "minGroupSize": 4,
+          "maxGroupSize": 16,
+          "summary": "Junnar fort trek with one of the best carved entrances in Maharashtra.",
+          "description": "The standard southern approach uses the main gate route, while experienced groups can inspect the more difficult northern rock patch from a safe point. Strong historical and architectural interest despite the compact size.",
+          "inclusions": ["Guide", "Packed snacks", "First aid"],
+          "exclusions": ["Transport", "Technical gear for alternate route", "Meals"],
+          "thingsToCarry": ["2L water", "Trekking shoes", "Cap", "Gloves optional"],
+          "meetingPoint": "Hadsar village, main trail start",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:00 AM", "title": "Meet at Hadsar", "description": "Introduction and route plan." },
+            { "order": 2, "timeLabel": "8:30 AM", "title": "Rock-cut gateway", "description": "Reach main entrance and fort top." },
+            { "order": 3, "timeLabel": "10:00 AM", "title": "Summit circuit", "description": "Cisterns and viewpoint walk." },
+            { "order": 4, "timeLabel": "11:30 AM", "title": "Descent", "description": "Return to village." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "lenyadri-caves",
+        "name": "Lenyadri Caves",
+        "city": "Junnar",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 19.24278,
+        "longitude": 73.88556,
+        "elevationM": 700,
+        "description": "Lenyadri is a Buddhist rock-cut cave complex near Junnar later adapted for Hindu worship, including the Girijatmaj Ganpati shrine. The site combines long stair access, cave architecture, and wide views over the Kukadi valley.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Junnar Hills",
+        "source": "https://en.wikipedia.org/wiki/Lenyadri",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Lenyadri Cave Heritage Walk",
+          "categorySlug": "caving",
+          "difficulty": "EASY",
+          "durationHours": 3,
+          "basePrice": 699,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Short heritage climb to the Junnar cave complex and Ganesh cave shrine.",
+          "description": "This experience is more heritage-focused than adventure-heavy, but still fits well as a cave-climb outing thanks to the stepped ascent and rock-cut complex layout. Good add-on for users exploring Shivneri and Naneghat circuits.",
+          "inclusions": ["Guide", "Water bottle", "Heritage commentary"],
+          "exclusions": ["Transport", "Temple donations", "Meals"],
+          "thingsToCarry": ["Walking shoes", "Cap", "Small backpack"],
+          "meetingPoint": "Lenyadri cave base steps",
+          "itinerary": [
+            { "order": 1, "timeLabel": "8:00 AM", "title": "Base meet", "description": "Overview of site and climb." },
+            { "order": 2, "timeLabel": "8:20 AM", "title": "Step ascent", "description": "Climb to main cave level." },
+            { "order": 3, "timeLabel": "9:00 AM", "title": "Cave exploration", "description": "Temple cave and surrounding complex." },
+            { "order": 4, "timeLabel": "10:30 AM", "title": "Descend", "description": "Return to base." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "kothaligad-fort",
+        "name": "Kothaligad (Peth Fort)",
+        "city": "Peth",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.99231,
+        "longitude": 73.51267,
+        "elevationM": 945,
+        "description": "Kothaligad, or Peth Fort, is a small but visually distinctive funnel-shaped hill fort near Karjat. Its cave base and narrow inner stairway inside the pinnacle make it a memorable short trek for beginners and photographers.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2],
+        "region": "Karjat Hills",
+        "source": "https://en.wikipedia.org/wiki/Kothaligad",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Kothaligad Monsoon Fort Trek",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 6,
+          "basePrice": 849,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Short Karjat fort trek with cave stop and inner staircase to the pinnacle.",
+          "description": "The route from Ambivli or Peth village is manageable for fit beginners, but the final staircase and upper rock can get slippery in rain. The fort is especially popular in monsoon thanks to waterfalls and green ridges.",
+          "inclusions": ["Guide", "Breakfast", "First aid"],
+          "exclusions": ["Transport to Ambivli/Peth", "Lunch", "Personal rain gear"],
+          "thingsToCarry": ["2L water", "Grip shoes", "Rain jacket", "Extra socks"],
+          "meetingPoint": "Peth village trail start, Karjat side",
+          "itinerary": [
+            { "order": 1, "timeLabel": "7:00 AM", "title": "Meet at base", "description": "Trek intro and departure." },
+            { "order": 2, "timeLabel": "8:30 AM", "title": "Reach cave zone", "description": "Short rest at cave below pinnacle." },
+            { "order": 3, "timeLabel": "9:00 AM", "title": "Climb inner stairs", "description": "Ascend into top lookout." },
+            { "order": 4, "timeLabel": "10:30 AM", "title": "Descend", "description": "Return to village." }
+          ],
+          "cancellationPolicy": { "weatherRefundPct": 100, "cutoffHours": 24, "beforeCutoffPct": 100, "afterCutoffPct": 50, "noShowPct": 0 },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    }
+  ]
+}

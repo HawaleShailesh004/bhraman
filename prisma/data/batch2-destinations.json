@@ -1,0 +1,1371 @@
+{
+  "destinations": [
+    {
+      "place": {
+        "slug": "lohagad-fort",
+        "name": "Lohagad Fort",
+        "city": "Lohagadwadi",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.70889,
+        "longitude": 73.47667,
+        "elevationM": 1033,
+        "description": "UNESCO-listed Maratha hill fort near Lonavala with four intact gates and the scorpion-tail Vinchu Kata ridge overlooking Pawna reservoir. One of Maharashtra's most popular beginner fort treks, spectacular in monsoon mist.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Lohagad",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Lohagad Fort Day Trek from Lohagadwadi",
+          "categorySlug": "fort",
+          "difficulty": "EASY",
+          "durationHours": 5,
+          "basePrice": 799,
+          "minGroupSize": 4,
+          "maxGroupSize": 35,
+          "summary": "Classic 45-minute climb to the Iron Fort with Pawna Lake views.",
+          "description": "Short stone-step ascent from Lohagadwadi village to the fort plateau. Guide covers Shivaji-era history, bastions, and safe monsoon trail etiquette on slippery sections.",
+          "inclusions": ["Local fort guide", "Veg lunch", "First-aid kit"],
+          "exclusions": [
+            "Transport to Lohagadwadi",
+            "ASI donations",
+            "Parking fees"
+          ],
+          "thingsToCarry": [
+            "Trekking shoes",
+            "2L water",
+            "Rain poncho (monsoon)",
+            "Cap"
+          ],
+          "meetingPoint": "Lohagadwadi village parking, below fort entrance steps",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Base assembly",
+              "description": "Registration and history briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:30 AM",
+              "title": "Ascent via stone steps",
+              "description": "Paced climb through forest and gates."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Fort plateau circuit",
+              "description": "Explore bastions and Pawna viewpoint."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:30 PM",
+              "title": "Lunch and descent",
+              "description": "Veg thali at base."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        },
+        {
+          "title": "Lohagad Monsoon Vinchu Kata Ridge Walk",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 7,
+          "basePrice": 949,
+          "minGroupSize": 6,
+          "maxGroupSize": 20,
+          "summary": "Extend to the dramatic scorpion-tail ridge when clouds clear.",
+          "description": "Full fort visit plus guided walk along Vinchu Kata narrow ridge for advanced photographers and fit trekkers. Not offered in heavy rain or high wind; leader may abort ridge section for safety.",
+          "inclusions": [
+            "Certified trek leader",
+            "Breakfast and lunch",
+            "Safety briefing on ridge"
+          ],
+          "exclusions": ["Transport", "Personal camera gear insurance"],
+          "thingsToCarry": [
+            "Grip shoes",
+            "Rain gear",
+            "Dry bag for electronics",
+            "2L water"
+          ],
+          "meetingPoint": "Lohagadwadi main trail board",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Early start",
+              "description": "Beat weekend crowds."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:00 AM",
+              "title": "Fort top",
+              "description": "Main gate exploration."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Vinchu Kata ridge",
+              "description": "Roped section if conditions allow."
+            },
+            {
+              "order": 4,
+              "timeLabel": "1:00 PM",
+              "title": "Descent and lunch",
+              "description": "Return to base village."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "tikona-fort",
+        "name": "Tikona Fort",
+        "city": "Tikona Peth",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.6317,
+        "longitude": 73.5128,
+        "elevationM": 1091,
+        "description": "Pyramidal Trikonagad hill fort rising above Pawna dam with steep rock steps and a small temple at the summit. Named Tikona (triangular) for its distinctive shape visible from the Kamshet–Pawna road.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Tikona",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Tikona Fort Steep Steps Trek",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 5,
+          "basePrice": 849,
+          "minGroupSize": 4,
+          "maxGroupSize": 22,
+          "summary": "Hour-long climb on narrow rock-cut steps to triangular summit.",
+          "description": "Approach from Tikona Peth parking through open hillock and steep staircase to the top temple and lake views. Guide manages one-by-one ascent on the narrow upper steps.",
+          "inclusions": ["Trek leader", "Veg lunch", "Basic first aid"],
+          "exclusions": ["Transport from Kamshet", "Parking at village"],
+          "thingsToCarry": [
+            "Trekking shoes",
+            "Gloves for rails",
+            "1.5L water",
+            "Sun hat"
+          ],
+          "meetingPoint": "Tikona Peth parking area, trail start south of village",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:30 AM",
+              "title": "Trail head meet",
+              "description": "Safety briefing on narrow steps."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:00 AM",
+              "title": "Ascent",
+              "description": "Steady climb with rest stops."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Summit temple",
+              "description": "Pawna reservoir panorama."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:00 PM",
+              "title": "Descent and lunch",
+              "description": "Return to parking."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "karnala-fort",
+        "name": "Karnala Fort & Bird Sanctuary",
+        "city": "Karnala",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.88167,
+        "longitude": 73.11806,
+        "elevationM": 439,
+        "description": "Funnel Hill fort inside Karnala Bird Sanctuary near Panvel, guarding the historic Bor pass trade route. Sanctuary hosts 150+ resident and 37 migratory bird species with a 1–2 hour fort trail.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Karnala_Fort",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Karnala Fort Hill Trek inside Sanctuary",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 4,
+          "basePrice": 899,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Forest trail to Karnala pinnacle with Bor pass history.",
+          "description": "Pay sanctuary entry at gate (included in package coordination). Guided hike on marked trail to fort summit with interpretation of Maratha–Portuguese history and bird habitat.",
+          "inclusions": [
+            "Sanctuary entry coordination",
+            "Fort guide",
+            "Packed snack"
+          ],
+          "exclusions": ["Transport from Panvel", "Camera fees if applicable"],
+          "thingsToCarry": [
+            "Binoculars optional",
+            "2L water",
+            "Trekking shoes",
+            "Muted clothing for birds"
+          ],
+          "meetingPoint": "Karnala Bird Sanctuary main gate, NH 66 near Panvel",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Sanctuary entry",
+              "description": "Permit and trail briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "7:30 AM",
+              "title": "Forest ascent",
+              "description": "Gradual climb with bird stops."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:30 AM",
+              "title": "Fort summit",
+              "description": "Pinnacle and bastion loop."
+            },
+            {
+              "order": 4,
+              "timeLabel": "11:00 AM",
+              "title": "Descent",
+              "description": "Return to gate."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        },
+        {
+          "title": "Karnala Birding Morning Walk",
+          "categorySlug": "trekking",
+          "difficulty": "EASY",
+          "durationHours": 3,
+          "basePrice": 699,
+          "minGroupSize": 4,
+          "maxGroupSize": 15,
+          "summary": "Dawn birdwatching on lower sanctuary trails without fort summit.",
+          "description": "Ideal for families and first-time birders. Naturalist guide focuses on hornbills, paradise flycatcher, and winter migrants on flat forest loops near the entrance.",
+          "inclusions": [
+            "Naturalist guide",
+            "Sanctuary entry",
+            "Checklist handout"
+          ],
+          "exclusions": ["Binoculars rental", "Transport"],
+          "thingsToCarry": [
+            "Binoculars",
+            "Notebook",
+            "Water",
+            "Earth-tone clothing"
+          ],
+          "meetingPoint": "Karnala sanctuary ticket counter, 6 AM slot",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "6:00 AM",
+              "title": "Dawn entry",
+              "description": "Quiet trail protocol briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "6:30 AM",
+              "title": "Lower loop",
+              "description": "Guided spotting stops."
+            },
+            {
+              "order": 3,
+              "timeLabel": "8:30 AM",
+              "title": "Wrap-up",
+              "description": "Species log review at gate."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "tungareshwar-sanctuary",
+        "name": "Tungareshwar Wildlife Sanctuary",
+        "city": "Sativali",
+        "district": "Thane",
+        "state": "Maharashtra",
+        "latitude": 19.40306,
+        "longitude": 72.95806,
+        "elevationM": 663,
+        "description": "85 sq km plateau sanctuary north of Mumbai contiguous with Sanjay Gandhi National Park, with teak forests, seasonal waterfalls, and a Shiva temple trail. Popular Thane–Vasai weekend escape for monsoon treks.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Tungareshwar_Wildlife_Sanctuary",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Tungareshwar Temple & Plateau Trek",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 6,
+          "basePrice": 999,
+          "minGroupSize": 6,
+          "maxGroupSize": 25,
+          "summary": "Forest jeep road hike to Shiva temple and windy viewpoint over Tansa valley.",
+          "description": "From Sativali checkpost, trek or jeep-assisted approach to Tungareshwar temple and optional extension to 590 m viewpoint. Forest entry fee coordinated; leech socks recommended in monsoon.",
+          "inclusions": [
+            "Forest entry coordination",
+            "Trek leader",
+            "Veg lunch",
+            "First-aid"
+          ],
+          "exclusions": ["Jeep segments if opted", "Transport from Vasai"],
+          "thingsToCarry": [
+            "Leech socks (monsoon)",
+            "2L water",
+            "Trekking shoes",
+            "Rain jacket"
+          ],
+          "meetingPoint": "Tungareshwar forest checkpost, Sativali village end",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Checkpost entry",
+              "description": "Permit and group formation."
+            },
+            {
+              "order": 2,
+              "timeLabel": "7:30 AM",
+              "title": "Temple trail",
+              "description": "3 km forest road walk."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Viewpoint extension",
+              "description": "Tansa valley panorama."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:30 PM",
+              "title": "Lunch and return",
+              "description": "Descend to Sativali."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "kaas-plateau",
+        "name": "Kaas Plateau",
+        "city": "Kaas",
+        "district": "Satara",
+        "state": "Maharashtra",
+        "latitude": 17.72,
+        "longitude": 73.8228,
+        "elevationM": 1200,
+        "description": "UNESCO Western Ghats site known as Maharashtra's Valley of Flowers, carpeted with endemic blooms August–October on volcanic laterite soil. Timed visitor entry and boardwalks protect the fragile plateau ecosystem.",
+        "bestMonths": [8, 9, 10],
+        "region": "Western Ghats",
+        "source": "https://kaas.ind.in/kaas-plateau/",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Kaas Plateau Wildflower Guided Walk",
+          "categorySlug": "trekking",
+          "difficulty": "EASY",
+          "durationHours": 4,
+          "basePrice": 1199,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Timed-entry plateau walk with botanist guide during bloom season.",
+          "description": "Includes Pune–Kaas transport slot coordination and Kas Pathar online entry booking assistance. Guide identifies Smithia, Utricularia, and carnivorous plants on designated paths only.",
+          "inclusions": [
+            "Botanist guide",
+            "Entry slot coordination",
+            "Packed breakfast",
+            "Bus from Satara meet point"
+          ],
+          "exclusions": [
+            "Official plateau entry fee (₹100–150 approx)",
+            "Pune pickup surcharge"
+          ],
+          "thingsToCarry": [
+            "Rain layer",
+            "Camera",
+            "Do not pick flowers",
+            "ID for entry gate"
+          ],
+          "meetingPoint": "Kaas plateau visitor gate, Satara–Kaas road",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Gate entry",
+              "description": "Slot verification and rules briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:30 AM",
+              "title": "Boardwalk circuit",
+              "description": "Guided flower identification."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:30 AM",
+              "title": "Kaas lake viewpoint",
+              "description": "Short extension if time permits."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:00 PM",
+              "title": "Return bus",
+              "description": "Drop at Satara."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 80,
+            "cutoffHours": 72,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 40,
+            "noShowPct": 0
+          },
+          "operatorName": "Sahyadri Trails"
+        },
+        {
+          "title": "Kaas Plateau + Thoseghar Falls Combo Day",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 10,
+          "basePrice": 1599,
+          "minGroupSize": 6,
+          "maxGroupSize": 18,
+          "summary": "Bloom-season combo of Kaas flowers and Thoseghar waterfall gallery.",
+          "description": "Full Satara day trip linking UNESCO plateau morning session with afternoon drive to Thoseghar viewing deck. Best on clear post-monsoon weekends in September.",
+          "inclusions": [
+            "Guide",
+            "Transport between sites",
+            "Lunch",
+            "Entry coordination"
+          ],
+          "exclusions": [
+            "Plateau and waterfall official entry tickets",
+            "Pune transport"
+          ],
+          "thingsToCarry": ["Snacks", "Water", "Warm layer for plateau wind"],
+          "meetingPoint": "Satara ST stand, 6 AM departure",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:30 AM",
+              "title": "Kaas session",
+              "description": "Morning plateau walk."
+            },
+            {
+              "order": 2,
+              "timeLabel": "11:00 AM",
+              "title": "Drive to Thoseghar",
+              "description": "20 km scenic route."
+            },
+            {
+              "order": 3,
+              "timeLabel": "1:00 PM",
+              "title": "Waterfall gallery",
+              "description": "Viewing platform visit."
+            },
+            {
+              "order": 4,
+              "timeLabel": "4:00 PM",
+              "title": "Satara return",
+              "description": "Bus dispersal."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 80,
+            "cutoffHours": 72,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 40,
+            "noShowPct": 0
+          },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "thoseghar-waterfall",
+        "name": "Thoseghar Waterfalls",
+        "city": "Thoseghar",
+        "district": "Satara",
+        "state": "Maharashtra",
+        "latitude": 17.59662,
+        "longitude": 73.84583,
+        "elevationM": 680,
+        "description": "Series of cascades near Thoseghar village including a ~200 m segmented fall visible from Maharashtra Tourism viewing galleries. Monsoon spectacle 20 km from Satara at the Konkan-facing edge of the Western Ghats.",
+        "bestMonths": [7, 8, 9, 10, 11],
+        "region": "Western Ghats",
+        "source": "https://en.wikipedia.org/wiki/Thoseghar_Waterfalls",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Thoseghar Waterfall Monsoon Visit",
+          "categorySlug": "trekking",
+          "difficulty": "EASY",
+          "durationHours": 4,
+          "basePrice": 749,
+          "minGroupSize": 4,
+          "maxGroupSize": 30,
+          "summary": "Guided visit to main and seasonal falls from Chalkewadi parking.",
+          "description": "Short paved walk to viewing galleries with guide explaining fall geology and safe monsoon viewing rules. No descent into gorge - gallery paths only.",
+          "inclusions": ["Guide", "Satara pickup and drop", "Packed snacks"],
+          "exclusions": ["Official entry fee (~₹50)", "Meals"],
+          "thingsToCarry": ["Raincoat", "Non-slip footwear", "Camera cover"],
+          "meetingPoint": "Thoseghar waterfall parking, Chalkewadi approach road",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "9:00 AM",
+              "title": "Parking meet",
+              "description": "Ticket queue assistance."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:20 AM",
+              "title": "Gallery walk",
+              "description": "10-minute trail to main deck."
+            },
+            {
+              "order": 3,
+              "timeLabel": "11:00 AM",
+              "title": "Secondary viewpoints",
+              "description": "Seasonal fall if flowing."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:00 PM",
+              "title": "Return",
+              "description": "Bus to Satara."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "vasota-fort",
+        "name": "Vasota Fort (Vyaghragad)",
+        "city": "Bamnoli",
+        "district": "Satara",
+        "state": "Maharashtra",
+        "latitude": 17.66315,
+        "longitude": 73.69718,
+        "elevationM": 1100,
+        "description": "Jungle fort in Koyna Wildlife Sanctuary reachable only by boat across Shivsagar reservoir from Bamnoli, then a dense forest trek. Open October–June; famous for Nageshwar pinnacle cave temple en route.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Western Ghats",
+        "source": "https://trekbook.in/vasota-fort-trek/",
+        "confidence": "NEEDS_VERIFICATION"
+      },
+      "listings": [
+        {
+          "title": "Vasota Jungle Fort Trek with Boat Crossing",
+          "categorySlug": "trekking",
+          "difficulty": "CHALLENGING",
+          "durationHours": 12,
+          "basePrice": 2199,
+          "minGroupSize": 6,
+          "maxGroupSize": 12,
+          "summary": "Forest permit, shared boat, and guided trek to Vyaghragad ruins.",
+          "description": "Package coordinates forest entry, mandatory guide, and shared boat charter from Bamnoli (cost split across group). 3-hour forest walk each way; leeches common in early season.",
+          "inclusions": [
+            "Forest guide",
+            "Boat charter share",
+            "Forest fees coordination",
+            "Lunch"
+          ],
+          "exclusions": [
+            "Satara transport",
+            "Full boat if group under 6 (surcharge may apply)"
+          ],
+          "thingsToCarry": [
+            "Leech socks",
+            "3L water",
+            "Trekking shoes",
+            "Dry bag",
+            "Lunch snacks"
+          ],
+          "meetingPoint": "Bamnoli Bhairavnath boat club, 7 AM",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Forest office",
+              "description": "Permits and boat allocation."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:00 AM",
+              "title": "Boat on Shivsagar",
+              "description": "45–90 minute crossing."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Forest trek",
+              "description": "Gradual climb through jungle."
+            },
+            {
+              "order": 4,
+              "timeLabel": "1:00 PM",
+              "title": "Fort ruins",
+              "description": "Plateau exploration and lunch."
+            },
+            {
+              "order": 5,
+              "timeLabel": "4:00 PM",
+              "title": "Return boat",
+              "description": "Must reach dock before last ferry."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 72,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 30,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        },
+        {
+          "title": "Vasota + Nageshwar Cave Temple Extension",
+          "categorySlug": "fort",
+          "difficulty": "EXTREME",
+          "durationHours": 14,
+          "basePrice": 2799,
+          "minGroupSize": 8,
+          "maxGroupSize": 12,
+          "summary": "Add Nageshwar pinnacle cave detour for fit trekkers only.",
+          "description": "Extended day with 4 km round detour to Nageshwar Mahadev cave in the cliff pinnacle. Requires early boat and excellent endurance; not offered in wet rock conditions.",
+          "inclusions": [
+            "All Vasota package inclusions",
+            "Extended guide hours",
+            "Early boat slot"
+          ],
+          "exclusions": ["Personal climbing gear", "Transport to Bamnoli"],
+          "thingsToCarry": [
+            "Headlamp",
+            "Gloves",
+            "4L water capacity",
+            "High-energy food"
+          ],
+          "meetingPoint": "Bamnoli forest checkpost, 6 AM sharp",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "6:00 AM",
+              "title": "Early permits",
+              "description": "First boat priority."
+            },
+            {
+              "order": 2,
+              "timeLabel": "11:00 AM",
+              "title": "Nageshwar detour",
+              "description": "Pinnacle cave visit at fork."
+            },
+            {
+              "order": 3,
+              "timeLabel": "3:00 PM",
+              "title": "Vasota summit",
+              "description": "Short fort loop if time."
+            },
+            {
+              "order": 4,
+              "timeLabel": "5:30 PM",
+              "title": "Last boat",
+              "description": "Return crossing to Bamnoli."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 72,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 20,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "panhala-fort",
+        "name": "Panhala Fort",
+        "city": "Panhala",
+        "district": "Kolhapur",
+        "state": "Maharashtra",
+        "latitude": 16.80889,
+        "longitude": 74.10917,
+        "elevationM": 845,
+        "description": "Massive Deccan hill fort with 14 km perimeter, Teen Darwaza gates, and Tarabai heritage above Kolhapur. UNESCO Maratha Military Landscape site with panoramic Sahyadri views toward the Konkan.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4],
+        "region": "Western Ghats",
+        "source": "https://en.wikipedia.org/wiki/Panhala_Fort",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Panhala Fort Heritage Walking Tour",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 5,
+          "basePrice": 899,
+          "minGroupSize": 4,
+          "maxGroupSize": 25,
+          "summary": "Guided circuit of Teen Darwaza, Sajja Kothi, and rampart viewpoints.",
+          "description": "Historian guide covers Maratha, Bijapur, and British layers of the fort with paced walking on uneven laterite paths. Suitable for culturally curious travelers; moderate heat in afternoon slots.",
+          "inclusions": ["Heritage guide", "Bottled water", "Fort map handout"],
+          "exclusions": [
+            "Transport from Kolhapur",
+            "Meals",
+            "ASI tickets if levied"
+          ],
+          "thingsToCarry": ["Sun hat", "Comfortable shoes", "Camera"],
+          "meetingPoint": "Teen Darwaza parking, Panhala fort road",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Teen Darwaza meet",
+              "description": "History overview."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:00 AM",
+              "title": "Sajja Kothi and bastions",
+              "description": "Guided rampart walk."
+            },
+            {
+              "order": 3,
+              "timeLabel": "11:00 AM",
+              "title": "Konkan viewpoint",
+              "description": "Photo stop and Q&A."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:30 PM",
+              "title": "Tour end",
+              "description": "Dispersal at parking."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Sahyadri Trails"
+        },
+        {
+          "title": "Panhala Sunset Rampart Camp",
+          "categorySlug": "camping",
+          "difficulty": "EASY",
+          "durationHours": 16,
+          "basePrice": 1499,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Overnight tent stay on fort meadows with Konkan sunset and stargazing.",
+          "description": "Designated campsite area near fort periphery with tents, dinner, and sunrise walk. Winter months recommended; monsoon not offered.",
+          "inclusions": [
+            "Tent and bedding",
+            "Dinner and breakfast",
+            "Camp coordinator",
+            "Sunset walk"
+          ],
+          "exclusions": ["Transport", "Alcohol", "Fort entry if applicable"],
+          "thingsToCarry": [
+            "Warm jacket (winter)",
+            "Torch",
+            "Personal toiletries"
+          ],
+          "meetingPoint": "Panhala fort campsite base, near MTDC hotel road",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "4:00 PM",
+              "title": "Check-in",
+              "description": "Tent allocation."
+            },
+            {
+              "order": 2,
+              "timeLabel": "6:00 PM",
+              "title": "Rampart sunset walk",
+              "description": "Guided short loop."
+            },
+            {
+              "order": 3,
+              "timeLabel": "8:00 PM",
+              "title": "Dinner",
+              "description": "Local Kolhapuri veg menu."
+            },
+            {
+              "order": 4,
+              "timeLabel": "7:00 AM",
+              "title": "Breakfast checkout",
+              "description": "Pack up by 9 AM."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 80,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "ganpatipule-beach",
+        "name": "Ganpatipule Beach",
+        "city": "Ganpatipule",
+        "district": "Ratnagiri",
+        "state": "Maharashtra",
+        "latitude": 17.1448,
+        "longitude": 73.2666,
+        "elevationM": 5,
+        "description": "Pristine Konkan beach with white sand, swayambhu Ganpati temple, and MTDC-backed water sports November–May. Gateway to Ratnagiri's coconut coast 375 km south of Mumbai.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Konkan Coast",
+        "source": "https://maharashtratourism.gov.in/beach/ganpatipule/",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Ganpatipule Beach Water Sports Bundle",
+          "categorySlug": "rafting",
+          "difficulty": "EASY",
+          "durationHours": 3,
+          "basePrice": 999,
+          "minGroupSize": 2,
+          "maxGroupSize": 12,
+          "summary": "Jet ski, banana boat, and bumper ride combo on Ganpatipule shore.",
+          "description": "Beach operator bundle with life jackets and instructor supervision on each ride. Seasonal November–May when sea conditions are calm; slots morning to 4 PM.",
+          "inclusions": [
+            "Jet ski round",
+            "Banana boat",
+            "Bumper ride",
+            "Life jackets",
+            "Beach instructor"
+          ],
+          "exclusions": ["Parasailing (separate)", "Photos", "Transport"],
+          "thingsToCarry": ["Swimwear", "Towel", "Sunscreen", "Dry clothes"],
+          "meetingPoint": "Ganpatipule beach water sports counter, near MTDC",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "10:00 AM",
+              "title": "Check-in",
+              "description": "Waiver and vest fitting."
+            },
+            {
+              "order": 2,
+              "timeLabel": "10:30 AM",
+              "title": "Jet ski",
+              "description": "Instructor-led circuit."
+            },
+            {
+              "order": 3,
+              "timeLabel": "11:15 AM",
+              "title": "Banana boat",
+              "description": "Group ride."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:00 PM",
+              "title": "Finish",
+              "description": "Equipment return."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        },
+        {
+          "title": "Ganpatipule Parasailing & Coastal Kayak",
+          "categorySlug": "kayaking",
+          "difficulty": "MODERATE",
+          "durationHours": 4,
+          "basePrice": 1899,
+          "minGroupSize": 2,
+          "maxGroupSize": 8,
+          "summary": "Parasail flight plus guided sit-on kayak along calm morning shore.",
+          "description": "Parasailing (~₹1,500 market) bundled with 45-minute kayak session when winds are light. Morning slot only; parasail subject to wind cancellation with kayak-only fallback.",
+          "inclusions": [
+            "Parasail with boat tow",
+            "Kayak and paddle",
+            "Instructor",
+            "Life jacket"
+          ],
+          "exclusions": ["Video package", "Hotel transfers"],
+          "thingsToCarry": [
+            "Secure sunglasses strap",
+            "Swimwear",
+            "Water bottle"
+          ],
+          "meetingPoint": "Ganpatipule main beach, south end launch zone",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Wind check",
+              "description": "Go/no-go for parasail."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:30 AM",
+              "title": "Parasail flight",
+              "description": "10–15 min airborne."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:30 AM",
+              "title": "Kayak briefing",
+              "description": "Paddle basics."
+            },
+            {
+              "order": 4,
+              "timeLabel": "10:00 AM",
+              "title": "Shore paddle",
+              "description": "Coastal loop."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 0,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "daulatabad-fort",
+        "name": "Daulatabad Fort",
+        "city": "Daulatabad",
+        "district": "Aurangabad",
+        "state": "Maharashtra",
+        "latitude": 19.94272,
+        "longitude": 75.21316,
+        "elevationM": 200,
+        "description": "13th-century Deogiri citadel on a conical hill with moat, dark passage (Andheri), and Chand Minar. One of India's most formidable medieval forts, 16 km from Aurangabad on the Ellora road.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Deccan Plateau",
+        "source": "https://en.wikipedia.org/wiki/Deogiri",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Daulatabad Fort Summit Challenge",
+          "categorySlug": "fort",
+          "difficulty": "CHALLENGING",
+          "durationHours": 4,
+          "basePrice": 949,
+          "minGroupSize": 4,
+          "maxGroupSize": 18,
+          "summary": "Guided climb through Andheri tunnel and 750 steps to hilltop citadel.",
+          "description": "ASI monument tour with historian guide through battlements, Bharat Mata temple remains, and summit views. Physically demanding; not suitable for claustrophobia in dark passage.",
+          "inclusions": [
+            "Heritage guide",
+            "ASI entry coordination",
+            "Bottled water"
+          ],
+          "exclusions": [
+            "ASI ticket (~₹25–40)",
+            "Transport from Aurangabad",
+            "Tips"
+          ],
+          "thingsToCarry": [
+            "Torch for passage",
+            "2L water",
+            "Non-slip shoes",
+            "Light backpack"
+          ],
+          "meetingPoint": "Daulatabad fort main gate ticket counter",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Gate entry",
+              "description": "Ticket and route briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:30 AM",
+              "title": "Andheri passage",
+              "description": "Guided tunnel traverse."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:30 AM",
+              "title": "Step ascent",
+              "description": "Paced climb with rests."
+            },
+            {
+              "order": 4,
+              "timeLabel": "11:00 AM",
+              "title": "Summit and descent",
+              "description": "Citadel tour; down by noon."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "ellora-caves",
+        "name": "Ellora Caves",
+        "city": "Verul",
+        "district": "Aurangabad",
+        "state": "Maharashtra",
+        "latitude": 20.0268,
+        "longitude": 75.1771,
+        "elevationM": 90,
+        "description": "UNESCO rock-cut complex of 34 Buddhist, Hindu, and Jain caves including the monolithic Kailasa temple carved from a single basalt cliff. 29 km from Aurangabad, spanning 600–1000 CE artistry.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4],
+        "region": "Deccan Plateau",
+        "source": "https://culture.gov.in/ellora-caves",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Ellora Caves Highlights Heritage Tour",
+          "categorySlug": "caving",
+          "difficulty": "EASY",
+          "durationHours": 4,
+          "basePrice": 849,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "ASI-licensed walk through Buddhist chaityas, Kailasa, and Jain caves.",
+          "description": "Covers Caves 1–12 (Buddhist), iconic Cave 16 Kailasa, and select Jain caves with art historian narration. Closed Tuesdays. Moderate walking on cave steps.",
+          "inclusions": ["Licensed guide", "Route plan", "Bottled water"],
+          "exclusions": ["ASI entry fee", "Aurangabad transport", "Camera fee"],
+          "thingsToCarry": ["Comfortable shoes", "Hat", "No flash photography"],
+          "meetingPoint": "Ellora caves ticket counter, Verul village",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "9:00 AM",
+              "title": "Ticket and briefing",
+              "description": "Cave numbering overview."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:30 AM",
+              "title": "Buddhist wing",
+              "description": "Chaitya and vihara caves."
+            },
+            {
+              "order": 3,
+              "timeLabel": "11:00 AM",
+              "title": "Kailasa Temple",
+              "description": "Monolithic courtyard circuit."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:30 PM",
+              "title": "Jain caves",
+              "description": "Select upper caves if time."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Deccan Ascents"
+        },
+        {
+          "title": "Ellora Kailasa Deep Architecture Tour",
+          "categorySlug": "caving",
+          "difficulty": "MODERATE",
+          "durationHours": 6,
+          "basePrice": 1199,
+          "minGroupSize": 4,
+          "maxGroupSize": 12,
+          "summary": "Extended scholar-led study of Kailasa sculptural program and upper Jain series.",
+          "description": "For heritage enthusiasts wanting detailed iconography of Cave 16 plus Jain Caves 30–34 climb. Includes rest break at ASI cafeteria area.",
+          "inclusions": [
+            "Senior heritage guide",
+            "Printed cave map",
+            "Lunch voucher"
+          ],
+          "exclusions": ["Entry tickets", "Transport"],
+          "thingsToCarry": [
+            "Notebook",
+            "Water",
+            "Sun protection for open courtyard"
+          ],
+          "meetingPoint": "Ellora Cave 16 courtyard entrance",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:30 AM",
+              "title": "Kailasa immersion",
+              "description": "2-hour Cave 16 deep dive."
+            },
+            {
+              "order": 2,
+              "timeLabel": "11:00 AM",
+              "title": "Upper Jain caves",
+              "description": "Steep stair climb to Cave 32."
+            },
+            {
+              "order": 3,
+              "timeLabel": "1:00 PM",
+              "title": "Lunch break",
+              "description": "Cafeteria near complex."
+            },
+            {
+              "order": 4,
+              "timeLabel": "2:00 PM",
+              "title": "Optional Buddhist revisit",
+              "description": "Cave 10 or 12 if time."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "malshej-ghat",
+        "name": "Malshej Ghat",
+        "city": "Khubi Phata",
+        "district": "Thane",
+        "state": "Maharashtra",
+        "latitude": 19.34063,
+        "longitude": 73.77455,
+        "elevationM": 588,
+        "description": "Mountain pass in the Western Ghats famed for monsoon waterfalls, flamingo-season mist, and the old village trail to Kalu Waterfall. Gateway between Konkan and Ahmednagar plateau near Harishchandragad.",
+        "bestMonths": [6, 7, 8, 9, 10],
+        "region": "Sahyadri",
+        "source": "https://maharashtratourism.gov.in/nature/malshej-ghat/",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Malshej Ghat Kalu Waterfall Jungle Trek",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 8,
+          "basePrice": 1299,
+          "minGroupSize": 6,
+          "maxGroupSize": 22,
+          "summary": "Ancient descent from MTDC area to Kalu waterfall viewpoint in monsoon.",
+          "description": "Follow pre-ghat-road village trail through cloud forest to Kalu stream crossings and waterfall viewpoint. Cliff jumping not included; viewing from safe distance per leader discretion.",
+          "inclusions": [
+            "Trek leader",
+            "Mumbai/Pune bus meet point",
+            "Breakfast and lunch",
+            "First-aid"
+          ],
+          "exclusions": ["Personal rain gear", "Parking at MTDC"],
+          "thingsToCarry": [
+            "Rain poncho",
+            "Trekking shoes",
+            "2L water",
+            "Dry bag"
+          ],
+          "meetingPoint": "MTDC Malshej Ghat resort road, trek start gate",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Trail descent",
+              "description": "Enter jungle from MTDC side."
+            },
+            {
+              "order": 2,
+              "timeLabel": "10:00 AM",
+              "title": "Rock steps and idol",
+              "description": "Ancient carved Ganpati en route."
+            },
+            {
+              "order": 3,
+              "timeLabel": "11:30 AM",
+              "title": "Kalu waterfall view",
+              "description": "Stream crossing and photo stop."
+            },
+            {
+              "order": 4,
+              "timeLabel": "2:00 PM",
+              "title": "Ascent to MTDC",
+              "description": "Return climb and dispersal."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        },
+        {
+          "title": "Malshej Monsoon Roadside Waterfall Safari",
+          "categorySlug": "trekking",
+          "difficulty": "EASY",
+          "durationHours": 6,
+          "basePrice": 899,
+          "minGroupSize": 8,
+          "maxGroupSize": 30,
+          "summary": "Guided stopovers at highway cascades and Harishchandragad viewpoints.",
+          "description": "Light monsoon day trip for families - multiple short walks to roadside falls near Khubi Phata with interpretation of Malshej ecology. No long jungle descent.",
+          "inclusions": [
+            "Guide",
+            "Shared transport from Kalyan",
+            "Veg lunch",
+            "Toll coordination"
+          ],
+          "exclusions": ["Personal snacks", "Private car clients' fuel"],
+          "thingsToCarry": ["Raincoat", "Extra clothes", "Camera"],
+          "meetingPoint": "Kalyan ST stand, 6 AM departure",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Malshej arrival",
+              "description": "First waterfall stop."
+            },
+            {
+              "order": 2,
+              "timeLabel": "10:00 AM",
+              "title": "Viewpoint walk",
+              "description": "Short mist trail."
+            },
+            {
+              "order": 3,
+              "timeLabel": "12:00 PM",
+              "title": "Lunch",
+              "description": "Highway dhaba stop."
+            },
+            {
+              "order": 4,
+              "timeLabel": "3:00 PM",
+              "title": "Return Kalyan",
+              "description": "Bus dispersal."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        }
+      ]
+    }
+  ]
+}

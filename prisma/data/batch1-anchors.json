@@ -1,0 +1,1726 @@
+{
+  "operators": [
+    {
+      "businessName": "Sahyadri Trails",
+      "baseCity": "Pune",
+      "bio": "Pune-based trekking collective running Sahyadri night treks, fort hikes, and monsoon forest walks with certified mountain leaders since 2014.",
+      "yearStarted": 2014
+    },
+    {
+      "businessName": "Konkan Wave Adventures",
+      "baseCity": "Mumbai",
+      "bio": "Mumbai outfit for Kolad rafting, Bhivpuri waterfall rappelling, and Konkan coast water sports with IRCTA-trained river guides.",
+      "yearStarted": 2012
+    },
+    {
+      "businessName": "Maval Adventure Co.",
+      "baseCity": "Lonavala",
+      "bio": "Lonavala operator for Pawna lakeside camping, Kamshet paragliding shuttles, and Visapur–Lohagad fort circuits in the Maval region.",
+      "yearStarted": 2016
+    },
+    {
+      "businessName": "Western Ghats Outdoors",
+      "baseCity": "Igatpuri",
+      "bio": "Igatpuri team for Kalsubai summit treks, Sandhan Valley canyon descents, and Bhandardara–Akole adventure routes.",
+      "yearStarted": 2011
+    },
+    {
+      "businessName": "Deccan Ascents",
+      "baseCity": "Nashik",
+      "bio": "Nashik operator focused on Trimbakeshwar-range forts like Harihar and guided heritage walks at ancient rock-cut caves near Lonavala.",
+      "yearStarted": 2015
+    },
+    {
+      "businessName": "Tamhini Trekkers",
+      "baseCity": "Pune",
+      "bio": "Pune group specializing in Tamhini Ghat monsoon trails including Andharban, Devkund, and Raigad waterfall day trips.",
+      "yearStarted": 2013
+    }
+  ],
+  "destinations": [
+    {
+      "place": {
+        "slug": "kalsubai-peak",
+        "name": "Kalsubai Peak",
+        "city": "Bari",
+        "district": "Ahmednagar",
+        "state": "Maharashtra",
+        "latitude": 19.60111,
+        "longitude": 73.70917,
+        "elevationM": 1646,
+        "description": "Maharashtra's highest peak at 1,646 m, crowned by a small temple and iron ladders on the final section. Trekkers come for panoramic Sahyadri views, night-to-sunrise ascents, and the state's most iconic summit badge.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Kalsubai",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Kalsubai Night Trek to Sunrise Summit",
+          "categorySlug": "trekking",
+          "difficulty": "CHALLENGING",
+          "durationHours": 9,
+          "basePrice": 1299,
+          "minGroupSize": 2,
+          "maxGroupSize": 25,
+          "summary": "Headlamp ascent from Bari village to Maharashtra's highest point for a Sahyadri sunrise.",
+          "description": "Start around 2 AM from Bari village and climb the well-marked trail with iron ladder sections near the summit. A certified trek leader manages pace, hydration stops, and safety on the crowded upper ridge. Breakfast is served at base after descent.",
+          "inclusions": [
+            "Certified trek leader",
+            "Breakfast at base",
+            "First-aid kit",
+            "Group coordination at summit"
+          ],
+          "exclusions": [
+            "Transport to Bari",
+            "Personal trekking gear",
+            "Forest parking fees"
+          ],
+          "thingsToCarry": [
+            "Headlamp with spare batteries",
+            "2L water",
+            "Trekking shoes",
+            "Warm layer",
+            "Rain jacket (monsoon)"
+          ],
+          "meetingPoint": "Bari village parking, near Kalsubai temple trail head",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "2:00 AM",
+              "title": "Assemble at Bari base",
+              "description": "Gear check, registration, and safety briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "2:30 AM",
+              "title": "Begin night ascent",
+              "description": "Headlamp trek through lower village trail and forest."
+            },
+            {
+              "order": 3,
+              "timeLabel": "5:00 AM",
+              "title": "Iron ladder section",
+              "description": "Queue-managed climb on exposed ladders to ridge."
+            },
+            {
+              "order": 4,
+              "timeLabel": "6:00 AM",
+              "title": "Summit temple",
+              "description": "Sunrise at Kalsubai peak; short rest and photos."
+            },
+            {
+              "order": 5,
+              "timeLabel": "8:00 AM",
+              "title": "Descend to Bari",
+              "description": "Controlled descent on same route."
+            },
+            {
+              "order": 6,
+              "timeLabel": "9:30 AM",
+              "title": "Breakfast and dispersal",
+              "description": "Hot breakfast at base village."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        },
+        {
+          "title": "Kalsubai Day Trek from Bari",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 7,
+          "basePrice": 899,
+          "minGroupSize": 4,
+          "maxGroupSize": 30,
+          "summary": "Classic daytime summit of the Everest of Maharashtra with guided pacing.",
+          "description": "A daylight ascent suitable for fit beginners who want clear trail views without a night start. The guide sets a steady pace through forest and open ridge to the summit temple, with time for photos and a packed lunch break near the top.",
+          "inclusions": [
+            "Certified trek leader",
+            "Packed lunch",
+            "Basic first aid"
+          ],
+          "exclusions": ["Transport", "Personal gear", "Tips"],
+          "thingsToCarry": [
+            "2L water",
+            "Cap and sunscreen",
+            "Trekking shoes",
+            "Light snacks"
+          ],
+          "meetingPoint": "Bari village, main parking near trail board",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "6:30 AM",
+              "title": "Meet at trail head",
+              "description": "Registration and route briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "7:00 AM",
+              "title": "Start ascent",
+              "description": "Steady climb through mixed forest and rock."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Summit break",
+              "description": "Temple viewpoint and lunch."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:30 PM",
+              "title": "Return to Bari",
+              "description": "Descent and dispersal."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "harishchandragad-fort",
+        "name": "Harishchandragad",
+        "city": "Khireshwar",
+        "district": "Ahmednagar",
+        "state": "Maharashtra",
+        "latitude": 19.38824,
+        "longitude": 73.77594,
+        "elevationM": 1422,
+        "description": "Ancient hill fort in the Malshej Ghat region famed for Konkan Kada cliff, Kedareshwar cave with its ice-cold pool, and Taramati peak. Multiple approach routes range from easy (Pachnai) to extreme (Nalichi Vaat).",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Harishchandragad",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Harishchandragad via Pachnai - Konkan Kada Day Trek",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 10,
+          "basePrice": 1099,
+          "minGroupSize": 4,
+          "maxGroupSize": 22,
+          "summary": "Easiest route to Konkan Kada and Kedareshwar cave on the fort plateau.",
+          "description": "Approach via Pachnai village on the shortest trail to the fort top. Visit Harishchandreshwar temple, walk to Konkan Kada for cliff views, and explore Kedareshwar cave before descending the same day.",
+          "inclusions": [
+            "Certified trek leader",
+            "Veg lunch",
+            "First-aid support"
+          ],
+          "exclusions": [
+            "Transport to Pachnai",
+            "Camping gear",
+            "Entry donations at temple"
+          ],
+          "thingsToCarry": [
+            "3L water",
+            "Trekking shoes",
+            "Torch for cave",
+            "Rain gear in monsoon"
+          ],
+          "meetingPoint": "Pachnai village bus stop, trail start",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "5:30 AM",
+              "title": "Pachnai assembly",
+              "description": "Briefing and start of forest trail."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:00 AM",
+              "title": "Fort plateau",
+              "description": "Reach top; temple and cave visits."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Konkan Kada viewpoint",
+              "description": "Guided walk to cliff edge with safety line."
+            },
+            {
+              "order": 4,
+              "timeLabel": "1:00 PM",
+              "title": "Lunch on plateau",
+              "description": "Packed veg lunch."
+            },
+            {
+              "order": 5,
+              "timeLabel": "3:30 PM",
+              "title": "Descend to Pachnai",
+              "description": "Return trek and dispersal."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        },
+        {
+          "title": "Harishchandragad Overnight Camp at Kokankada",
+          "categorySlug": "camping",
+          "difficulty": "CHALLENGING",
+          "durationHours": 24,
+          "basePrice": 1899,
+          "minGroupSize": 6,
+          "maxGroupSize": 18,
+          "summary": "Sunset at Konkan Kada and stargazing on the fort plateau with guided camping.",
+          "description": "Two-day trek via Khireshwar with overnight camping near Kokankada. Includes all meals, tents, and a night session for stargazing when skies are clear. Not recommended in heavy monsoon.",
+          "inclusions": [
+            "Tents and sleeping mats",
+            "Dinner and breakfast",
+            "Trek leader",
+            "Camping permits coordination"
+          ],
+          "exclusions": [
+            "Sleeping bag (rentable)",
+            "Transport",
+            "Personal expenses"
+          ],
+          "thingsToCarry": [
+            "Warm jacket",
+            "Headlamp",
+            "Sleeping bag or liner",
+            "3L water"
+          ],
+          "meetingPoint": "Khireshwar village, near Hanuman temple",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Khireshwar start",
+              "description": "Ascent via scenic Khireshwar route."
+            },
+            {
+              "order": 2,
+              "timeLabel": "12:00 PM",
+              "title": "Plateau arrival",
+              "description": "Set up camp; explore caves and temple."
+            },
+            {
+              "order": 3,
+              "timeLabel": "5:30 PM",
+              "title": "Kokankada sunset",
+              "description": "Guided cliff viewpoint session."
+            },
+            {
+              "order": 4,
+              "timeLabel": "7:00 AM",
+              "title": "Next morning descent",
+              "description": "Breakfast and trek down to base."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 72,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 40,
+            "noShowPct": 0
+          },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "rajmachi-fort",
+        "name": "Rajmachi Fort",
+        "city": "Udhewadi",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.82572,
+        "longitude": 73.39483,
+        "elevationM": 790,
+        "description": "Twin hill forts Shrivardhan and Manaranjan above Udhewadi village, between Lonavala and Karjat. Popular for beginner-friendly fort walks, monsoon mist, and the long Tungarli approach from Lonavala.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2],
+        "region": "Sahyadri",
+        "source": "https://indiahikes.com/documented-trek/rajmachi-trek",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Rajmachi Twin Fort Exploration from Udhewadi",
+          "categorySlug": "fort",
+          "difficulty": "EASY",
+          "durationHours": 5,
+          "basePrice": 799,
+          "minGroupSize": 4,
+          "maxGroupSize": 30,
+          "summary": "Short climbs to Shrivardhan and Manaranjan forts from Udhewadi base.",
+          "description": "Ideal introduction to Sahyadri forts with minimal elevation gain from Udhewadi. A local guide covers fort history, bastion loops, and viewpoints over the Borghat and Konkan fringe.",
+          "inclusions": [
+            "Local fort guide",
+            "Veg lunch at homestay",
+            "Entry coordination"
+          ],
+          "exclusions": ["Jeep fare to Udhewadi from Lonavala", "Transport"],
+          "thingsToCarry": [
+            "1.5L water",
+            "Sun hat",
+            "Comfortable walking shoes"
+          ],
+          "meetingPoint": "Udhewadi village centre, near school ground",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Udhewadi meet",
+              "description": "History briefing over tea."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:30 AM",
+              "title": "Manaranjan fort",
+              "description": "20-minute climb to lower fort."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Shrivardhan fort",
+              "description": "Guided circuit of upper fort walls."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:30 PM",
+              "title": "Lunch and return",
+              "description": "Veg thali at village homestay."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        },
+        {
+          "title": "Rajmachi Night Trek from Lonavala Route",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 12,
+          "basePrice": 1199,
+          "minGroupSize": 6,
+          "maxGroupSize": 20,
+          "summary": "Full-day traverse from Tungarli dam approach to twin forts and back.",
+          "description": "The classic long Rajmachi route from the Lonavala side through forest mud trails to Udhewadi, then fort visits before return. Best in post-monsoon and winter when trails are firm.",
+          "inclusions": ["Trek leader", "Breakfast and lunch", "First-aid"],
+          "exclusions": ["Lonavala transport", "Night stay"],
+          "thingsToCarry": [
+            "Headlamp",
+            "3L water",
+            "Trekking shoes",
+            "Rain poncho"
+          ],
+          "meetingPoint": "Tungarli dam parking, Lonavala side",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "6:00 AM",
+              "title": "Tungarli start",
+              "description": "Forest trail toward Udhewadi."
+            },
+            {
+              "order": 2,
+              "timeLabel": "11:00 AM",
+              "title": "Udhewadi arrival",
+              "description": "Fort exploration block."
+            },
+            {
+              "order": 3,
+              "timeLabel": "2:00 PM",
+              "title": "Return leg",
+              "description": "Descent via same route."
+            },
+            {
+              "order": 4,
+              "timeLabel": "6:00 PM",
+              "title": "Lonavala dispersal",
+              "description": "End at dam parking."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Sahyadri Trails"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "kundalika-rafting-kolad",
+        "name": "Kundalika River Rafting (Kolad)",
+        "city": "Kolad",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.4078,
+        "longitude": 73.2147,
+        "elevationM": null,
+        "description": "India's only dam-release white-water rafting on the Kundalika near Kolad, with Grade II–III rapids over roughly 12 km. Releases from Bhira dam power the river mainly in morning slots year-round.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2, 3],
+        "region": "Konkan Foothills",
+        "source": "https://www.naturetrails.in/our-immersions/rafting.html",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Kundalika White Water Rafting - Morning Slot",
+          "categorySlug": "rafting",
+          "difficulty": "MODERATE",
+          "durationHours": 4,
+          "basePrice": 1200,
+          "minGroupSize": 2,
+          "maxGroupSize": 9,
+          "summary": "12 km raft run on Grade II–III rapids with certified river guide.",
+          "description": "Report by 7:15 AM for safety briefing, life jacket and helmet fitting, then a 2–2.5 hour paddle through major and minor rapids. Weekday base rate; weekend slots typically priced higher on-site.",
+          "inclusions": [
+            "Rafting session",
+            "Life jacket and helmet",
+            "Certified river guide",
+            "Safety briefing"
+          ],
+          "exclusions": [
+            "Transport to Kolad",
+            "Photos and video",
+            "Weekend surcharge if applicable"
+          ],
+          "thingsToCarry": [
+            "Quick-dry clothes",
+            "Secure footwear",
+            "Change of clothes",
+            "Waterproof pouch for phone"
+          ],
+          "meetingPoint": "Kolad rafting base camp, Sambhe-Pali road (operator confirms pin after booking)",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Check-in",
+              "description": "Registration and waiver signing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "7:20 AM",
+              "title": "Safety briefing",
+              "description": "Paddle commands and swim position demo."
+            },
+            {
+              "order": 3,
+              "timeLabel": "7:45 AM",
+              "title": "Launch on Kundalika",
+              "description": "12 km descent with rapids."
+            },
+            {
+              "order": 4,
+              "timeLabel": "10:30 AM",
+              "title": "Take-out and dispersal",
+              "description": "Change rooms at base."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 30,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        },
+        {
+          "title": "Rafting + Kayaking Combo at Kolad",
+          "categorySlug": "kayaking",
+          "difficulty": "MODERATE",
+          "durationHours": 6,
+          "basePrice": 1700,
+          "minGroupSize": 2,
+          "maxGroupSize": 12,
+          "summary": "Morning raft run plus calm-stretch kayaking on the Kundalika.",
+          "description": "Full adventure day combining white-water rafting with a guided sit-on-top kayaking session on calmer sections after the main rapids. Lunch included at partner camp.",
+          "inclusions": [
+            "Rafting",
+            "Kayak session with instructor",
+            "Lunch",
+            "Safety equipment"
+          ],
+          "exclusions": ["Transport", "Accommodation"],
+          "thingsToCarry": ["Swimwear", "Sunscreen", "Towel", "Dry bag"],
+          "meetingPoint": "Kolad adventure camp, near Kundalika river bridge",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Rafting block",
+              "description": "Same as standard morning rafting."
+            },
+            {
+              "order": 2,
+              "timeLabel": "11:00 AM",
+              "title": "Lunch break",
+              "description": "Veg/non-veg buffet at camp."
+            },
+            {
+              "order": 3,
+              "timeLabel": "12:30 PM",
+              "title": "Kayaking intro",
+              "description": "Paddle basics on flat water."
+            },
+            {
+              "order": 4,
+              "timeLabel": "2:00 PM",
+              "title": "Session end",
+              "description": "Equipment return."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 40,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "pawna-lake",
+        "name": "Pawna Lake",
+        "city": "Thakursai",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.675,
+        "longitude": 73.48611,
+        "elevationM": 607,
+        "description": "Reservoir lake in Maval taluka formed by Pawna Dam, ringed by Lohagad, Tikona, and Tung forts. Maharashtra's most popular lakeside camping belt with bonfires, stargazing, and monsoon mist views.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Pavana_Lake",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Pawna Lakeside Camping with Bonfire",
+          "categorySlug": "camping",
+          "difficulty": "EASY",
+          "durationHours": 18,
+          "basePrice": 1099,
+          "minGroupSize": 2,
+          "maxGroupSize": 40,
+          "summary": "Tent stay on Pawna shore with BBQ dinner, bonfire, and sunrise lake views.",
+          "description": "Check in by 4 PM at Thakursai-side campsite with tent allocation, unlimited evening snacks, barbecue, and buffet dinner. Morning tea and breakfast included before checkout at 10 AM.",
+          "inclusions": [
+            "Shared tent stay",
+            "BBQ and dinner",
+            "Breakfast",
+            "Bonfire (weather permitting)",
+            "Parking"
+          ],
+          "exclusions": [
+            "Transport from Lonavala/Kamshet",
+            "Personal bedding in winter",
+            "Alcohol"
+          ],
+          "thingsToCarry": [
+            "Warm layer (winter)",
+            "Torch",
+            "Mosquito repellent",
+            "Comfortable clothes"
+          ],
+          "meetingPoint": "Thakursai campsite gate; GPS pin shared after booking",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "4:00 PM",
+              "title": "Check-in",
+              "description": "Tent assignment and lake walk."
+            },
+            {
+              "order": 2,
+              "timeLabel": "6:00 PM",
+              "title": "Sunset and snacks",
+              "description": "Tea and fried snacks."
+            },
+            {
+              "order": 3,
+              "timeLabel": "8:00 PM",
+              "title": "BBQ and dinner",
+              "description": "Buffet with veg and non-veg options."
+            },
+            {
+              "order": 4,
+              "timeLabel": "9:30 PM",
+              "title": "Bonfire",
+              "description": "Music on select weekends."
+            },
+            {
+              "order": 5,
+              "timeLabel": "7:00 AM",
+              "title": "Breakfast checkout",
+              "description": "Tea, poha, and dispersal by 10 AM."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 80,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        },
+        {
+          "title": "Pawna Camp + Kayaking on the Lake",
+          "categorySlug": "kayaking",
+          "difficulty": "EASY",
+          "durationHours": 20,
+          "basePrice": 1499,
+          "minGroupSize": 2,
+          "maxGroupSize": 20,
+          "summary": "Overnight camp plus guided kayak paddle at dawn on Pawna.",
+          "description": "Includes standard lakeside camping package plus a 45-minute guided kayaking session next morning when water is calm. Life jackets provided; no prior kayaking experience needed.",
+          "inclusions": [
+            "Camping package",
+            "Kayak and life jacket",
+            "Kayak instructor",
+            "Morning paddle"
+          ],
+          "exclusions": ["Transport", "Dam entry if levied locally"],
+          "thingsToCarry": [
+            "Change of clothes",
+            "Sandals",
+            "Dry bag",
+            "Sunscreen"
+          ],
+          "meetingPoint": "Thakursai lakeside camp, Pawna Nagar",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "4:00 PM",
+              "title": "Camp check-in",
+              "description": "Same as standard camping."
+            },
+            {
+              "order": 2,
+              "timeLabel": "6:30 AM",
+              "title": "Kayak briefing",
+              "description": "Life jacket fit and paddle demo."
+            },
+            {
+              "order": 3,
+              "timeLabel": "7:00 AM",
+              "title": "Lake paddle",
+              "description": "Guided loop along shore."
+            },
+            {
+              "order": 4,
+              "timeLabel": "9:00 AM",
+              "title": "Breakfast checkout",
+              "description": "Pack up tents."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 80,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "kamshet-paragliding",
+        "name": "Kamshet Paragliding",
+        "city": "Kamshet",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.7445,
+        "longitude": 73.5431,
+        "elevationM": 670,
+        "description": "Maharashtra's premier paragliding hub with takeoff sites at Tower Hill and Shelar overlooking Pawna valley. Tandem flights run Oct–May when thermals are stable; site shifts daily with wind direction.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Sahyadri",
+        "source": "https://windy.app/forecast2/spot/468131/Tower+Hill+Kamshet",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Kamshet Classic Tandem Paragliding Joyride",
+          "categorySlug": "paragliding",
+          "difficulty": "EASY",
+          "durationHours": 2,
+          "basePrice": 3000,
+          "minGroupSize": 1,
+          "maxGroupSize": 8,
+          "summary": "8–12 minute tandem flight over Pawna valley with certified pilot.",
+          "description": "Meet at Kamshet base for 4x4 shuttle to the day's active launch site. Certified tandem pilot handles takeoff, flight, and landing while you enjoy Sahyadri and lake views. Weekday rate; weekends often ₹500 higher.",
+          "inclusions": [
+            "Tandem flight",
+            "Certified pilot",
+            "Harness and helmet",
+            "Site transport from base"
+          ],
+          "exclusions": [
+            "Video package (₹500–600 extra)",
+            "Transport from Mumbai/Pune",
+            "Weekend surcharge"
+          ],
+          "thingsToCarry": [
+            "Closed shoes",
+            "Sunglasses strap",
+            "Light jacket",
+            "Government ID"
+          ],
+          "meetingPoint": "Rangoli Restaurant area, Old Mumbai-Pune Highway, Kamshet",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Base check-in",
+              "description": "Weight check and waiver."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:30 AM",
+              "title": "Shuttle to launch",
+              "description": "4x4 to Tower Hill or Shelar."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:00 AM",
+              "title": "Takeoff briefing",
+              "description": "Run-and-launch instructions."
+            },
+            {
+              "order": 4,
+              "timeLabel": "9:15 AM",
+              "title": "Flight and landing",
+              "description": "8–12 min tandem; return to base."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 0,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        },
+        {
+          "title": "Kamshet Instructional Tandem - Hands-on Flight",
+          "categorySlug": "paragliding",
+          "difficulty": "MODERATE",
+          "durationHours": 3,
+          "basePrice": 4000,
+          "minGroupSize": 1,
+          "maxGroupSize": 6,
+          "summary": "Longer flight with passenger weight-shift control under pilot supervision.",
+          "description": "For guests who want more than a passive ride. Pre-flight ground school covers weight shift and pitch control; pilot delegates safe inputs during a 12–15 minute flight.",
+          "inclusions": [
+            "Instructional tandem",
+            "Ground school",
+            "Pilot and gear",
+            "Site shuttle"
+          ],
+          "exclusions": ["Video", "Transport to Kamshet"],
+          "thingsToCarry": ["Sports shoes", "Gloves optional", "Water bottle"],
+          "meetingPoint": "Kamshet paragliding base, near Rangoli Hotel",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Ground school",
+              "description": "Controls and safety briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:00 AM",
+              "title": "Launch site",
+              "description": "Harness fit and practice runs."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:30 AM",
+              "title": "Instructional flight",
+              "description": "Passenger assists with approved inputs."
+            },
+            {
+              "order": 4,
+              "timeLabel": "10:00 AM",
+              "title": "Debrief",
+              "description": "Q&A at landing zone."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 0,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "bhivpuri-waterfall",
+        "name": "Bhivpuri Waterfalls (Bekare)",
+        "city": "Bhivpuri",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.8511,
+        "longitude": 73.3486,
+        "elevationM": 40,
+        "description": "Monsoon waterfall belt near Bhivpuri Road station in Karjat, including Bekare and Diksal falls at the Matheran range foothills. Famous for ~100 ft waterfall rappelling and quick access from Mumbai.",
+        "bestMonths": [6, 7, 8, 9],
+        "region": "Sahyadri",
+        "source": "https://www.treksandtrails.org/tours/bekare-waterfall-rappelling-near-bhivpuri",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Bekare Waterfall Rappelling Day Trip",
+          "categorySlug": "rappelling",
+          "difficulty": "MODERATE",
+          "durationHours": 8,
+          "basePrice": 1400,
+          "minGroupSize": 4,
+          "maxGroupSize": 25,
+          "summary": "100-foot waterfall abseil near Bhivpuri with trek, breakfast, and lunch.",
+          "description": "Meet at Bhivpuri Road station, jeep to Bekare village, then short trek to the falls. Certified instructor rigs ropes for sequential rappels; harness and helmet provided. Activity runs only in active monsoon flow.",
+          "inclusions": [
+            "Rappelling equipment",
+            "Certified instructor",
+            "Veg breakfast and lunch",
+            "Local transport Bekare return"
+          ],
+          "exclusions": [
+            "Train fare from Mumbai",
+            "Action camera",
+            "Changing room facilities limited"
+          ],
+          "thingsToCarry": [
+            "Quick-dry clothes",
+            "Extra set of clothes",
+            "Trekking sandals",
+            "Rain cover for bag"
+          ],
+          "meetingPoint": "Bhivpuri Road railway station platform, Karjat end",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Station meet",
+              "description": "Jeep to Bekare village."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:45 AM",
+              "title": "Breakfast",
+              "description": "Poha and tea at village house."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:30 AM",
+              "title": "Trek to falls",
+              "description": "30–40 min trail to rappel point."
+            },
+            {
+              "order": 4,
+              "timeLabel": "10:30 AM",
+              "title": "Rappelling session",
+              "description": "Demo and one-by-one descents."
+            },
+            {
+              "order": 5,
+              "timeLabel": "1:00 PM",
+              "title": "Lunch",
+              "description": "Veg lunch at base."
+            },
+            {
+              "order": 6,
+              "timeLabel": "3:30 PM",
+              "title": "Return to station",
+              "description": "Jeep drop at Bhivpuri Road."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "devkund-waterfall",
+        "name": "Devkund Waterfall",
+        "city": "Bhira",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.4775,
+        "longitude": 73.40861,
+        "elevationM": 520,
+        "description": "Plunge waterfall at the confluence of three streams near Bhira village in Tamhini Ghat, believed to be a Kundalika headwater. A forest trek past dam backwaters leads to a turquoise pool beneath an 85 m cascade.",
+        "bestMonths": [9, 10, 11, 12, 1, 2],
+        "region": "Western Ghats",
+        "source": "https://en.wikipedia.org/wiki/Devkund_Waterfall",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Devkund Forest Trek to Plunge Pool",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 7,
+          "basePrice": 999,
+          "minGroupSize": 4,
+          "maxGroupSize": 22,
+          "summary": "Guided 6.5 km forest walk from Bhira to Devkund's sacred plunge pool.",
+          "description": "Forest department rules require going with a registered guide. Trail follows Bhira dam backwaters, stream crossings, and boulder section to the waterfall. Swimming near the pool is at guide's discretion based on flow.",
+          "inclusions": [
+            "Local forest guide",
+            "Veg lunch",
+            "Group first-aid kit"
+          ],
+          "exclusions": [
+            "Transport to Bhira",
+            "Forest entry if applicable",
+            "Swimwear"
+          ],
+          "thingsToCarry": [
+            "2L water",
+            "Trekking shoes with grip",
+            "Rain jacket",
+            "Dry bag"
+          ],
+          "meetingPoint": "Bhira village parking, near Patnus trail head",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:00 AM",
+              "title": "Bhira assembly",
+              "description": "Guide registration and briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "7:30 AM",
+              "title": "Dam backwater section",
+              "description": "Flat walk along reservoir edge."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:00 AM",
+              "title": "Stream crossings",
+              "description": "Rope-assisted sections in monsoon."
+            },
+            {
+              "order": 4,
+              "timeLabel": "10:30 AM",
+              "title": "Devkund falls",
+              "description": "Time at pool and photos."
+            },
+            {
+              "order": 5,
+              "timeLabel": "1:00 PM",
+              "title": "Return trek",
+              "description": "Lunch en route; back by 2 PM."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Tamhini Trekkers"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "tarkarli-coast",
+        "name": "Tarkarli Beach & Sindhudurg Coast",
+        "city": "Tarkarli",
+        "district": "Sindhudurg",
+        "state": "Maharashtra",
+        "latitude": 16.01369,
+        "longitude": 73.48983,
+        "elevationM": 3,
+        "description": "Clear-water Konkan beach near Malvan with coral patches and boat access to scuba sites around Sindhudurg Fort reef. One of western India's few reliable beginner scuba destinations with calm surface conditions.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Konkan Coast",
+        "source": "https://en.wikipedia.org/wiki/Tarkarli",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Tarkarli Try Scuba Diving at Sindhudurg Reef",
+          "categorySlug": "rafting",
+          "difficulty": "EASY",
+          "durationHours": 3,
+          "basePrice": 3500,
+          "minGroupSize": 1,
+          "maxGroupSize": 6,
+          "summary": "Boat dive with instructor at fort reef - no certification required.",
+          "description": "Short boat ride from Tarkarli jetty to a designated reef zone near Sindhudurg Fort. PADI-affiliated centre provides pool briefing, gear, and supervised dive to 6–8 m for beginners.",
+          "inclusions": [
+            "Boat transfer",
+            "Scuba equipment",
+            "Instructor dive",
+            "Briefing session"
+          ],
+          "exclusions": [
+            "Underwater photos",
+            "Transport to Tarkarli",
+            "GST if not included by operator"
+          ],
+          "thingsToCarry": [
+            "Swimwear",
+            "Towel",
+            "Government ID",
+            "Anti-nausea if sensitive"
+          ],
+          "meetingPoint": "Tarkarli Bandar jetty, Malvan taluka",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Jetty check-in",
+              "description": "Forms and medical questionnaire."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:30 AM",
+              "title": "Boat to site",
+              "description": "15-min ride to reef zone."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:00 AM",
+              "title": "Briefing and gear",
+              "description": "Pool-side skills on boat or shore."
+            },
+            {
+              "order": 4,
+              "timeLabel": "9:45 AM",
+              "title": "Guided dive",
+              "description": "15–20 min underwater with instructor."
+            },
+            {
+              "order": 5,
+              "timeLabel": "11:00 AM",
+              "title": "Return jetty",
+              "description": "Gear rinse and dispersal."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        },
+        {
+          "title": "Tarkarli Snorkeling at Tsunami Island",
+          "categorySlug": "kayaking",
+          "difficulty": "EASY",
+          "durationHours": 4,
+          "basePrice": 899,
+          "minGroupSize": 2,
+          "maxGroupSize": 15,
+          "summary": "Boat to shallow reef patches with mask, snorkel, and life jacket.",
+          "description": "Half-day boat trip including snorkeling stops at clear patches near Karli backwaters and Tsunami Island sandbar. Equipment and guide included; suitable for non-swimmers with life jackets.",
+          "inclusions": ["Boat ride", "Snorkel gear", "Life jacket", "Guide"],
+          "exclusions": ["Lunch", "Hotel pickup", "Underwater camera"],
+          "thingsToCarry": ["Sunscreen", "Hat", "Towel", "Water bottle"],
+          "meetingPoint": "Tarkarli beach boat operators' counter, near MTDC resort road",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "9:00 AM",
+              "title": "Beach meet",
+              "description": "Gear fitting."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:30 AM",
+              "title": "Boat to reef",
+              "description": "Short coastal ride."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Snorkel session",
+              "description": "45 min in water with guide."
+            },
+            {
+              "order": 4,
+              "timeLabel": "12:00 PM",
+              "title": "Island stop",
+              "description": "Shallow swim and return."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Konkan Wave Adventures"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "andharban-forest",
+        "name": "Andharban Forest Trail",
+        "city": "Pimpri",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.51034,
+        "longitude": 73.41751,
+        "elevationM": 660,
+        "description": "Andharban - the Dark Forest - is a 13 km descending trail through Tamhini Wildlife Sanctuary from Pimpri dam to Bhira. Monsoon mist, waterfall crossings, and valley views make it a signature Pune-region rain trek.",
+        "bestMonths": [6, 7, 8, 9, 10],
+        "region": "Western Ghats",
+        "source": "https://indiahikes.com/documented-trek/andharban-trek",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Andharban Monsoon Descent Trek",
+          "categorySlug": "trekking",
+          "difficulty": "MODERATE",
+          "durationHours": 8,
+          "basePrice": 1199,
+          "minGroupSize": 6,
+          "maxGroupSize": 25,
+          "summary": "Point-to-point 13 km forest descent from Pimpri to Bhira in monsoon.",
+          "description": "Organized bus from Pune to Independence Point near Pimpri dam. Pay sanctuary entry at trail gate (₹50/person locally). Trek leader manages waterfall crossings and pickup coordination at Bhira end.",
+          "inclusions": [
+            "Trek leader",
+            "Pune pickup and Bhira drop bus",
+            "Packed lunch",
+            "Sanctuary fee coordination"
+          ],
+          "exclusions": [
+            "Personal rain gear",
+            "Return transport to Pimpri for private vehicles"
+          ],
+          "thingsToCarry": [
+            "Rain poncho",
+            "Leech socks",
+            "2L water",
+            "Dry bag",
+            "Trekking shoes"
+          ],
+          "meetingPoint": "Independence Point trail gate, Pimpri dam (18.510341, 73.417509)",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:30 AM",
+              "title": "Trail entry",
+              "description": "Sanctuary fee and group formation."
+            },
+            {
+              "order": 2,
+              "timeLabel": "8:00 AM",
+              "title": "Ridge section",
+              "description": "Valley views before forest canopy."
+            },
+            {
+              "order": 3,
+              "timeLabel": "11:00 AM",
+              "title": "Dark forest core",
+              "description": "Mist, streams, and three waterfall crossings."
+            },
+            {
+              "order": 4,
+              "timeLabel": "1:00 PM",
+              "title": "Lunch break",
+              "description": "Packed lunch in forest clearing."
+            },
+            {
+              "order": 5,
+              "timeLabel": "3:00 PM",
+              "title": "Bhira dam exit",
+              "description": "Bus pickup to Pune."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Tamhini Trekkers"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "sandhan-valley",
+        "name": "Sandhan Valley",
+        "city": "Samrad",
+        "district": "Ahmednagar",
+        "state": "Maharashtra",
+        "latitude": 19.5008,
+        "longitude": 73.7374,
+        "elevationM": 650,
+        "description": "Sandhan Valley - Valley of Shadows - is a narrow rock gorge between Alang-Madan-Kulang peaks near Samrad village. Technical sections include rappels, pool wades, and rock patches on a one-way canyon descent to Dehne.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://www.outlooktraveller.com/explore-maharashtra/sandhan-valley-maharashtras-thrilling-canyon-trek-through-the-valley-of-shadows",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Sandhan Valley Canyon Trek Samrad to Dehne",
+          "categorySlug": "trekking",
+          "difficulty": "CHALLENGING",
+          "durationHours": 10,
+          "basePrice": 1999,
+          "minGroupSize": 6,
+          "maxGroupSize": 18,
+          "summary": "Full canyon traverse with rappels and pool crossings in the Valley of Shadows.",
+          "description": "Technical trek requiring fitness and prior trekking experience. Includes rope sections, harness for rappels, and vehicle shuttle for bags from Samrad to Dehne. Overnight camping optional at Samrad before start.",
+          "inclusions": [
+            "Technical trek leader",
+            "Rappelling gear",
+            "Lunch",
+            "Vehicle transfer for bags end-point"
+          ],
+          "exclusions": [
+            "Samrad camping",
+            "Personal vehicle relocation Samrad–Dehne",
+            "Transport from Mumbai"
+          ],
+          "thingsToCarry": [
+            "Harness-compatible clothing",
+            "3L water",
+            "Headlamp",
+            "Dry bag",
+            "Grip shoes"
+          ],
+          "meetingPoint": "Samrad village bus stop, Bhandardara region",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "6:00 AM",
+              "title": "Samrad start",
+              "description": "Gear check and gorge entry."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:00 AM",
+              "title": "First rappel section",
+              "description": "Harnessed descent in gorge."
+            },
+            {
+              "order": 3,
+              "timeLabel": "12:00 PM",
+              "title": "Pool crossings",
+              "description": "Waist-deep wades in post-monsoon pools."
+            },
+            {
+              "order": 4,
+              "timeLabel": "3:00 PM",
+              "title": "Dehne exit",
+              "description": "Climb out to road head."
+            },
+            {
+              "order": 5,
+              "timeLabel": "4:30 PM",
+              "title": "Vehicle pickup",
+              "description": "Jeep to Bhandardara or Igatpuri."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 72,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 40,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        },
+        {
+          "title": "Sandhan Valley Rappelling & Rock Patch Weekend",
+          "categorySlug": "rappelling",
+          "difficulty": "EXTREME",
+          "durationHours": 14,
+          "basePrice": 2499,
+          "minGroupSize": 8,
+          "maxGroupSize": 14,
+          "summary": "Two-day technical canyon with multiple rappel pitches and Samrad camping.",
+          "description": "Extended version for experienced adventurers with additional rappel pitches and overnight camp at Samrad. Includes all technical equipment and meals; participants must disclose prior rappelling experience.",
+          "inclusions": [
+            "Technical guide team",
+            "All rope gear",
+            "Samrad camping",
+            "Meals x3",
+            "Bag transfer"
+          ],
+          "exclusions": ["Transport", "Personal climbing shoes"],
+          "thingsToCarry": [
+            "Sleeping bag",
+            "Headlamp",
+            "Gloves",
+            "3L water capacity"
+          ],
+          "meetingPoint": "Samrad village, designated camping ground",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "5:00 PM",
+              "title": "Day 0 camp",
+              "description": "Samrad overnight and dinner."
+            },
+            {
+              "order": 2,
+              "timeLabel": "6:00 AM",
+              "title": "Canyon entry",
+              "description": "Full technical traverse."
+            },
+            {
+              "order": 3,
+              "timeLabel": "4:00 PM",
+              "title": "Dehne finish",
+              "description": "Return transport to base."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 72,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 30,
+            "noShowPct": 0
+          },
+          "operatorName": "Western Ghats Outdoors"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "karla-caves-lonavala",
+        "name": "Karla & Bhaja Caves",
+        "city": "Karla",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.78333,
+        "longitude": 73.47056,
+        "elevationM": 350,
+        "description": "2nd-century BCE Buddhist rock-cut chaityas and viharas on the ancient Bhor Ghat trade route near Lonavala. Karla's grand chaitya hall is among India's largest; Bhaja and nearby Bedse complete the Maval cave trilogy.",
+        "bestMonths": [10, 11, 12, 1, 2, 3, 4, 5],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Karla_Caves",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Karla Caves Heritage Walk with Archaeologist Guide",
+          "categorySlug": "caving",
+          "difficulty": "EASY",
+          "durationHours": 3,
+          "basePrice": 699,
+          "minGroupSize": 4,
+          "maxGroupSize": 20,
+          "summary": "Guided tour of Karla chaitya hall, sculptures, and trade-route history.",
+          "description": "Climb 350 steps to Karla complex with a heritage guide explaining Hinayana and Mahayana phases, chaitya architecture, and inscriptions. ASI monument; closed Tuesdays. Moderate stair climb required.",
+          "inclusions": ["Heritage guide", "Bottled water", "Site commentary"],
+          "exclusions": [
+            "ASI entry ticket",
+            "Transport from Malavli station",
+            "Food"
+          ],
+          "thingsToCarry": [
+            "Comfortable shoes",
+            "Hat",
+            "Camera (no flash in caves)"
+          ],
+          "meetingPoint": "Karla caves lower parking, off Mumbai-Pune old highway",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "9:00 AM",
+              "title": "Parking meet",
+              "description": "Ticket queue guidance."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:30 AM",
+              "title": "Step climb",
+              "description": "Paced ascent with rest stops."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Great Chaitya",
+              "description": "Guided circuit of main hall."
+            },
+            {
+              "order": 4,
+              "timeLabel": "11:30 AM",
+              "title": "Descent",
+              "description": "Optional shop stop at base."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Deccan Ascents"
+        },
+        {
+          "title": "Bhaja & Bedse Caves Half-Day Circuit",
+          "categorySlug": "caving",
+          "difficulty": "MODERATE",
+          "durationHours": 6,
+          "basePrice": 899,
+          "minGroupSize": 4,
+          "maxGroupSize": 16,
+          "summary": "Two quieter cave complexes with stupa reliefs and valley views.",
+          "description": "Morning at Bhaja's chaitya and vihara group, then drive to Bedse for 400-step climb to lesser-visited caves overlooking Pawna basin. Combines archaeology with light hiking between sites.",
+          "inclusions": ["Guide", "Inter-site transport", "Packed lunch"],
+          "exclusions": ["ASI tickets", "Malavli station transfer"],
+          "thingsToCarry": ["Water", "Sun protection", "Small day pack"],
+          "meetingPoint": "Malavli railway station east exit, auto stand",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "8:00 AM",
+              "title": "Bhaja caves",
+              "description": "45-min exploration."
+            },
+            {
+              "order": 2,
+              "timeLabel": "10:30 AM",
+              "title": "Drive to Bedse",
+              "description": "30-min via Kamshet road."
+            },
+            {
+              "order": 3,
+              "timeLabel": "11:00 AM",
+              "title": "Bedse climb",
+              "description": "Cave tour and valley viewpoint."
+            },
+            {
+              "order": 4,
+              "timeLabel": "1:00 PM",
+              "title": "Lunch and return",
+              "description": "Drop at Malavli."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "harihar-fort",
+        "name": "Harihar Fort",
+        "city": "Nirgudpada",
+        "district": "Nashik",
+        "state": "Maharashtra",
+        "latitude": 19.90497,
+        "longitude": 73.472,
+        "elevationM": 1120,
+        "description": "Harihar - also called Harshagad - is famed for its near-vertical rock-cut steps carved into the scarp, including the iconic narrow staircase to the summit. One of Maharashtra's most photographed fort approaches in the Trimbak range.",
+        "bestMonths": [10, 11, 12, 1, 2, 3],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Harihar_fort",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Harihar Fort Vertical Steps Challenge",
+          "categorySlug": "fort",
+          "difficulty": "EXTREME",
+          "durationHours": 8,
+          "basePrice": 1099,
+          "minGroupSize": 4,
+          "maxGroupSize": 15,
+          "summary": "Summit Harihar via the legendary 80° rock-cut staircase from Nirgudpada.",
+          "description": "Not for acrophobia sufferers. Steep rock steps with sheer drops require careful one-by-one ascent. Trek leader enforces harness on the narrow upper staircase section. Start early to avoid heat and queues.",
+          "inclusions": [
+            "Certified trek leader",
+            "Safety line on narrow section",
+            "Breakfast",
+            "First-aid"
+          ],
+          "exclusions": ["Transport to Nirgudpada", "Gloves"],
+          "thingsToCarry": [
+            "Grip gloves",
+            "2L water",
+            "Non-slip trekking shoes",
+            "Light backpack only"
+          ],
+          "meetingPoint": "Nirgudpada village, trail head past Harshewadi fork signboard",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "5:30 AM",
+              "title": "Nirgudpada start",
+              "description": "Forest trail to scarp base."
+            },
+            {
+              "order": 2,
+              "timeLabel": "7:00 AM",
+              "title": "Rock steps section",
+              "description": "Single-file climb on cut steps."
+            },
+            {
+              "order": 3,
+              "timeLabel": "8:30 AM",
+              "title": "Summit plateau",
+              "description": "Fort exploration and rest."
+            },
+            {
+              "order": 4,
+              "timeLabel": "11:00 AM",
+              "title": "Descent",
+              "description": "Controlled down-climb same route."
+            },
+            {
+              "order": 5,
+              "timeLabel": "1:30 PM",
+              "title": "Base dispersal",
+              "description": "Breakfast served on return."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 48,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Deccan Ascents"
+        }
+      ]
+    },
+    {
+      "place": {
+        "slug": "visapur-fort",
+        "name": "Visapur Fort",
+        "city": "Malavli",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "latitude": 18.7225,
+        "longitude": 73.49,
+        "elevationM": 1084,
+        "description": "Large hill fort sharing the plateau with Lohagad, built by the Maratha empire with massive ramparts, water cisterns, and monsoon waterfalls on the walls. Popular monsoon trek from Malavli with beginner-friendly routes.",
+        "bestMonths": [6, 7, 8, 9, 10, 11, 12, 1, 2],
+        "region": "Sahyadri",
+        "source": "https://en.wikipedia.org/wiki/Visapur_Fort",
+        "confidence": "HIGH"
+      },
+      "listings": [
+        {
+          "title": "Visapur Fort Monsoon Waterfall Trek",
+          "categorySlug": "fort",
+          "difficulty": "MODERATE",
+          "durationHours": 6,
+          "basePrice": 849,
+          "minGroupSize": 4,
+          "maxGroupSize": 25,
+          "summary": "Malavli to Visapur plateau with seasonal cascades on fort walls.",
+          "description": "Guided hike from Malavli through Bhaje village approach to Visapur's broad plateau. In monsoon, multiple streams flow over the laterite walls. Includes history of the Lohagad-Visapur twin fort system.",
+          "inclusions": ["Trek guide", "Veg lunch", "First-aid"],
+          "exclusions": ["Train to Malavli", "Rain gear"],
+          "thingsToCarry": [
+            "Rain poncho",
+            "Trekking shoes",
+            "2L water",
+            "Extra clothes"
+          ],
+          "meetingPoint": "Malavli railway station, east side auto stand",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "7:30 AM",
+              "title": "Malavli meet",
+              "description": "Walk toward Bhaje approach."
+            },
+            {
+              "order": 2,
+              "timeLabel": "9:00 AM",
+              "title": "Fort entrance",
+              "description": "Rampart exploration."
+            },
+            {
+              "order": 3,
+              "timeLabel": "11:00 AM",
+              "title": "Plateau circuit",
+              "description": "Cisterns and waterfall walls."
+            },
+            {
+              "order": 4,
+              "timeLabel": "1:00 PM",
+              "title": "Descent and lunch",
+              "description": "Veg lunch near base."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Maval Adventure Co."
+        }
+      ]
+    }
+  ]
+}
