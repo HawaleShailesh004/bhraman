@@ -1,13 +1,5 @@
-import { PayoutStatus } from "@prisma/client";
 import { ForbiddenError, getSessionOperator } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-
-const STATUS_FLOW: Record<PayoutStatus, PayoutStatus | null> = {
-  PENDING: PayoutStatus.PROCESSING,
-  PROCESSING: PayoutStatus.PAID,
-  PAID: null,
-  FAILED: PayoutStatus.PROCESSING,
-};
 
 export async function PATCH(
   _request: Request,
@@ -27,27 +19,13 @@ export async function PATCH(
       throw new ForbiddenError();
     }
 
-    const nextStatus = STATUS_FLOW[payout.status];
-    if (!nextStatus) {
-      return Response.json({ error: "ALREADY_SETTLED" }, { status: 409 });
-    }
-
-    const updated = await prisma.payout.update({
-      where: { id: params.id },
-      data: {
-        status: nextStatus,
-        referenceId:
-          nextStatus === PayoutStatus.PAID
-            ? `RZP-ROUTE-${Date.now().toString(36).toUpperCase()}`
-            : payout.referenceId,
+    return Response.json(
+      {
+        error: "PAYOUT_MANAGED_BY_PLATFORM",
+        message: "Payout status can only be changed by the platform.",
       },
-    });
-
-    return Response.json({
-      id: updated.id,
-      status: updated.status,
-      referenceId: updated.referenceId,
-    });
+      { status: 409 },
+    );
   } catch (error) {
     if (error instanceof ForbiddenError) {
       return Response.json({ error: "FORBIDDEN" }, { status: 403 });

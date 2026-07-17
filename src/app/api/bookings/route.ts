@@ -1,4 +1,5 @@
 import { BookingError, createBooking } from "@/lib/booking";
+import { Gender } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getRazorpayClient } from "@/lib/razorpay";
 import type { BookingCheckoutResponse } from "@/types/booking";
@@ -11,9 +12,14 @@ type BookingRequestBody = {
   listingId?: unknown;
   slotId?: unknown;
   groupSize?: unknown;
+  customerGender?: unknown;
+  emergencyContactName?: unknown;
+  emergencyContactPhone?: unknown;
+  medicalNotes?: unknown;
   traveler?: {
     name?: unknown;
     email?: unknown;
+    phone?: unknown;
   };
 };
 
@@ -26,6 +32,24 @@ export async function POST(request: Request) {
     typeof body.groupSize !== "number"
   ) {
     return Response.json({ error: "Invalid booking payload." }, { status: 400 });
+  }
+  if (
+    typeof body.customerGender !== "string" ||
+    !Object.values(Gender).includes(body.customerGender as Gender)
+  ) {
+    return Response.json({ error: "Invalid customer gender." }, { status: 400 });
+  }
+  if (
+    typeof body.traveler?.phone !== "string" ||
+    body.traveler.phone.trim().length < 7 ||
+    typeof body.emergencyContactName !== "string" ||
+    !body.emergencyContactName.trim() ||
+    typeof body.emergencyContactPhone !== "string" ||
+    body.emergencyContactPhone.trim().length < 7 ||
+    (body.medicalNotes !== undefined &&
+      typeof body.medicalNotes !== "string")
+  ) {
+    return Response.json({ error: "Invalid safety details." }, { status: 400 });
   }
 
   let traveler;
@@ -51,6 +75,24 @@ export async function POST(request: Request) {
       listingId: body.listingId,
       slotId: body.slotId,
       groupSize: body.groupSize,
+      customerEmail: traveler.email,
+      customerPhone:
+        typeof body.traveler?.phone === "string"
+          ? body.traveler.phone.trim().slice(0, 30) || null
+          : null,
+      customerGender: (body.customerGender as Gender | undefined) ?? null,
+      emergencyContactName:
+        typeof body.emergencyContactName === "string"
+          ? body.emergencyContactName.trim().slice(0, 120) || null
+          : null,
+      emergencyContactPhone:
+        typeof body.emergencyContactPhone === "string"
+          ? body.emergencyContactPhone.trim().slice(0, 30) || null
+          : null,
+      medicalNotes:
+        typeof body.medicalNotes === "string"
+          ? body.medicalNotes.trim().slice(0, 2000) || null
+          : null,
     });
 
     const razorpay = getRazorpayClient();

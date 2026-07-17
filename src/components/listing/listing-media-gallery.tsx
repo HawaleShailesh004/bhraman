@@ -76,19 +76,23 @@ export function ListingGalleryStrip({ listing }: { listing: ListingDetailData })
   const showArrows = photos.length > 1;
 
   return (
-    <section className="relative">
+    <section className="relative min-w-0 overflow-x-clip">
       <Eyebrow>Gallery</Eyebrow>
-      <div className="flex items-end justify-between gap-4 mb-5">
-        <h2 className="font-display text-2xl">Photos from the experience</h2>
-        <span className="text-mist text-sm shrink-0">{photos.length} photos</span>
+      <div className="mb-5 flex items-end justify-between gap-3">
+        <h2 className="min-w-0 break-words font-display text-xl sm:text-2xl">
+          Photos from the experience
+        </h2>
+        <span className="shrink-0 text-sm text-mist">
+          {photos.length} photos
+        </span>
       </div>
 
-      <div className="relative group/gallery">
+      <div className="group/gallery relative min-w-0">
         {showArrows && canScrollLeft ? (
           <button
             type="button"
             onClick={() => scrollBy("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 -translate-x-1/2 w-10 h-10 rounded-full bg-white border border-line shadow-[var(--shadow-md)] grid place-items-center text-ink hover:border-forest hover:text-forest transition-colors"
+            className="absolute left-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-[var(--shadow-md)] transition-colors hover:border-forest hover:text-forest sm:grid"
             aria-label="Scroll photos left"
           >
             <ChevronLeft size={20} strokeWidth={2.5} />
@@ -99,7 +103,7 @@ export function ListingGalleryStrip({ listing }: { listing: ListingDetailData })
           <button
             type="button"
             onClick={() => scrollBy("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 translate-x-1/2 w-10 h-10 rounded-full bg-white border border-line shadow-[var(--shadow-md)] grid place-items-center text-ink hover:border-forest hover:text-forest transition-colors"
+            className="absolute right-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-[var(--shadow-md)] transition-colors hover:border-forest hover:text-forest sm:grid"
             aria-label="Scroll photos right"
           >
             <ChevronRight size={20} strokeWidth={2.5} />
@@ -108,18 +112,18 @@ export function ListingGalleryStrip({ listing }: { listing: ListingDetailData })
 
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1 -mx-1 px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-1 [scrollbar-width:none] sm:gap-4 [&::-webkit-scrollbar]:hidden"
         >
           {photos.map((url, i) => (
             <button
               key={url}
               type="button"
               onClick={() => setLightboxIndex(i)}
-              className="relative shrink-0 w-[min(72vw,320px)] aspect-[4/3] rounded-2xl overflow-hidden border border-line shadow-[var(--shadow-sm)] snap-start focus:outline-none focus-visible:ring-2 focus-visible:ring-forest group"
+              className="group relative aspect-[4/3] w-[min(78vw,280px)] shrink-0 snap-start overflow-hidden rounded-2xl border border-line shadow-[var(--shadow-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-forest sm:w-[min(72vw,320px)]"
               style={listingImageStyle(listing.category.slug, url)}
               aria-label={`View photo ${i + 1} of ${photos.length}`}
             >
-              <div className="absolute inset-0 bg-forest/0 group-hover:bg-forest/10 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-forest/0 transition-colors duration-300 group-hover:bg-forest/10" />
             </button>
           ))}
         </div>
@@ -150,7 +154,7 @@ export function ListingGalleryStrip({ listing }: { listing: ListingDetailData })
               </button>
             </div>
 
-            <div className="relative flex-1 flex items-center justify-center px-14 min-h-0">
+            <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 sm:px-14">
               <img
                 src={photos[lightboxIndex]}
                 alt={`${listing.title} — photo ${lightboxIndex + 1}`}

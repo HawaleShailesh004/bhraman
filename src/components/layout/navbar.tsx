@@ -11,6 +11,7 @@ import { AuthNav } from "@/components/layout/auth-nav";
 const LINKS = [
   { href: "/discover", label: "Discover" },
   { href: "/plan", label: "Plan with AI" },
+  { href: "/operators", label: "Operators" },
   { href: "/#destinations", label: "Destinations" },
   { href: "/operator/enter", label: "For Operators" },
 ];
@@ -63,11 +64,16 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 ml-3">
+          <nav className="ml-3 hidden items-center gap-4 md:flex xl:gap-6">
             {LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
+                aria-current={
+                  l.href !== "/" && pathname.startsWith(l.href)
+                    ? "page"
+                    : undefined
+                }
                 className="text-[13px] font-medium transition-opacity hover:opacity-100 opacity-75"
                 style={{ color: solid ? "#1A2E22" : "#FAF8F3" }}
               >
@@ -117,6 +123,9 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
             />
             <motion.div
               className="fixed top-0 right-0 bottom-0 z-[70] w-[78%] max-w-xs bg-paper p-6 flex flex-col"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Navigation menu"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

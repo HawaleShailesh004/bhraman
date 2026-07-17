@@ -12,6 +12,8 @@ import type {
   ListingCardData,
   ListingDetailData,
   ListingFilters,
+  OperatorDirectoryCardData,
+  PublicOperatorProfileData,
 } from "@/types/listing";
 
 const cardSelect = {
@@ -30,8 +32,14 @@ const cardSelect = {
   place: { select: { name: true, city: true, district: true } },
   operator: {
     select: {
+      slug: true,
       businessName: true,
-      isVerified: true,
+      verificationStatus: true,
+      yearsOperating: true,
+      insuranceStatus: true,
+      insuranceProvider: true,
+      femaleGuideCount: true,
+      totalGuideCount: true,
       ratingAvg: true,
       ratingCount: true,
       completedTrips: true,
@@ -69,7 +77,7 @@ function buildWhere(filters: ListingFilters): Prisma.ListingWhereInput {
       slots: {
         some: {
           startTime: { gte: date },
-          status: "OPEN",
+          status: { in: ["OPEN", "FILLING_FAST", "CONFIRMED"] },
         },
       },
     }),
@@ -79,10 +87,26 @@ function buildWhere(filters: ListingFilters): Prisma.ListingWhereInput {
 function mapCard(
   listing: Prisma.ListingGetPayload<{ select: typeof cardSelect }>
 ): ListingCardData {
+  const { operator, ...card } = listing;
   return {
-    ...listing,
-    ratingAvg: listing.operator.ratingAvg,
-    ratingCount: listing.operator.ratingCount,
+    ...card,
+    operator: {
+      slug: operator.slug,
+      businessName: operator.businessName,
+      isVerified: operator.verificationStatus === "VERIFIED",
+      verificationStatus: operator.verificationStatus,
+      yearsOperating: operator.yearsOperating,
+      insuranceStatus: operator.insuranceStatus,
+      insuranceProvider: operator.insuranceProvider,
+      femaleGuideCount: operator.femaleGuideCount,
+      totalGuideCount: operator.totalGuideCount,
+      ratingAvg: operator.ratingAvg,
+      ratingCount: operator.ratingCount,
+      completedTrips: operator.completedTrips,
+      avgResponseMins: operator.avgResponseMins,
+    },
+    ratingAvg: operator.ratingAvg,
+    ratingCount: operator.ratingCount,
   };
 }
 
@@ -155,7 +179,9 @@ export async function getListingDetail(slug: string): Promise<ListingDetailData 
       reviews: {
         orderBy: { createdAt: "desc" },
         take: 12,
-        include: { user: { select: { name: true } } },
+        include: {
+          booking: { include: { user: { select: { name: true } } } },
+        },
       },
     },
   });
@@ -192,10 +218,17 @@ export async function getListingDetail(slug: string): Promise<ListingDetailData 
       description: listing.place.description,
     },
     operator: {
+      slug: listing.operator.slug,
       businessName: listing.operator.businessName,
       baseCity: listing.operator.baseCity,
       bio: listing.operator.bio,
-      isVerified: listing.operator.isVerified,
+      isVerified: listing.operator.verificationStatus === "VERIFIED",
+      verificationStatus: listing.operator.verificationStatus,
+      yearsOperating: listing.operator.yearsOperating,
+      insuranceStatus: listing.operator.insuranceStatus,
+      insuranceProvider: listing.operator.insuranceProvider,
+      femaleGuideCount: listing.operator.femaleGuideCount,
+      totalGuideCount: listing.operator.totalGuideCount,
       ratingAvg: listing.operator.ratingAvg,
       ratingCount: listing.operator.ratingCount,
       completedTrips: listing.operator.completedTrips,
@@ -213,12 +246,191 @@ export async function getListingDetail(slug: string): Promise<ListingDetailData 
       id: review.id,
       rating: review.rating,
       comment: review.comment,
-      isVerified: review.isVerified,
+      isVerified: true,
       createdAt: review.createdAt.toISOString(),
-      user: { name: review.user.name },
+      user: { name: review.booking.user.name },
     })),
   };
   }, () => getCatalogListingBySlug(slug));
+}
+
+export async function getPublicOperatorProfile(
+  slug: string,
+): Promise<PublicOperatorProfileData | null> {
+  const fallback = () => {
+    const listings = getCatalogAllListings().filter(
+      (listing) => listing.operator.slug === slug,
+    );
+    if (listings.length === 0) return null;
+    const operator = listings[0].operator;
+    return {
+      slug: operator.slug,
+      businessName: operator.businessName,
+      baseCity: operator.baseCity,
+      bio: operator.bio,
+      yearsOperating: operator.yearsOperating,
+      verificationStatus: operator.verificationStatus,
+      insuranceStatus: operator.insuranceStatus,
+      insuranceProvider: operator.insuranceProvider,
+      femaleGuideCount: operator.femaleGuideCount,
+      totalGuideCount: operator.totalGuideCount,
+      completedTrips: operator.completedTrips,
+      ratingAvg: operator.ratingAvg,
+      ratingCount: operator.ratingCount,
+      galleryUrls: Array.from(
+        new Set(
+          listings.flatMap((listing) => [
+            listing.heroImageUrl,
+            ...(listing.galleryUrls ?? []),
+          ]),
+        ),
+      ).filter((url): url is string => Boolean(url)),
+      listings,
+    };
+  };
+
+  return withCatalogFallback(async () => {
+    if (!(await dbHasPublishedListings())) return fallback();
+
+    const operator = await prisma.operator.findUnique({
+      where: { slug },
+      select: {
+        id: true,
+        slug: true,
+        businessName: true,
+        baseCity: true,
+        bio: true,
+        yearsOperating: true,
+        verificationStatus: true,
+        insuranceStatus: true,
+        insuranceProvider: true,
+        femaleGuideCount: true,
+        totalGuideCount: true,
+        listings: {
+          where: { status: "PUBLISHED" },
+          select: cardSelect,
+          orderBy: { updatedAt: "desc" },
+        },
+      },
+    });
+    if (!operator) return null;
+
+    const [reviewAggregate, completedTrips] = await Promise.all([
+      prisma.review.aggregate({
+        where: { listing: { operatorId: operator.id } },
+        _avg: { rating: true },
+        _count: { rating: true },
+      }),
+      prisma.availabilitySlot.count({
+        where: {
+          status: "COMPLETED",
+          listing: { operatorId: operator.id },
+        },
+      }),
+    ]);
+
+    const listings = operator.listings.map(mapCard);
+    const galleryUrls = Array.from(
+      new Set(
+        listings.flatMap((listing) => [
+          listing.heroImageUrl,
+          ...(listing.galleryUrls ?? []),
+        ]),
+      ),
+    ).filter((url): url is string => Boolean(url));
+
+    return {
+      slug: operator.slug,
+      businessName: operator.businessName,
+      baseCity: operator.baseCity,
+      bio: operator.bio,
+      yearsOperating: operator.yearsOperating,
+      verificationStatus: operator.verificationStatus,
+      insuranceStatus: operator.insuranceStatus,
+      insuranceProvider: operator.insuranceProvider,
+      femaleGuideCount: operator.femaleGuideCount,
+      totalGuideCount: operator.totalGuideCount,
+      completedTrips,
+      ratingAvg: reviewAggregate._avg.rating ?? 0,
+      ratingCount: reviewAggregate._count.rating,
+      galleryUrls,
+      listings,
+    };
+  }, fallback);
+}
+
+export async function getPublicOperators(): Promise<
+  OperatorDirectoryCardData[]
+> {
+  const fallback = () => {
+    const bySlug = new Map<string, OperatorDirectoryCardData>();
+    for (const listing of getCatalogAllListings()) {
+      const existing = bySlug.get(listing.operator.slug);
+      if (existing) {
+        existing.activeListingCount += 1;
+        continue;
+      }
+      bySlug.set(listing.operator.slug, {
+        slug: listing.operator.slug,
+        businessName: listing.operator.businessName,
+        baseCity: listing.operator.baseCity,
+        bio: listing.operator.bio,
+        verificationStatus: listing.operator.verificationStatus,
+        yearsOperating: listing.operator.yearsOperating,
+        insuranceStatus: listing.operator.insuranceStatus,
+        femaleGuideCount: listing.operator.femaleGuideCount,
+        totalGuideCount: listing.operator.totalGuideCount,
+        coverImageUrl: listing.heroImageUrl,
+        activeListingCount: 1,
+      });
+    }
+    return Array.from(bySlug.values()).sort((a, b) =>
+      a.businessName.localeCompare(b.businessName),
+    );
+  };
+
+  return withCatalogFallback(async () => {
+    if (!(await dbHasPublishedListings())) return fallback();
+    const operators = await prisma.operator.findMany({
+      where: { listings: { some: { status: "PUBLISHED" } } },
+      select: {
+        slug: true,
+        businessName: true,
+        baseCity: true,
+        bio: true,
+        verificationStatus: true,
+        yearsOperating: true,
+        insuranceStatus: true,
+        femaleGuideCount: true,
+        totalGuideCount: true,
+        listings: {
+          where: { status: "PUBLISHED" },
+          select: { heroImageUrl: true },
+          orderBy: { updatedAt: "desc" },
+        },
+        _count: {
+          select: { listings: { where: { status: "PUBLISHED" } } },
+        },
+      },
+      orderBy: { businessName: "asc" },
+    });
+
+    return operators.map((operator) => ({
+      slug: operator.slug,
+      businessName: operator.businessName,
+      baseCity: operator.baseCity,
+      bio: operator.bio,
+      verificationStatus: operator.verificationStatus,
+      yearsOperating: operator.yearsOperating,
+      insuranceStatus: operator.insuranceStatus,
+      femaleGuideCount: operator.femaleGuideCount,
+      totalGuideCount: operator.totalGuideCount,
+      coverImageUrl:
+        operator.listings.find((listing) => listing.heroImageUrl)
+          ?.heroImageUrl ?? null,
+      activeListingCount: operator._count.listings,
+    }));
+  }, fallback);
 }
 
 export async function getCategories() {

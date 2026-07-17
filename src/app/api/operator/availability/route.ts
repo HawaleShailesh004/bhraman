@@ -13,6 +13,7 @@ type AvailabilityBody = {
   fromDate?: unknown;
   toDate?: unknown;
   priceOverride?: unknown;
+  minSeatsToConfirm?: unknown;
 };
 
 export async function POST(request: Request) {
@@ -34,6 +35,18 @@ export async function POST(request: Request) {
   ) {
     return Response.json({ error: "INVALID_PAYLOAD" }, { status: 400 });
   }
+  if (
+    body.minSeatsToConfirm !== undefined &&
+    (typeof body.minSeatsToConfirm !== "number" ||
+      !Number.isInteger(body.minSeatsToConfirm) ||
+      body.minSeatsToConfirm < 1 ||
+      body.minSeatsToConfirm > body.capacity)
+  ) {
+    return Response.json(
+      { error: "INVALID_MINIMUM_SEATS" },
+      { status: 400 },
+    );
+  }
 
   try {
     await assertOwnsListing(session.userId, body.listingId);
@@ -47,6 +60,10 @@ export async function POST(request: Request) {
       toDate: body.toDate,
       priceOverride:
         typeof body.priceOverride === "number" ? body.priceOverride : null,
+      minSeatsToConfirm:
+        typeof body.minSeatsToConfirm === "number"
+          ? body.minSeatsToConfirm
+          : null,
     });
 
     return Response.json(result);

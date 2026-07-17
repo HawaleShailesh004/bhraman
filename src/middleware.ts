@@ -9,12 +9,16 @@ const isOperatorAuthRoute = createRouteMatcher([
   "/operator/enter",
 ]);
 
-const isOperatorAppRoute = createRouteMatcher(["/operator(.*)"]);
+const isOperatorAppRoute = createRouteMatcher([
+  "/operator",
+  "/operator/(.*)",
+]);
 
 const isTravelerProtectedRoute = createRouteMatcher([
   "/bookings(.*)",
   "/booking/(.*)",
 ]);
+const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
 const clerkConfigured = Boolean(
   process.env.CLERK_SECRET_KEY &&
@@ -25,13 +29,22 @@ export default clerkConfigured
   ? clerkMiddleware(async (auth, req) => {
       if (isTravelerProtectedRoute(req)) {
         await auth().protect({
-          unauthenticatedUrl: "/sign-in",
+          unauthenticatedUrl: new URL("/sign-in", req.url).toString(),
         });
       }
 
       if (isOperatorAppRoute(req) && !isOperatorAuthRoute(req)) {
         await auth().protect({
-          unauthenticatedUrl: "/operator/sign-in",
+          unauthenticatedUrl: new URL(
+            "/operator/sign-in",
+            req.url,
+          ).toString(),
+        });
+      }
+
+      if (isAdminRoute(req)) {
+        await auth().protect({
+          unauthenticatedUrl: new URL("/sign-in", req.url).toString(),
         });
       }
     })

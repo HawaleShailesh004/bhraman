@@ -27,9 +27,13 @@ export function isClerkEnabled() {
   );
 }
 
-import type { TravelerSession, OperatorSession } from "@/types/auth";
+import type {
+  AdminSession,
+  TravelerSession,
+  OperatorSession,
+} from "@/types/auth";
 
-export type { TravelerSession, OperatorSession };
+export type { AdminSession, TravelerSession, OperatorSession };
 
 async function getDemoTraveler(): Promise<TravelerSession | null> {
   const user = await prisma.user.findUnique({
@@ -51,6 +55,7 @@ async function getDemoOperator(): Promise<OperatorSession | null> {
     operatorId: user.operator.id,
     businessName: user.operator.businessName,
     email: user.email,
+    verificationStatus: user.operator.verificationStatus,
   };
 }
 
@@ -141,6 +146,7 @@ export async function getSessionOperator(): Promise<OperatorSession | null> {
     operatorId: user.operator.id,
     businessName: user.operator.businessName,
     email: user.email,
+    verificationStatus: user.operator.verificationStatus,
   };
 }
 
@@ -149,6 +155,19 @@ export async function requireSessionOperator() {
   if (!session) {
     throw new UnauthorizedError();
   }
+  return session;
+}
+
+export async function getSessionAdmin(): Promise<AdminSession | null> {
+  if (!isClerkEnabled()) return null;
+  const user = await syncUserFromClerk();
+  if (!user || user.role !== UserRole.ADMIN) return null;
+  return { userId: user.id, email: user.email, name: user.name };
+}
+
+export async function requireSessionAdmin() {
+  const session = await getSessionAdmin();
+  if (!session) throw new UnauthorizedError();
   return session;
 }
 

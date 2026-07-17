@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, Clock, Users, BadgeCheck, Images } from "lucide-react";
 import type { ListingCardData } from "@/types/listing";
 import { formatInr } from "@/lib/format";
 import { listingImageStyle } from "@/lib/ui-present";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { DifficultyMeter, StarRating } from "@/components/ui/primitives";
+import { brandEase, softSpring } from "@/lib/motion";
 
 function photoCount(listing: ListingCardData): number {
   const urls = new Set<string>();
@@ -25,11 +26,14 @@ export function ListingCardUi({
   listing: ListingCardData;
   index?: number;
 }) {
+  const reduce = useReducedMotion();
   const photos = photoCount(listing);
-  const peekUrl = listing.galleryUrls?.find((u) => u && u !== listing.heroImageUrl);
+  const peekUrl = listing.galleryUrls?.find(
+    (u) => u && u !== listing.heroImageUrl,
+  );
   const imageStyle = listingImageStyle(
     listing.category.slug,
-    listing.heroImageUrl
+    listing.heroImageUrl,
   );
   const peekStyle = peekUrl
     ? listingImageStyle(listing.category.slug, peekUrl)
@@ -37,40 +41,51 @@ export function ListingCardUi({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={reduce ? false : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{
-        duration: 0.45,
-        delay: (index % 3) * 0.06,
-        ease: [0.22, 0.61, 0.36, 1],
-      }}
+      transition={
+        reduce
+          ? { duration: 0 }
+          : {
+              duration: 0.4,
+              delay: (index % 3) * 0.06,
+              ease: brandEase,
+            }
+      }
+      whileHover={
+        reduce ? undefined : { y: -4, transition: softSpring }
+      }
+      whileTap={
+        reduce ? undefined : { scale: 0.985, transition: softSpring }
+      }
     >
       <Link href={`/listings/${listing.slug}`} className="group block">
-        <div
-          className="overflow-hidden rounded-[var(--radius-card)] border border-line/80 bg-white shadow-[var(--shadow-sm)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-md)]"
-        >
+        <div className="overflow-hidden rounded-[var(--radius-card)] border border-line/80 bg-white shadow-[var(--shadow-sm)] transition-shadow duration-300 group-hover:shadow-[var(--shadow-md)]">
           <div className="relative h-44 overflow-hidden">
             {peekStyle ? (
               <div
-                className="absolute inset-0 scale-[0.92] translate-x-2 translate-y-1 opacity-0 transition-all duration-300 group-hover:opacity-55 group-hover:translate-x-3"
+                className="absolute inset-0 translate-x-2 translate-y-1 scale-[0.92] opacity-0 transition-all duration-300 group-hover:translate-x-3 group-hover:opacity-55"
                 style={peekStyle}
                 aria-hidden
               />
             ) : null}
             <div
-              className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.03]"
+              className="absolute inset-0 transition-transform duration-500 ease-brand group-hover:scale-[1.04]"
               style={imageStyle}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
             </div>
-            <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2 z-10">
+            <div className="absolute inset-x-3 top-3 z-10 flex items-start justify-between gap-2">
               <span className="inline-flex items-center gap-1 rounded-full bg-ink/90 px-2.5 py-1 text-[10px] font-semibold text-paper backdrop-blur">
                 <CategoryIcon slug={listing.category.slug} size={11} />
                 {listing.category.name}
               </span>
               <span className="rounded-full bg-white/95 px-2 py-1 shadow-sm backdrop-blur">
-                <DifficultyMeter difficulty={listing.difficulty} showLabel={false} />
+                <DifficultyMeter
+                  difficulty={listing.difficulty}
+                  showLabel={false}
+                />
               </span>
             </div>
             {photos > 1 ? (
@@ -114,7 +129,10 @@ export function ListingCardUi({
                 </span>
                 <span className="text-[11px] text-mist"> /person</span>
               </div>
-              <StarRating rating={listing.ratingAvg} count={listing.ratingCount} />
+              <StarRating
+                rating={listing.ratingAvg}
+                count={listing.ratingCount}
+              />
             </div>
           </div>
         </div>

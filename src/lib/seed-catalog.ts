@@ -42,6 +42,7 @@ type SeedOperator = {
   businessName: string;
   baseCity: string;
   bio: string;
+  yearStarted: number;
 };
 
 type SeedListing = {
@@ -152,10 +153,20 @@ function buildCatalog(): ListingDetailData[] {
           description: destination.place.description,
         },
         operator: {
+          slug: slugify(operator.businessName),
           businessName: operator.businessName,
           baseCity: operator.baseCity,
           bio: operator.bio,
           isVerified: true,
+          verificationStatus: "VERIFIED",
+          yearsOperating: Math.max(
+            0,
+            new Date().getFullYear() - operator.yearStarted,
+          ),
+          insuranceStatus: false,
+          insuranceProvider: null,
+          femaleGuideCount: 0,
+          totalGuideCount: 0,
           ...stats,
         },
         ratingAvg: stats.ratingAvg,

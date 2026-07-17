@@ -4,12 +4,11 @@ import {
   OperatorListingManagerUi,
 } from "@/components/operator/operator-dashboard-ui";
 import { OperatorStatCard } from "@/components/operator/operator-stat-card";
+import { PayoutCard } from "@/components/operator/PayoutCard";
 import {
   NewListingButton,
   OperatorPageHeader,
 } from "@/components/operator/operator-shell";
-import { TopoLines } from "@/components/ui/primitives";
-import { formatInr } from "@/lib/format";
 import {
   getOperatorCategories,
   getOperatorDashboard,
@@ -34,8 +33,6 @@ export default async function OperatorOverviewPage() {
   ]);
 
   const primaryPayout = payouts[0];
-  const monthEarned = payouts.reduce((sum, p) => sum + p.amount, 0);
-  const monthCommission = payouts.reduce((sum, p) => sum + p.commission, 0);
 
   return (
     <>
@@ -57,37 +54,10 @@ export default async function OperatorOverviewPage() {
           showActions={false}
           title="Upcoming bookings"
           actionHref="/operator/bookings"
+          paginate={false}
         />
 
-        {primaryPayout ? (
-          <div
-            className="relative h-fit overflow-hidden rounded-[22px] p-6 text-paper"
-            style={{ background: "linear-gradient(135deg,#1A2E22,#13231A)" }}
-          >
-            <TopoLines opacity={0.12} />
-            <div className="relative z-10">
-              <div className="text-[12px] font-bold uppercase tracking-wide text-[#9DB0A4]">
-                Pending payout
-              </div>
-              <div className="my-1.5 font-display text-[38px] font-black tracking-tight">
-                {formatInr(primaryPayout.netAmount)}
-              </div>
-              <div className="text-[13px] text-[#C9D2CB]">
-                Period{" "}
-                {new Date(primaryPayout.periodStart).toLocaleDateString("en-IN")} –{" "}
-                {new Date(primaryPayout.periodEnd).toLocaleDateString("en-IN")}
-              </div>
-              <div className="mt-4 flex justify-between border-t border-white/12 pt-4 text-[13px]">
-                <span className="text-[#9DB0A4]">This month earned</span>
-                <span className="font-bold text-amber">{formatInr(monthEarned)}</span>
-              </div>
-              <div className="mt-2 flex justify-between text-[13px]">
-                <span className="text-[#9DB0A4]">Commission (12%)</span>
-                <span className="font-bold text-amber">−{formatInr(monthCommission)}</span>
-              </div>
-            </div>
-          </div>
-        ) : null}
+        {primaryPayout ? <PayoutCard payout={primaryPayout} /> : null}
       </div>
 
       <div className="mt-6">

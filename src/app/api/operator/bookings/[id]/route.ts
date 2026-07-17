@@ -28,11 +28,17 @@ export async function PATCH(
 
     const existing = await prisma.booking.findUnique({
       where: { id: params.id },
-      select: { status: true },
+      select: {
+        status: true,
+        slot: { select: { endTime: true } },
+      },
     });
 
     if (!existing || existing.status !== "CONFIRMED") {
       return Response.json({ error: "INVALID_TRANSITION" }, { status: 409 });
+    }
+    if (existing.slot.endTime > new Date()) {
+      return Response.json({ error: "TRIP_NOT_ENDED" }, { status: 409 });
     }
 
     const booking = await prisma.booking.update({

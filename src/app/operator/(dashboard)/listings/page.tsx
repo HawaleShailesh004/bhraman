@@ -1,5 +1,4 @@
-import { CreateListingForm } from "@/components/operator/CreateListingForm";
-import { OperatorListingManagerUi } from "@/components/operator/operator-dashboard-ui";
+import { OperatorListingsClient } from "@/components/operator/operator-listings-ui";
 import { OperatorPageHeader } from "@/components/operator/operator-shell";
 import {
   getOperatorCategories,
@@ -10,7 +9,13 @@ import { getSessionOperator } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
-export default async function OperatorListingsPage() {
+type ListingsPageProps = {
+  searchParams?: { tab?: string };
+};
+
+export default async function OperatorListingsPage({
+  searchParams,
+}: ListingsPageProps) {
   const session = await getSessionOperator();
   if (!session) return null;
 
@@ -20,19 +25,21 @@ export default async function OperatorListingsPage() {
     getOperatorCategories(),
   ]);
 
+  const initialTab =
+    searchParams?.tab === "create" ? ("create" as const) : ("listings" as const);
+
   return (
     <>
       <OperatorPageHeader
         title="My listings"
         subtitle="Publish, pause, and manage the experiences travelers can book."
       />
-      <div className="mb-8">
-        <OperatorListingManagerUi listings={listings} />
-      </div>
-      <section>
-        <h2 className="mb-4 font-display text-xl">Create listing</h2>
-        <CreateListingForm places={places} categories={categories} />
-      </section>
+      <OperatorListingsClient
+        listings={listings}
+        places={places}
+        categories={categories}
+        initialTab={initialTab}
+      />
     </>
   );
 }

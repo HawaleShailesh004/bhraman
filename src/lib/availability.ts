@@ -24,7 +24,12 @@ function generateMockSlots(listingId: string, durationHours: number, capacity: n
       endTime: end.toISOString(),
       capacity,
       bookedSeats: 0,
+      confirmedSeats: 0,
       seatsLeft: capacity,
+      maleCount: 0,
+      femaleCount: 0,
+      otherCount: 0,
+      minSeatsToConfirm: null,
       status: "OPEN",
     });
   }
@@ -57,7 +62,7 @@ export async function getListingAvailability(slug: string) {
   const slots = await prisma.availabilitySlot.findMany({
     where: {
       listingId: listing.id,
-      status: "OPEN",
+      status: { in: ["OPEN", "FILLING_FAST", "CONFIRMED"] },
       startTime: { gte: new Date() },
     },
     orderBy: { startTime: "asc" },
@@ -68,10 +73,26 @@ export async function getListingAvailability(slug: string) {
       endTime: true,
       capacity: true,
       bookedSeats: true,
+      maleCount: true,
+      femaleCount: true,
+      otherCount: true,
+      minSeatsToConfirm: true,
       priceOverride: true,
       status: true,
     },
   });
+
+  const confirmedBySlot = await prisma.booking.groupBy({
+    by: ["slotId"],
+    where: {
+      slotId: { in: slots.map((slot) => slot.id) },
+      status: { in: ["CONFIRMED", "COMPLETED"] },
+    },
+    _sum: { groupSize: true },
+  });
+  const confirmedSeats = new Map(
+    confirmedBySlot.map((row) => [row.slotId, row._sum.groupSize ?? 0]),
+  );
 
   return slots.map((slot) => ({
     id: slot.id,
@@ -79,7 +100,12 @@ export async function getListingAvailability(slug: string) {
     endTime: slot.endTime.toISOString(),
     capacity: slot.capacity,
     bookedSeats: slot.bookedSeats,
+    confirmedSeats: confirmedSeats.get(slot.id) ?? 0,
     seatsLeft: Math.max(slot.capacity - slot.bookedSeats, 0),
+    maleCount: slot.maleCount,
+    femaleCount: slot.femaleCount,
+    otherCount: slot.otherCount,
+    minSeatsToConfirm: slot.minSeatsToConfirm,
     status: slot.status,
     priceOverride: slot.priceOverride,
   }));

@@ -1,16 +1,15 @@
 import "server-only";
 
-import { PayoutStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { formatInr } from "@/lib/format";
 import type {
   OperatorBookingRow,
   OperatorDashboardData,
+  OperatorCustomerRow,
   OperatorListingRow,
   OperatorPayoutRow,
+  OperatorVerificationData,
 } from "@/types/operator";
-
-const PLATFORM_COMMISSION_RATE = 0.12;
 
 function initials(name: string) {
   return name
@@ -29,7 +28,12 @@ function mapBookingRow(booking: {
   totalAmount: number;
   listingTitleSnapshot: string;
   startTimeSnapshot: Date;
+  slot: { endTime: Date };
   user: { name: string };
+  payment: {
+    escrowStatus: OperatorBookingRow["escrowStatus"];
+    disputeStatus: OperatorBookingRow["disputeStatus"];
+  } | null;
 }): OperatorBookingRow {
   return {
     id: booking.id,
@@ -38,9 +42,12 @@ function mapBookingRow(booking: {
     travelerInitials: initials(booking.user.name),
     listingTitle: booking.listingTitleSnapshot,
     startTime: booking.startTimeSnapshot.toISOString(),
+    endTime: booking.slot.endTime.toISOString(),
     groupSize: booking.groupSize,
     status: booking.status,
     totalAmount: booking.totalAmount,
+    escrowStatus: booking.payment?.escrowStatus ?? null,
+    disputeStatus: booking.payment?.disputeStatus ?? null,
   };
 }
 
@@ -80,7 +87,13 @@ export async function getOperatorDashboard(
           startTimeSnapshot: { gte: new Date() },
           status: { in: ["CONFIRMED", "PENDING", "COMPLETED"] },
         },
-        include: { user: { select: { name: true } } },
+        include: {
+          user: { select: { name: true } },
+          slot: { select: { endTime: true } },
+          payment: {
+            select: { escrowStatus: true, disputeStatus: true },
+          },
+        },
         orderBy: { startTimeSnapshot: "asc" },
         take: 8,
       }),
@@ -152,7 +165,11 @@ export async function getOperatorBookings(
 ): Promise<OperatorBookingRow[]> {
   const bookings = await prisma.booking.findMany({
     where: { listing: { operatorId } },
-    include: { user: { select: { name: true } } },
+    include: {
+      user: { select: { name: true } },
+      slot: { select: { endTime: true } },
+      payment: { select: { escrowStatus: true, disputeStatus: true } },
+    },
     orderBy: { startTimeSnapshot: "desc" },
     take: 50,
   });
@@ -160,35 +177,32 @@ export async function getOperatorBookings(
   return bookings.map(mapBookingRow);
 }
 
-export async function ensureOperatorPayouts(operatorId: string) {
-  const existing = await prisma.payout.count({ where: { operatorId } });
-  if (existing > 0) {
-    return;
-  }
-
-  const confirmed = await prisma.booking.aggregate({
-    where: {
-      listing: { operatorId },
-      status: { in: ["CONFIRMED", "COMPLETED"] },
-    },
-    _sum: { totalAmount: true },
-  });
-
-  const gross = confirmed._sum.totalAmount ?? 0;
-  const commission = Math.round(gross * PLATFORM_COMMISSION_RATE);
-  const netAmount = gross - commission;
-  const now = new Date();
-  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-
-  await prisma.payout.create({
-    data: {
-      operatorId,
-      amount: gross,
-      commission,
-      netAmount,
-      status: PayoutStatus.PENDING,
-      periodStart: monthStart,
-      periodEnd: now,
+export async function getOperatorBookingDetail(
+  operatorId: string,
+  bookingId: string,
+) {
+  return prisma.booking.findFirst({
+    where: { id: bookingId, listing: { operatorId } },
+    select: {
+      id: true,
+      bookingRef: true,
+      status: true,
+      listingTitleSnapshot: true,
+      startTimeSnapshot: true,
+      groupSize: true,
+      customerPhone: true,
+      customerEmail: true,
+      customerGender: true,
+      emergencyContactName: true,
+      emergencyContactPhone: true,
+      medicalNotes: true,
+      user: { select: { name: true, email: true } },
+      payment: {
+        select: {
+          escrowStatus: true,
+          disputeStatus: true,
+        },
+      },
     },
   });
 }
@@ -196,8 +210,6 @@ export async function ensureOperatorPayouts(operatorId: string) {
 export async function getOperatorPayouts(
   operatorId: string
 ): Promise<OperatorPayoutRow[]> {
-  await ensureOperatorPayouts(operatorId);
-
   const payouts = await prisma.payout.findMany({
     where: { operatorId },
     orderBy: { createdAt: "desc" },
@@ -243,4 +255,79 @@ export async function getOperatorCategories() {
     select: { id: true, name: true, slug: true },
     orderBy: { name: "asc" },
   });
+}
+
+export async function getOperatorVerification(
+  operatorId: string,
+): Promise<OperatorVerificationData> {
+  return prisma.operator.findUniqueOrThrow({
+    where: { id: operatorId },
+    select: {
+      businessName: true,
+      yearsOperating: true,
+      panNumber: true,
+      gstNumber: true,
+      mtdcRegistrationNo: true,
+      insuranceStatus: true,
+      insuranceProvider: true,
+      insuranceDetails: true,
+      femaleGuideCount: true,
+      totalGuideCount: true,
+      posHPolicyStatus: true,
+      verificationStatus: true,
+      phoneVerified: true,
+    },
+  });
+}
+
+export async function getOperatorCustomers(
+  operatorId: string,
+): Promise<OperatorCustomerRow[]> {
+  const bookings = await prisma.booking.findMany({
+    where: {
+      listing: { operatorId },
+      status: "COMPLETED",
+    },
+    select: {
+      userId: true,
+      customerPhone: true,
+      customerGender: true,
+      startTimeSnapshot: true,
+      user: { select: { name: true, email: true } },
+    },
+    orderBy: { startTimeSnapshot: "desc" },
+  });
+
+  const customers = new Map<string, OperatorCustomerRow>();
+  for (const booking of bookings) {
+    const existing = customers.get(booking.userId);
+    if (existing) {
+      existing.completedBookings += 1;
+      existing.isRepeatCustomer = true;
+      if (!existing.phone && booking.customerPhone) {
+        existing.phone = booking.customerPhone;
+      }
+      if (!existing.gender && booking.customerGender) {
+        existing.gender = booking.customerGender;
+      }
+      continue;
+    }
+
+    customers.set(booking.userId, {
+      userId: booking.userId,
+      name: booking.user.name,
+      email: booking.user.email,
+      phone: booking.customerPhone,
+      gender: booking.customerGender,
+      completedBookings: 1,
+      lastTripAt: booking.startTimeSnapshot.toISOString(),
+      isRepeatCustomer: false,
+    });
+  }
+
+  return Array.from(customers.values()).sort(
+    (a, b) =>
+      b.completedBookings - a.completedBookings ||
+      b.lastTripAt.localeCompare(a.lastTripAt),
+  );
 }

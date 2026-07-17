@@ -35,8 +35,15 @@ export type ListingCardData = {
     district: string;
   };
   operator: {
+    slug: string;
     businessName: string;
     isVerified: boolean;
+    verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
+    yearsOperating: number | null;
+    insuranceStatus: boolean;
+    insuranceProvider: string | null;
+    femaleGuideCount: number;
+    totalGuideCount: number;
     ratingAvg: number;
     ratingCount: number;
     completedTrips: number;
@@ -68,8 +75,19 @@ export type AvailabilitySlotData = {
   endTime: string;
   capacity: number;
   bookedSeats: number;
+  confirmedSeats: number;
   seatsLeft: number;
-  status: "OPEN" | "FULL" | "CLOSED";
+  maleCount: number;
+  femaleCount: number;
+  otherCount: number;
+  minSeatsToConfirm: number | null;
+  status:
+    | "OPEN"
+    | "FILLING_FAST"
+    | "CONFIRMED"
+    | "FULL"
+    | "CANCELLED"
+    | "COMPLETED";
   priceOverride?: number | null;
 };
 
@@ -100,4 +118,36 @@ export type ListingDetailData = ListingCardData & {
   };
   itinerary: ItineraryStepData[];
   reviews: ReviewData[];
+};
+
+export type PublicOperatorProfileData = {
+  slug: string;
+  businessName: string;
+  baseCity: string;
+  bio: string;
+  yearsOperating: number | null;
+  verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
+  insuranceStatus: boolean;
+  insuranceProvider: string | null;
+  femaleGuideCount: number;
+  totalGuideCount: number;
+  completedTrips: number;
+  ratingAvg: number;
+  ratingCount: number;
+  galleryUrls: string[];
+  listings: ListingCardData[];
+};
+
+export type OperatorDirectoryCardData = {
+  slug: string;
+  businessName: string;
+  baseCity: string;
+  bio: string;
+  verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
+  yearsOperating: number | null;
+  insuranceStatus: boolean;
+  femaleGuideCount: number;
+  totalGuideCount: number;
+  coverImageUrl: string | null;
+  activeListingCount: number;
 };

@@ -12,6 +12,10 @@ import {
   SearchBarUi,
 } from "@/components/discovery/search-filters-ui";
 import { Button } from "@/components/ui/primitives";
+import {
+  PaginationControls,
+  useClientPagination,
+} from "@/components/ui/pagination";
 
 type SortOption = "recommended" | "price-low" | "price-high";
 
@@ -43,6 +47,8 @@ export function DiscoverClient({
       r = [...r].sort((a, b) => b.ratingAvg - a.ratingAvg);
     return r;
   }, [listings, category, sort]);
+
+  const pagination = useClientPagination(results, 10, `${category}-${sort}`);
 
   function onCategoryChange(slug: string) {
     setCategory(slug);
@@ -90,25 +96,37 @@ export function DiscoverClient({
           <Button href="/plan">Plan with AI</Button>
         </div>
       ) : (
-        <motion.div
-          layout
-          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10"
-        >
-          <AnimatePresence mode="popLayout">
-            {results.map((l, i) => (
-              <motion.div
-                key={l.id}
-                layout
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ListingCardUi listing={l} index={i} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <div className="space-y-8">
+          <motion.div
+            layout
+            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10"
+          >
+            <AnimatePresence mode="popLayout">
+              {pagination.pageItems.map((l, i) => (
+                <motion.div
+                  key={l.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ListingCardUi listing={l} index={i} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+          <PaginationControls
+            total={pagination.total}
+            page={pagination.page}
+            pageSize={pagination.pageSize}
+            totalPages={pagination.totalPages}
+            rangeStart={pagination.rangeStart}
+            rangeEnd={pagination.rangeEnd}
+            onPageChange={pagination.setPage}
+            onPageSizeChange={pagination.changePageSize}
+          />
+        </div>
       )}
     </div>
   );

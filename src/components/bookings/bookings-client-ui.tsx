@@ -4,6 +4,10 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { MapPin, Calendar, Users, ChevronRight, Compass } from "lucide-react";
 import { Button } from "@/components/ui/primitives";
+import {
+  PaginationControls,
+  useClientPagination,
+} from "@/components/ui/pagination";
 import { formatInr } from "@/lib/format";
 import { listingImageStyle } from "@/lib/ui-present";
 import type { BookingSummary } from "@/types/booking";
@@ -48,13 +52,17 @@ export function BookingsClientUi({ bookings }: { bookings: BookingSummary[] }) {
     return bookings.filter((b) => !isUpcoming(b));
   }, [bookings, tab]);
 
+  const pagination = useClientPagination(rows, 10, tab);
+
   return (
     <div className="page-shell pt-28 pb-24">
       <div className="mb-10 max-w-lg">
         <h1 className="mb-2 font-display text-[clamp(1.75rem,4vw,2.25rem)] font-bold tracking-tight">
           My bookings
         </h1>
-        <p className="text-sm leading-relaxed text-mist">Your adventures, all in one place.</p>
+        <p className="text-sm leading-relaxed text-mist">
+          Your adventures, all in one place.
+        </p>
       </div>
 
       <div className="mb-8 flex gap-2">
@@ -77,13 +85,17 @@ export function BookingsClientUi({ bookings }: { bookings: BookingSummary[] }) {
       {rows.length === 0 ? (
         <div className="rounded-[var(--radius-card)] border border-dashed border-line bg-white p-14 text-center">
           <Compass className="mx-auto mb-4 text-mist" size={32} />
-          <h3 className="mb-2 font-display text-lg font-bold">No {tab.toLowerCase()} bookings</h3>
-          <p className="mb-6 text-sm text-mist">Time to plan your next adventure.</p>
+          <h3 className="mb-2 font-display text-lg font-bold">
+            No {tab.toLowerCase()} bookings
+          </h3>
+          <p className="mb-6 text-sm text-mist">
+            Time to plan your next adventure.
+          </p>
           <Button href="/discover">Browse adventures</Button>
         </div>
       ) : (
         <div className="space-y-5">
-          {rows.map((booking) => (
+          {pagination.pageItems.map((booking) => (
             <Link
               key={booking.id}
               href={`/booking/${booking.bookingRef}`}
@@ -91,7 +103,10 @@ export function BookingsClientUi({ bookings }: { bookings: BookingSummary[] }) {
             >
               <div
                 className="h-20 w-20 shrink-0 rounded-lg sm:h-24 sm:w-24"
-                style={listingImageStyle(booking.categorySlug, booking.heroImageUrl)}
+                style={listingImageStyle(
+                  booking.categorySlug,
+                  booking.heroImageUrl,
+                )}
               />
               <div className="min-w-0 flex-1">
                 <div className="mb-2 flex items-start justify-between gap-3">
@@ -109,7 +124,8 @@ export function BookingsClientUi({ bookings }: { bookings: BookingSummary[] }) {
                     <MapPin size={12} /> {booking.placeName}
                   </span>
                   <span className="flex items-center gap-1">
-                    <Calendar size={12} /> {formatDate(booking.startTimeSnapshot)}
+                    <Calendar size={12} />{" "}
+                    {formatDate(booking.startTimeSnapshot)}
                   </span>
                   <span className="flex items-center gap-1">
                     <Users size={12} /> {booking.groupSize} people
@@ -126,6 +142,17 @@ export function BookingsClientUi({ bookings }: { bookings: BookingSummary[] }) {
               </div>
             </Link>
           ))}
+
+          <PaginationControls
+            total={pagination.total}
+            page={pagination.page}
+            pageSize={pagination.pageSize}
+            totalPages={pagination.totalPages}
+            rangeStart={pagination.rangeStart}
+            rangeEnd={pagination.rangeEnd}
+            onPageChange={pagination.setPage}
+            onPageSizeChange={pagination.changePageSize}
+          />
         </div>
       )}
     </div>

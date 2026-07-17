@@ -13,6 +13,9 @@ Built for [TrailsMate](https://github.com/HawaleShailesh004/bhraman) hackathon. 
 - **AI planner** — natural-language trip search powered by Anthropic Claude (`/plan`)
 - **Booking** — slot selection, group pricing, Razorpay checkout, email confirmation
 - **Operator portal** — dashboard, listings, availability, bookings, payouts
+- **Trust profiles** — public operator portfolios, insurance/guide signals, verification workflow
+- **Safety & CRM** — emergency details, private trip rosters, completed-customer history
+- **Escrow disputes** — traveler/operator escrow freeze and admin resolution with Razorpay refunds
 - **Real photos** — Wikimedia Commons images per place (hero + gallery)
 
 ---
@@ -24,7 +27,7 @@ git clone https://github.com/HawaleShailesh004/bhraman.git
 cd bhraman
 npm install
 cp .env.example .env   # fill in values (see below)
-npx prisma db push
+npm run db:migrate:deploy
 npm run db:seed
 npm run db:images
 npm run dev
@@ -64,7 +67,7 @@ These are also shown on **`/operator/sign-in`** and **`/operator/sign-up`**.
 ```bash
 npm install
 cp .env.example .env
-npx prisma db push
+npm run db:migrate:deploy
 npm run db:seed
 npm run db:images
 npm run dev
@@ -120,6 +123,8 @@ npm run dev
 | Listings | `/operator/listings` |
 | Availability | `/operator/availability` |
 | Payouts | `/operator/payouts` |
+| Customers | `/operator/customers` |
+| Verification | `/operator/verification` |
 
 ### 6. Other operator demo emails
 
@@ -134,6 +139,7 @@ npm run dev
 | `npm run dev` | Development server |
 | `npm run build` | Production build (`prisma generate` + `next build`) |
 | `npm run db:seed` | Seed operators, places, listings (idempotent) |
+| `npm run db:migrate:deploy` | Apply committed schema migrations |
 | `npm run db:images` | Attach hero + gallery URLs to listings |
 | `npm run db:operators` | Update operator emails only (no full reseed) |
 | `npm run db:studio` | Prisma Studio GUI |
@@ -162,16 +168,21 @@ public/            Static assets
 
 1. Import repo in [Vercel](https://vercel.com)
 2. Add all env vars from `.env.example` (use **pooled** Neon URL for `DATABASE_URL`)
-3. Deploy, then run once against production DB:
+3. Back up the database, then apply committed migrations and seed:
 
    ```bash
-   npx prisma db push
+   # Existing DBs previously managed with db push: run once
+   npx prisma migrate resolve --applied 20260717000000_baseline
+
+   npm run db:migrate:deploy
    npm run db:seed
    npm run db:images
    ```
 
 4. **Clerk dashboard:** add production domain; set sign-in `/sign-in`, sign-up `/sign-up`
 5. **Razorpay:** configure webhook → `https://your-domain/api/webhooks/razorpay`
+6. Assign at least one internal Clerk-linked `User` the `ADMIN` role, then use
+   `/admin/disputes` for escrow operations. Never grant this role to operators.
 
 ---
 

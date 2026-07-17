@@ -4,31 +4,38 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   Check,
   CreditCard,
   Smartphone,
   Building2,
   Shield,
-  CalendarDays,
   Users,
   ArrowLeft,
   PartyPopper,
+  HeartPulse,
+  UserRoundCheck,
+  LockKeyhole,
+  PhoneCall,
+  Minus,
+  Plus,
 } from "lucide-react";
 import { useToast } from "@/components/ui/ToastProvider";
+import { SlotPickerUi } from "@/components/booking/slot-picker-ui";
 import { formatInr } from "@/lib/format";
+import { brandEase, slideStep, softSpring, springTap } from "@/lib/motion";
 import { listingImageStyle } from "@/lib/ui-present";
 import type { BookingCheckoutResponse } from "@/types/booking";
 import type { AvailabilitySlotData, ListingDetailData } from "@/types/listing";
 import type { TravelerSession } from "@/types/auth";
+import type { ReactNode } from "react";
 
 const clerkConfigured = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
 );
 
-const PLATFORM_FEE_RATE = 0.05;
-const STEPS = ["Details", "Travelers", "Payment", "Confirmed"];
+const STEPS = ["Details", "Travelers", "Safety", "Payment", "Confirmed"];
 
 declare global {
   interface Window {
@@ -38,14 +45,31 @@ declare global {
   }
 }
 
-function formatSlotDateTime(value: string) {
-  return new Intl.DateTimeFormat("en-IN", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(value));
+function StepPanel({
+  direction,
+  reduce,
+  children,
+  className,
+}: {
+  direction: 1 | -1;
+  reduce: boolean;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      variants={slideStep(direction)}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      transition={
+        reduce ? { duration: 0 } : { duration: 0.28, ease: brandEase }
+      }
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 export function BookingFlowUi({
@@ -102,7 +126,9 @@ function BookingFlowContent({
   const router = useRouter();
   const searchParams = useSearchParams();
   const { pushToast } = useToast();
+  const reduceMotion = Boolean(useReducedMotion());
   const [step, setStep] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
   const [slots, setSlots] = useState<AvailabilitySlotData[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
@@ -112,6 +138,12 @@ function BookingFlowContent({
     name: traveler?.name ?? "",
     email: traveler?.email ?? "",
     phone: "",
+  });
+  const [safety, setSafety] = useState({
+    customerGender: "PREFER_NOT_TO_SAY",
+    emergencyContactName: "",
+    emergencyContactPhone: "",
+    medicalNotes: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [checkoutReady, setCheckoutReady] = useState(false);
@@ -153,12 +185,13 @@ function BookingFlowContent({
   }, [traveler]);
 
   useEffect(() => {
-    if (searchParams.get("step") === "2") {
-      setStep(2);
+    if (searchParams.get("step") === "3") {
+      setDirection(1);
+      setStep(3);
     }
   }, [searchParams]);
 
-  const paymentReturnUrl = `/book/${listing.slug}?step=2`;
+  const paymentReturnUrl = `/book/${listing.slug}?step=3`;
   const isGuest = clerkConfigured && isLoaded && !isSignedIn;
 
   function redirectToSignInForPayment() {
@@ -194,10 +227,15 @@ function BookingFlowContent({
     ? Math.min(listing.maxGroupSize, selectedSlot.seatsLeft)
     : listing.maxGroupSize;
 
+  useEffect(() => {
+    setGroup((current) =>
+      Math.min(Math.max(current, listing.minGroupSize), maxAllowed),
+    );
+  }, [listing.minGroupSize, maxAllowed]);
+
   const pricePerHead = selectedSlot?.priceOverride ?? listing.basePrice;
   const subtotal = pricePerHead * group;
-  const fee = Math.round(subtotal * PLATFORM_FEE_RATE);
-  const total = subtotal + fee;
+  const total = subtotal;
 
   const seatLabel = useMemo(() => {
     if (!selectedSlot) return "Select a date";
@@ -207,24 +245,41 @@ function BookingFlowContent({
 
   const next = () => {
     if (step === 1) {
-      if (!lead.name.trim() || !lead.email.trim()) {
+      if (!lead.name.trim() || !lead.email.trim() || !lead.phone.trim()) {
         pushToast({
           tone: "err",
           title: "Missing details",
-          description: "Add your name and email to continue.",
+          description: "Add your name, email, and phone to continue.",
         });
         return;
       }
     }
     if (step === 2) {
+      if (
+        !safety.emergencyContactName.trim() ||
+        !safety.emergencyContactPhone.trim()
+      ) {
+        pushToast({
+          tone: "err",
+          title: "Emergency contact required",
+          description: "Add a name and phone number for your trek leader.",
+        });
+        return;
+      }
+    }
+    if (step === 3) {
       if (requireSignInForPayment()) return;
       beginCheckout();
       return;
     }
-    setStep((s) => Math.min(3, s + 1));
+    setDirection(1);
+    setStep((s) => Math.min(4, s + 1));
   };
 
-  const back = () => setStep((s) => Math.max(0, s - 1));
+  const back = () => {
+    setDirection(-1);
+    setStep((s) => Math.max(0, s - 1));
+  };
 
   async function beginCheckout() {
     if (requireSignInForPayment()) return;
@@ -247,7 +302,15 @@ function BookingFlowContent({
           listingId: listing.id,
           slotId: selectedSlot.id,
           groupSize: group,
-          traveler: { name: lead.name, email: lead.email },
+          traveler: {
+            name: lead.name,
+            email: lead.email,
+            phone: lead.phone,
+          },
+          customerGender: safety.customerGender,
+          emergencyContactName: safety.emergencyContactName,
+          emergencyContactPhone: safety.emergencyContactPhone,
+          medicalNotes: safety.medicalNotes,
         }),
       });
 
@@ -268,7 +331,8 @@ function BookingFlowContent({
       }
 
       setBookingRef(data.bookingRef);
-      setStep(3);
+      setDirection(1);
+      setStep(4);
 
       if (
         data.mode === "razorpay" &&
@@ -327,44 +391,63 @@ function BookingFlowContent({
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-6 pt-28 pb-20">
-      <div className="flex items-center mb-10">
+    <div className="mx-auto max-w-2xl px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
+      <nav className="mb-3 flex items-center" aria-label="Booking progress">
         {STEPS.map((label, i) => (
-          <div key={label} className={`flex items-center ${i < STEPS.length - 1 ? "flex-1" : ""}`}>
-            <div className="flex items-center gap-2">
+          <div key={label} className={`flex min-w-0 items-center ${i < STEPS.length - 1 ? "flex-1" : ""}`}>
+            <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
               <div
-                className={`w-8 h-8 rounded-full grid place-items-center font-display font-extrabold text-[13px] transition-colors ${
+                aria-current={i === step ? "step" : undefined}
+                aria-label={`${label}${i < step ? ", completed" : i === step ? ", current step" : ""}`}
+                className={`grid h-8 w-8 shrink-0 place-items-center rounded-full font-display text-[13px] font-extrabold transition-colors duration-200 ${
                   i < step
                     ? "bg-forest text-white"
                     : i === step
-                      ? "bg-amber text-[#3A2406]"
+                      ? "bg-amber text-amber-text"
                       : "bg-line text-mist"
                 }`}
               >
-                {i < step ? <Check size={15} strokeWidth={3} /> : i + 1}
+                <motion.span
+                  key={`${i}-${i < step ? "done" : i === step ? "on" : "todo"}`}
+                  initial={reduceMotion ? false : { scale: 0.7, opacity: 0.5 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={softSpring}
+                  className="grid place-items-center"
+                >
+                  {i < step ? <Check size={15} strokeWidth={3} /> : i + 1}
+                </motion.span>
               </div>
               <span
-                className={`text-xs font-semibold hidden sm:block ${i <= step ? "text-ink" : "text-mist"}`}
+                className={`hidden truncate text-xs font-semibold md:block ${i <= step ? "text-ink" : "text-mist"}`}
               >
                 {label}
               </span>
             </div>
             {i < STEPS.length - 1 ? (
-              <div className={`h-0.5 flex-1 mx-3 ${i < step ? "bg-forest" : "bg-line"}`} />
+              <div className="mx-1.5 h-0.5 min-w-[12px] flex-1 overflow-hidden bg-line sm:mx-3">
+                <motion.div
+                  initial={false}
+                  animate={{ width: i < step ? "100%" : "0%" }}
+                  transition={
+                    reduceMotion
+                      ? { duration: 0 }
+                      : { duration: 0.35, ease: brandEase }
+                  }
+                  className="h-full bg-forest"
+                />
+              </div>
             ) : null}
           </div>
         ))}
-      </div>
+      </nav>
+      <p className="mb-6 text-center text-xs font-semibold text-mist md:hidden">
+        Step {step + 1} of {STEPS.length} · {STEPS[step]}
+      </p>
 
-      <div className="bg-white border border-line rounded-[22px] p-6 sm:p-8 shadow-[var(--shadow-md)]">
+      <div className="rounded-lg border border-line bg-white p-4 shadow-[var(--shadow-md)] sm:rounded-[22px] sm:p-8">
         <AnimatePresence mode="wait">
           {step === 0 ? (
-            <motion.div
-              key="s0"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-            >
+            <StepPanel key="s0" direction={direction} reduce={reduceMotion}>
               <h2 className="font-display text-2xl mb-1">{listing.title}</h2>
               <p className="text-mist text-sm mb-6">
                 {listing.place.name}, {listing.place.district}
@@ -374,60 +457,110 @@ function BookingFlowContent({
                 style={listingImageStyle(listing.category.slug, listing.heroImageUrl)}
               />
               <div className="space-y-3">
-                <div className="border border-line rounded-lg p-4">
-                  <div className="text-[10px] font-bold tracking-wide uppercase text-mist mb-1">
-                    Date
-                  </div>
-                  {loading ? (
-                    <span className="text-mist text-sm">Loading dates…</span>
-                  ) : slots.length === 0 ? (
-                    <span className="text-clay text-sm">No open dates yet</span>
-                  ) : (
-                    <select
-                      value={selectedSlotId ?? ""}
-                      onChange={(e) => setSelectedSlotId(e.target.value)}
-                      className="w-full font-semibold bg-transparent outline-none"
-                    >
-                      {slots.map((slot) => (
-                        <option key={slot.id} value={slot.id}>
-                          {formatSlotDateTime(slot.startTime)}
-                        </option>
-                      ))}
-                    </select>
-                  )}
+                <div className="rounded-lg border border-line p-4">
+                  <SlotPickerUi
+                    slots={slots}
+                    loading={loading}
+                    selectedSlotId={selectedSlotId}
+                    onSelect={setSelectedSlotId}
+                  />
                 </div>
-                <div className="border border-line rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-3">
+                <div className="rounded-lg border border-line p-4">
+                  <div className="mb-3 flex items-center gap-3">
                     <Users size={18} className="text-mist" />
-                    <div className="text-[10px] font-bold tracking-wide uppercase text-mist">
+                    <div className="text-[10px] font-bold uppercase tracking-wide text-mist">
                       Group size
                     </div>
                   </div>
-                  <div className="flex items-center justify-between max-w-[200px]">
-                    <button
+                  <div className="flex max-w-[200px] items-center justify-between">
+                    <motion.button
                       type="button"
-                      onClick={() => setGroup(Math.max(listing.minGroupSize, group - 1))}
-                      className="w-9 h-9 rounded-full border-[1.5px] border-line grid place-items-center hover:border-ink"
+                      aria-label="Decrease group size"
+                      onClick={() =>
+                        setGroup(Math.max(listing.minGroupSize, group - 1))
+                      }
+                      whileTap={reduceMotion ? undefined : { scale: 0.9 }}
+                      transition={springTap}
+                      className="grid h-9 w-9 place-items-center rounded-full border-[1.5px] border-line transition-colors hover:border-ink"
                     >
-                      −
-                    </button>
-                    <span className="font-semibold">{group} people</span>
-                    <button
+                      <Minus size={16} />
+                    </motion.button>
+                    <motion.span
+                      key={group}
+                      initial={reduceMotion ? false : { scale: 0.92, opacity: 0.6 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={softSpring}
+                      className="font-semibold"
+                    >
+                      {group} people
+                    </motion.span>
+                    <motion.button
                       type="button"
+                      aria-label="Increase group size"
                       onClick={() => setGroup(Math.min(maxAllowed, group + 1))}
-                      className="w-9 h-9 rounded-full border-[1.5px] border-line grid place-items-center hover:border-ink"
+                      whileTap={reduceMotion ? undefined : { scale: 0.9 }}
+                      transition={springTap}
+                      className="grid h-9 w-9 place-items-center rounded-full border-[1.5px] border-line transition-colors hover:border-ink"
                     >
-                      +
-                    </button>
+                      <Plus size={16} />
+                    </motion.button>
                   </div>
                   <p className="mt-2 text-xs text-mist">{seatLabel}</p>
                 </div>
+                {selectedSlot ? (
+                  <div className="rounded-lg border border-forest/15 bg-[#EAF1EC] p-4 text-sm">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-ink-muted">
+                      <span className="inline-flex items-center gap-1.5 font-semibold">
+                        <UserRoundCheck size={15} className="text-forest" />
+                        {selectedSlot.femaleCount +
+                          selectedSlot.maleCount +
+                          selectedSlot.otherCount ===
+                        0
+                          ? "Be the first to book this departure"
+                          : `${selectedSlot.femaleCount} women · ${selectedSlot.maleCount} men confirmed`}
+                      </span>
+                      {selectedSlot.minSeatsToConfirm !== null ? (
+                        <span>
+                          {selectedSlot.status === "CONFIRMED" ||
+                          selectedSlot.status === "FULL"
+                            ? "Departure confirmed"
+                            : `${Math.max(
+                                selectedSlot.minSeatsToConfirm -
+                                  selectedSlot.confirmedSeats,
+                                0,
+                              )} more seats to confirm`}
+                        </span>
+                      ) : null}
+                    </div>
+                    {selectedSlot.minSeatsToConfirm !== null ? (
+                      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/80">
+                        <motion.div
+                          className="h-full rounded-full bg-forest"
+                          initial={false}
+                          animate={{
+                            width: `${Math.min(
+                              100,
+                              (selectedSlot.confirmedSeats /
+                                selectedSlot.minSeatsToConfirm) *
+                                100,
+                            )}%`,
+                          }}
+                          transition={
+                            reduceMotion
+                              ? { duration: 0 }
+                              : { duration: 0.4, ease: brandEase }
+                          }
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
-            </motion.div>
+            </StepPanel>
           ) : null}
 
           {step === 1 ? (
-            <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+            <StepPanel key="s1" direction={direction} reduce={reduceMotion}>
               <h2 className="font-display text-2xl mb-1">Lead traveler details</h2>
               <p className="text-mist text-sm mb-6">
                 {traveler && clerkConfigured
@@ -446,11 +579,17 @@ function BookingFlowContent({
                     type: "email",
                     readOnly: Boolean(traveler && clerkConfigured),
                   },
-                  { k: "phone", label: "Phone (optional)", ph: "+91 98765 43210", type: "tel", readOnly: false },
+                  { k: "phone", label: "Phone", ph: "+91 98765 43210", type: "tel", readOnly: false },
                 ].map((f) => (
                   <div key={f.k}>
-                    <label className="block text-sm font-bold mb-2">{f.label}</label>
+                    <label
+                      htmlFor={`lead-${f.k}`}
+                      className="mb-2 block text-sm font-bold"
+                    >
+                      {f.label}
+                    </label>
                     <input
+                      id={`lead-${f.k}`}
                       type={f.type}
                       value={lead[f.k as keyof typeof lead]}
                       onChange={(e) =>
@@ -459,18 +598,221 @@ function BookingFlowContent({
                       }
                       readOnly={f.readOnly}
                       placeholder={f.ph}
-                      className={`w-full border-[1.5px] border-line rounded-lg px-4 py-3 text-[15px] bg-paper focus:bg-white focus:border-amber focus:ring-[3px] focus:ring-amber/15 outline-none ${
-                        f.readOnly ? "text-mist cursor-default" : ""
+                      className={`w-full rounded-lg border-[1.5px] border-line bg-paper px-4 py-3 text-[15px] outline-none focus:border-amber focus:bg-white focus:ring-[3px] focus:ring-amber/15 ${
+                        f.readOnly ? "cursor-default text-mist" : ""
                       }`}
                     />
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </StepPanel>
           ) : null}
 
           {step === 2 ? (
-            <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+            <StepPanel key="s2" direction={direction} reduce={reduceMotion}>
+              <div className="mb-6 flex items-start gap-3 rounded-[14px] border border-forest/15 bg-[#EAF1EC] p-4">
+                <LockKeyhole
+                  size={20}
+                  className="mt-0.5 shrink-0 text-forest"
+                />
+                <div>
+                  <h2 className="font-display text-xl">Trip safety details</h2>
+                  <p className="mt-1 text-xs leading-relaxed text-[#54635A]">
+                    Only your operator can access these details for this trip.
+                    They are excluded from the customer directory.
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <p
+                    id="safety-gender-label"
+                    className="mb-2 block text-sm font-bold"
+                  >
+                    Lead traveler gender
+                  </p>
+                  <div
+                    role="radiogroup"
+                    aria-labelledby="safety-gender-label"
+                    className="grid grid-cols-3 gap-2"
+                  >
+                    {(
+                      [
+                        { value: "FEMALE", label: "Woman" },
+                        { value: "MALE", label: "Man" },
+                        { value: "OTHER", label: "Other" },
+                      ] as const
+                    ).map((option) => {
+                      const selected =
+                        safety.customerGender === option.value;
+                      return (
+                        <motion.button
+                          key={option.value}
+                          type="button"
+                          role="radio"
+                          aria-checked={selected}
+                          onClick={() =>
+                            setSafety({
+                              ...safety,
+                              customerGender: option.value,
+                            })
+                          }
+                          whileTap={
+                            reduceMotion ? undefined : { scale: 0.98 }
+                          }
+                          transition={springTap}
+                          className={`relative flex min-h-12 items-center justify-center rounded-xl border-[1.5px] px-2 py-3 text-center text-sm font-semibold transition-colors duration-200 sm:px-3 ${
+                            selected
+                              ? "border-amber bg-[#FFF9F0] text-ink"
+                              : "border-line bg-paper text-[#54635A] hover:border-mist hover:bg-white"
+                          }`}
+                        >
+                          {option.label}
+                          {selected ? (
+                            <motion.span
+                              layoutId={
+                                reduceMotion
+                                  ? undefined
+                                  : "gender-choice-check"
+                              }
+                              className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-amber sm:right-2 sm:top-2"
+                              transition={softSpring}
+                            />
+                          ) : null}
+                        </motion.button>
+                      );
+                    })}
+                    <motion.button
+                      type="button"
+                      role="radio"
+                      aria-checked={
+                        safety.customerGender === "PREFER_NOT_TO_SAY"
+                      }
+                      onClick={() =>
+                        setSafety({
+                          ...safety,
+                          customerGender: "PREFER_NOT_TO_SAY",
+                        })
+                      }
+                      whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                      transition={springTap}
+                      className={`relative col-span-3 flex min-h-12 items-center justify-between gap-3 rounded-xl border-[1.5px] px-4 py-3 text-left text-sm font-semibold transition-colors duration-200 ${
+                        safety.customerGender === "PREFER_NOT_TO_SAY"
+                          ? "border-amber bg-[#FFF9F0] text-ink"
+                          : "border-line bg-paper text-[#54635A] hover:border-mist hover:bg-white"
+                      }`}
+                    >
+                      <span>
+                        Prefer not to say
+                        <span className="mt-0.5 block text-[11px] font-medium text-mist">
+                          Kept private from the batch mix
+                        </span>
+                      </span>
+                      {safety.customerGender === "PREFER_NOT_TO_SAY" ? (
+                        <motion.span
+                          layoutId={
+                            reduceMotion ? undefined : "gender-choice-check"
+                          }
+                          className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-amber text-amber-text"
+                          transition={softSpring}
+                        >
+                          <Check size={12} strokeWidth={3} />
+                        </motion.span>
+                      ) : (
+                        <span className="h-5 w-5 shrink-0 rounded-full border border-line" />
+                      )}
+                    </motion.button>
+                  </div>
+                  <p className="mt-2 text-xs leading-relaxed text-mist">
+                    Optional. If shared, it contributes to the anonymous batch
+                    mix shown to travelers.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 pt-1">
+                  <PhoneCall size={16} className="text-amber-deep" />
+                  <p className="text-sm font-bold">Emergency contact</p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="emergency-name"
+                      className="mb-2 block text-sm font-bold"
+                    >
+                      Emergency contact name
+                    </label>
+                    <input
+                      id="emergency-name"
+                      value={safety.emergencyContactName}
+                      onChange={(event) =>
+                        setSafety({
+                          ...safety,
+                          emergencyContactName: event.target.value,
+                        })
+                      }
+                      placeholder="Contact name"
+                      autoComplete="off"
+                      className="w-full rounded-lg border-[1.5px] border-line bg-paper px-4 py-3 text-[15px] outline-none focus:border-amber focus:bg-white"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="emergency-phone"
+                      className="mb-2 block text-sm font-bold"
+                    >
+                      Emergency contact phone
+                    </label>
+                    <input
+                      id="emergency-phone"
+                      type="tel"
+                      value={safety.emergencyContactPhone}
+                      onChange={(event) =>
+                        setSafety({
+                          ...safety,
+                          emergencyContactPhone: event.target.value,
+                        })
+                      }
+                      placeholder="+91 98765 43210"
+                      inputMode="tel"
+                      autoComplete="off"
+                      className="w-full rounded-lg border-[1.5px] border-line bg-paper px-4 py-3 text-[15px] outline-none focus:border-amber focus:bg-white"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    htmlFor="medical-notes"
+                    className="mb-2 block text-sm font-bold"
+                  >
+                    Medical or accessibility notes{" "}
+                    <span className="font-normal text-mist">(optional)</span>
+                  </label>
+                  <textarea
+                    id="medical-notes"
+                    rows={4}
+                    value={safety.medicalNotes}
+                    onChange={(event) =>
+                      setSafety({ ...safety, medicalNotes: event.target.value })
+                    }
+                    placeholder="Allergies, conditions, medications, accessibility needs, or anything the guide should know."
+                    maxLength={1000}
+                    className="w-full resize-none rounded-lg border-[1.5px] border-line bg-paper px-4 py-3 text-[15px] outline-none focus:border-amber focus:bg-white"
+                  />
+                  <p className="mt-1.5 text-xs text-mist">
+                    Include only what the trip leader needs to prepare safe and
+                    appropriate support.
+                  </p>
+                </div>
+                <div className="flex gap-2 rounded-[14px] border border-forest/15 bg-[#EAF1EC] p-3 text-xs text-[#54635A]">
+                  <HeartPulse size={17} className="shrink-0 text-forest" />
+                  This information is excluded from public pages and customer
+                  lists. It is intended for the specific trip roster only.
+                </div>
+              </div>
+            </StepPanel>
+          ) : null}
+
+          {step === 3 ? (
+            <StepPanel key="s3" direction={direction} reduce={reduceMotion}>
               <h2 className="font-display text-2xl mb-1">Payment method</h2>
               <p className="text-mist text-sm mb-6">
                 Secured by Razorpay {checkoutReady ? "" : "(loading…)"}
@@ -488,59 +830,86 @@ function BookingFlowContent({
                   </button>
                 </div>
               ) : null}
-              <div className="space-y-3 mb-6">
+              <div className="mb-6 space-y-3">
                 {[
                   { k: "upi", icon: Smartphone, name: "UPI", sub: "GPay, PhonePe, Paytm" },
                   { k: "card", icon: CreditCard, name: "Card", sub: "Credit / Debit" },
                   { k: "netbanking", icon: Building2, name: "Netbanking", sub: "All major banks" },
                 ].map((m) => (
-                  <button
+                  <motion.button
                     key={m.k}
                     type="button"
+                    aria-pressed={method === m.k}
                     onClick={() => setMethod(m.k)}
-                    className={`w-full flex items-center gap-3 border-[1.5px] rounded-lg p-3.5 text-left ${
-                      method === m.k ? "border-amber bg-[#FFF9F0]" : "border-line hover:border-mist"
+                    whileTap={reduceMotion ? undefined : { scale: 0.985 }}
+                    transition={springTap}
+                    className={`relative flex w-full items-center gap-3 rounded-lg border-[1.5px] p-3.5 text-left transition-colors duration-200 ${
+                      method === m.k
+                        ? "border-amber bg-[#FFF9F0]"
+                        : "border-line hover:border-mist"
                     }`}
                   >
-                    <span className="w-9 h-9 rounded-lg bg-paper-2 grid place-items-center">
+                    <span className="grid h-9 w-9 place-items-center rounded-lg bg-paper-2">
                       <m.icon size={18} />
                     </span>
                     <div className="flex-1">
-                      <div className="font-semibold text-sm">{m.name}</div>
-                      <div className="text-mist text-xs">{m.sub}</div>
+                      <div className="text-sm font-semibold">{m.name}</div>
+                      <div className="text-xs text-mist">{m.sub}</div>
                     </div>
-                    {method === m.k ? <Check size={18} className="text-amber-deep" /> : null}
-                  </button>
+                    <AnimatePresence>
+                      {method === m.k ? (
+                        <motion.span
+                          key="check"
+                          initial={reduceMotion ? false : { scale: 0.6, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={reduceMotion ? undefined : { scale: 0.6, opacity: 0 }}
+                          transition={softSpring}
+                        >
+                          <Check size={18} className="text-amber-deep" />
+                        </motion.span>
+                      ) : null}
+                    </AnimatePresence>
+                  </motion.button>
                 ))}
               </div>
-            </motion.div>
+            </StepPanel>
           ) : null}
 
-          {step === 3 ? (
-            <motion.div key="s3" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-6">
-              <div className="w-16 h-16 rounded-full bg-forest grid place-items-center mx-auto mb-5">
+          {step === 4 ? (
+            <StepPanel
+              key="s4"
+              direction={direction}
+              reduce={reduceMotion}
+              className="py-6 text-center"
+            >
+              <motion.div
+                className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full bg-forest"
+                initial={reduceMotion ? false : { scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={softSpring}
+              >
                 <PartyPopper size={32} className="text-white" />
-              </div>
-              <h2 className="font-display text-2xl mb-2">Booking created!</h2>
+              </motion.div>
+              <h2 className="mb-2 font-display text-2xl">Booking created!</h2>
               {bookingRef ? (
-                <p className="text-mist mb-1">
+                <p className="mb-1 text-mist">
                   Reference <span className="font-bold text-ink">{bookingRef}</span>
                 </p>
               ) : null}
-              <p className="text-mist text-sm mb-6">
+              <p className="mb-6 text-sm text-mist">
                 Complete payment in the Razorpay window or check your booking status.
               </p>
               <Link
                 href={bookingRef ? `/booking/${bookingRef}` : "/bookings"}
-                className="inline-flex items-center gap-2 bg-amber text-[#3A2406] rounded-full px-7 py-3.5 font-bold"
+                className="inline-flex items-center gap-2 rounded-full bg-amber px-7 py-3.5 font-bold text-[#3A2406] transition-transform hover:-translate-y-0.5"
               >
                 View booking
               </Link>
-            </motion.div>
+            </StepPanel>
           ) : null}
         </AnimatePresence>
 
-        {step < 3 ? (
+        {step < 4 ? (
           <>
             <div className="border-t border-dashed border-line mt-6 pt-5 text-sm space-y-2">
               <div className="flex justify-between text-[#54635A]">
@@ -549,39 +918,59 @@ function BookingFlowContent({
                 </span>
                 <span>{formatInr(subtotal)}</span>
               </div>
-              <div className="flex justify-between text-[#54635A]">
-                <span>Platform fee</span>
-                <span>{formatInr(fee)}</span>
-              </div>
               <div className="flex justify-between font-bold text-base pt-2 border-t border-line">
                 <span>Total</span>
                 <span>{formatInr(total)}</span>
               </div>
             </div>
-            <div className="flex gap-3 mt-6">
+            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row">
               {step > 0 ? (
-                <button
+                <motion.button
                   type="button"
                   onClick={back}
-                  className="inline-flex items-center gap-2 border-[1.5px] border-line rounded-full px-5 py-3 font-bold text-sm hover:border-ink"
+                  whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                  transition={springTap}
+                  className="touch-target inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-line px-5 py-3 text-sm font-bold transition-colors hover:border-ink"
                 >
                   <ArrowLeft size={16} /> Back
-                </button>
+                </motion.button>
               ) : null}
-              <button
+              <motion.button
                 type="button"
                 onClick={next}
-                disabled={!selectedSlot || slots.length === 0 || submitting}
-                className="flex-1 bg-amber text-[#3A2406] rounded-full py-3 font-bold shadow-[0_8px_20px_rgba(224,138,43,0.32)] hover:-translate-y-0.5 transition-transform disabled:opacity-60"
+                disabled={
+                  !selectedSlot ||
+                  selectedSlot.seatsLeft < group ||
+                  slots.length === 0 ||
+                  submitting
+                }
+                whileHover={
+                  reduceMotion ||
+                  !selectedSlot ||
+                  selectedSlot.seatsLeft < group ||
+                  submitting
+                    ? undefined
+                    : { y: -2 }
+                }
+                whileTap={
+                  reduceMotion ||
+                  !selectedSlot ||
+                  selectedSlot.seatsLeft < group ||
+                  submitting
+                    ? undefined
+                    : { scale: 0.98 }
+                }
+                transition={softSpring}
+                className="touch-target flex-1 rounded-full bg-amber py-3 font-bold text-amber-text shadow-[0_8px_20px_rgba(224,138,43,0.32)] disabled:opacity-60"
               >
-                {step === 2
+                {step === 3
                   ? submitting
                     ? "Creating order…"
                     : isGuest
                       ? "Sign in to pay"
                       : `Pay ${formatInr(total)}`
                   : "Continue"}
-              </button>
+              </motion.button>
             </div>
             <p className="flex items-center justify-center gap-1.5 text-mist text-xs mt-4">
               <Shield size={13} /> Free cancellation up to{" "}

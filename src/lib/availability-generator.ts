@@ -11,6 +11,7 @@ export type GenerateSlotsInput = {
   fromDate: string;
   toDate: string;
   priceOverride?: number | null;
+  minSeatsToConfirm?: number | null;
 };
 
 function setTimeOfDay(date: Date, time: string) {
@@ -39,6 +40,7 @@ export async function generateSlots(input: GenerateSlotsInput) {
     capacity: number;
     bookedSeats: number;
     priceOverride: number | null;
+    minSeatsToConfirm: number | null;
     status: SlotStatus;
   }[] = [];
 
@@ -64,6 +66,7 @@ export async function generateSlots(input: GenerateSlotsInput) {
       capacity: input.capacity,
       bookedSeats: 0,
       priceOverride: input.priceOverride ?? null,
+      minSeatsToConfirm: input.minSeatsToConfirm ?? null,
       status: SlotStatus.OPEN,
     });
   }

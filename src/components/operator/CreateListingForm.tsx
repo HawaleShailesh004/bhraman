@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+import { MapPin, Mountain, Ruler, Tag, Users, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/ToastProvider";
 
@@ -13,9 +14,11 @@ const DIFFICULTIES = ["EASY", "MODERATE", "CHALLENGING", "EXTREME"] as const;
 export function CreateListingForm({
   places,
   categories,
+  onCreated,
 }: {
   places: PlaceOption[];
   categories: CategoryOption[];
+  onCreated?: () => void;
 }) {
   const router = useRouter();
   const { pushToast } = useToast();
@@ -64,6 +67,7 @@ export function CreateListingForm({
       setTitle("");
       setSummary("");
       router.refresh();
+      onCreated?.();
     } catch (error) {
       pushToast({
         tone: "err",
@@ -77,130 +81,220 @@ export function CreateListingForm({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-xl rounded-lg border border-line bg-white p-6 shadow-md"
-    >
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-bold">Experience title</label>
-        <input
-          className="inp w-full"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          placeholder="Kalsubai Night Trek to Sunrise Summit"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-bold">Short summary</label>
-        <input
-          className="inp w-full"
-          value={summary}
-          onChange={(event) => setSummary(event.target.value)}
-          placeholder="One punchy line travelers see first"
-          required
-        />
-      </div>
-
-      <div className="mb-4 grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-2 block text-sm font-bold">Place</label>
-          <select
+    <form onSubmit={handleSubmit} className="w-full space-y-4">
+      <FormSection
+        icon={<Tag size={16} />}
+        title="Basics"
+        hint="What travelers see first in search and cards."
+      >
+        <Field label="Experience title">
+          <input
             className="inp w-full"
-            value={placeId}
-            onChange={(event) => setPlaceId(event.target.value)}
-          >
-            {places.map((place) => (
-              <option key={place.id} value={place.id}>
-                {place.name} · {place.city}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="mb-2 block text-sm font-bold">Category</label>
-          <select
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            placeholder="Kalsubai Night Trek to Sunrise Summit"
+            required
+          />
+        </Field>
+        <Field label="Short summary">
+          <input
             className="inp w-full"
-            value={categoryId}
-            onChange={(event) => setCategoryId(event.target.value)}
-          >
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+            value={summary}
+            onChange={(event) => setSummary(event.target.value)}
+            placeholder="One punchy line travelers see first"
+            required
+          />
+        </Field>
+      </FormSection>
 
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-bold">Difficulty</label>
-        <div className="flex flex-wrap gap-2">
-          {DIFFICULTIES.map((level) => (
-            <button
-              key={level}
-              type="button"
-              onClick={() => setDifficulty(level)}
-              className={[
-                "rounded-full border px-4 py-2 text-sm font-semibold",
-                difficulty === level
-                  ? "border-ink bg-ink text-paper"
-                  : "border-line bg-white text-ink",
-              ].join(" ")}
+      <FormSection
+        icon={<MapPin size={16} />}
+        title="Location & category"
+        hint="Where it runs and how it is classified."
+      >
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Place">
+            <select
+              className="inp w-full"
+              value={placeId}
+              onChange={(event) => setPlaceId(event.target.value)}
             >
-              {level[0] + level.slice(1).toLowerCase()}
-            </button>
-          ))}
+              {places.map((place) => (
+                <option key={place.id} value={place.id}>
+                  {place.name} · {place.city}
+                </option>
+              ))}
+            </select>
+          </Field>
+          <Field label="Category">
+            <select
+              className="inp w-full"
+              value={categoryId}
+              onChange={(event) => setCategoryId(event.target.value)}
+            >
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </Field>
         </div>
-      </div>
+        <Field label="Difficulty">
+          <div className="flex flex-wrap gap-2">
+            {DIFFICULTIES.map((level) => (
+              <button
+                key={level}
+                type="button"
+                onClick={() => setDifficulty(level)}
+                className={[
+                  "rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
+                  difficulty === level
+                    ? "border-ink bg-ink text-paper"
+                    : "border-line bg-white text-ink hover:border-mist",
+                ].join(" ")}
+              >
+                {level[0] + level.slice(1).toLowerCase()}
+              </button>
+            ))}
+          </div>
+        </Field>
+      </FormSection>
 
-      <div className="mb-4 grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-2 block text-sm font-bold">Base price (₹)</label>
-          <input
-            type="number"
-            className="inp w-full"
-            value={basePrice}
-            onChange={(event) => setBasePrice(Number(event.target.value))}
-            required
-          />
+      <FormSection
+        icon={<Ruler size={16} />}
+        title="Trip details"
+        hint="Duration and group capacity for this experience."
+      >
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Duration (hrs)">
+            <input
+              type="number"
+              className="inp w-full"
+              value={durationHours}
+              onChange={(event) => setDurationHours(Number(event.target.value))}
+              min={1}
+              required
+            />
+          </Field>
+          <Field label="Min group">
+            <div className="relative">
+              <Users
+                size={14}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-mist"
+              />
+              <input
+                type="number"
+                className="inp w-full pl-9"
+                value={minGroupSize}
+                onChange={(event) =>
+                  setMinGroupSize(Number(event.target.value))
+                }
+                min={1}
+                required
+              />
+            </div>
+          </Field>
+          <Field label="Max group">
+            <div className="relative">
+              <Users
+                size={14}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-mist"
+              />
+              <input
+                type="number"
+                className="inp w-full pl-9"
+                value={maxGroupSize}
+                onChange={(event) =>
+                  setMaxGroupSize(Number(event.target.value))
+                }
+                min={1}
+                required
+              />
+            </div>
+          </Field>
         </div>
-        <div>
-          <label className="mb-2 block text-sm font-bold">Duration (hrs)</label>
-          <input
-            type="number"
-            className="inp w-full"
-            value={durationHours}
-            onChange={(event) => setDurationHours(Number(event.target.value))}
-            required
-          />
-        </div>
-        <div>
-          <label className="mb-2 block text-sm font-bold">Min group</label>
-          <input
-            type="number"
-            className="inp w-full"
-            value={minGroupSize}
-            onChange={(event) => setMinGroupSize(Number(event.target.value))}
-            required
-          />
-        </div>
-        <div>
-          <label className="mb-2 block text-sm font-bold">Max group</label>
-          <input
-            type="number"
-            className="inp w-full"
-            value={maxGroupSize}
-            onChange={(event) => setMaxGroupSize(Number(event.target.value))}
-            required
-          />
-        </div>
-      </div>
+      </FormSection>
 
-      <Button type="submit" disabled={submitting} className="w-full">
-        {submitting ? "Saving..." : "Save as draft"}
-      </Button>
+      <FormSection
+        icon={<Wallet size={16} />}
+        title="Pricing"
+        hint="Base price per person before add-ons."
+      >
+        <Field label="Base price (₹)">
+          <div className="relative max-w-sm">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-mist">
+              ₹
+            </span>
+            <input
+              type="number"
+              className="inp w-full pl-8"
+              value={basePrice}
+              onChange={(event) => setBasePrice(Number(event.target.value))}
+              min={0}
+              required
+            />
+          </div>
+        </Field>
+      </FormSection>
+
+      <div className="sticky bottom-4 z-10 flex flex-col gap-3 rounded-[14px] border border-line/80 bg-white/95 p-4 shadow-[var(--shadow-md)] backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+        <p className="flex items-start gap-2 text-xs leading-relaxed text-mist sm:max-w-sm">
+          <Mountain size={14} className="mt-0.5 shrink-0 text-forest" />
+          Saves as a draft. Toggle publish from My listings when you are ready.
+        </p>
+        <Button
+          type="submit"
+          disabled={submitting}
+          className="w-full shrink-0 sm:w-auto"
+        >
+          {submitting ? "Saving..." : "Save as draft"}
+        </Button>
+      </div>
     </form>
+  );
+}
+
+function FormSection({
+  icon,
+  title,
+  hint,
+  children,
+}: {
+  icon: ReactNode;
+  title: string;
+  hint: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="rounded-[14px] border border-line/80 bg-white p-5 shadow-[var(--shadow-sm)] sm:p-6">
+      <header className="mb-5 flex gap-3 border-b border-line/70 pb-4">
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#EAF1EC] text-forest">
+          {icon}
+        </span>
+        <div>
+          <h3 className="font-display text-base font-bold tracking-tight">
+            {title}
+          </h3>
+          <p className="mt-0.5 text-xs text-mist">{hint}</p>
+        </div>
+      </header>
+      <div className="space-y-4">{children}</div>
+    </section>
+  );
+}
+
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-sm font-bold">{label}</label>
+      {children}
+    </div>
   );
 }

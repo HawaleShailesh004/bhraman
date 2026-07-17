@@ -49,3 +49,22 @@ export async function fetchCapturedPaymentForOrder(orderId: string) {
 
   return { paymentId: captured.id, orderId };
 }
+
+export async function refundCapturedPayment(input: {
+  paymentId: string;
+  amount: number;
+  notes?: Record<string, string>;
+  receipt: string;
+}) {
+  const client = getRazorpayClient();
+  if (!client) {
+    throw new Error("RAZORPAY_NOT_CONFIGURED");
+  }
+
+  return client.payments.refund(input.paymentId, {
+    amount: input.amount * 100,
+    speed: "normal",
+    notes: input.notes,
+    receipt: input.receipt,
+  });
+}

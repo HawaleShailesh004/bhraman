@@ -39,6 +39,8 @@ function mapBookingSummary(booking: BookingWithPayment): BookingSummary {
           amount: booking.payment.amount,
           razorpayOrderId: booking.payment.razorpayOrderId,
           razorpayPaymentId: booking.payment.razorpayPaymentId,
+          escrowStatus: booking.payment.escrowStatus,
+          disputeStatus: booking.payment.disputeStatus,
         }
       : null,
   };

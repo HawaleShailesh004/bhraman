@@ -9,4 +9,11 @@ export type OperatorSession = {
   operatorId: string;
   businessName: string;
   email: string;
+  verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
+};
+
+export type AdminSession = {
+  userId: string;
+  email: string;
+  name: string;
 };

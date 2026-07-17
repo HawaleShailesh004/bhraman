@@ -1,4 +1,9 @@
-import type { BookingStatus, PaymentStatus } from "@prisma/client";
+import type {
+  BookingStatus,
+  DisputeStatus,
+  EscrowStatus,
+  PaymentStatus,
+} from "@prisma/client";
 
 export type BookingCheckoutResponse = {
   bookingId: string;
@@ -29,5 +34,7 @@ export type BookingSummary = {
     amount: number;
     razorpayOrderId: string;
     razorpayPaymentId: string | null;
+    escrowStatus: EscrowStatus | null;
+    disputeStatus: DisputeStatus | null;
   } | null;
 };

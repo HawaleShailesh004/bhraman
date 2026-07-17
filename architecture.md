@@ -54,6 +54,8 @@ flowchart TB
 | `(marketing)` | SEO landing, about, operator recruitment | Public |
 | `(app)` | Discovery, listing detail, booking, planner | Partial (bookings) |
 | `operator/` | Dashboard, CRUD, payouts | Clerk + operator role |
+| `operators/[slug]` | Public operator trust portfolio | Public |
+| `admin/` | Escrow dispute operations | Clerk + ADMIN role |
 | `api/` | Serverless handlers | Session / secrets |
 
 UI is server-rendered where possible; client components for booking checkout, gallery scroll, planner chat, operator forms.
@@ -87,7 +89,9 @@ Listing *──1 Operator
 Listing 1──* AvailabilitySlot
 Listing 1──* ItineraryStep
 Booking *──1 Payment
+Booking 1──0..1 Review
 Operator 1──* Payout
+Payment 1──0..1 Payout
 ```
 
 **Listing media:** `heroImageUrl` (cover) + `galleryUrls[]` (additional photos, not duplicated in hero).
@@ -149,6 +153,8 @@ flowchart LR
 | POST | `/api/bookings/verify` | Confirm payment |
 | POST | `/api/planner` | AI listing search |
 | POST | `/api/webhooks/razorpay` | Payment webhook |
+| GET | `/api/cron/release-escrow` | Release held escrow after trip completion |
+| POST | `/api/bookings/[id]/dispute` | Traveler escrow dispute |
 
 ### Operator (authenticated)
 
@@ -158,13 +164,15 @@ flowchart LR
 | PATCH/DELETE | `/api/operator/listings/[id]` | Update / delete own |
 | GET/POST | `/api/operator/availability` | Slot management |
 | PATCH | `/api/operator/bookings/[id]` | Status updates |
-| PATCH | `/api/operator/payouts/[id]` | Payout actions |
+| PATCH | `/api/operator/payouts/[id]` | Reject operator self-settlement |
+| POST | `/api/operator/bookings/[id]/dispute` | Operator escrow dispute |
+| PATCH | `/api/admin/disputes/[id]` | Admin release/refund resolution |
 
 ### Cron
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| POST | `/api/cron/release-seats` | Release expired seat holds (`CRON_SECRET`) |
+| GET | `/api/cron/release-seats` | Sync unpaid holds then release seats (`CRON_SECRET`) |
 
 ---
 
@@ -220,10 +228,13 @@ Hero background, category/difficulty badges, photo count, hover peek of second g
 |---------|----------|
 | Traveler sessions | Clerk JWT; `getSessionTraveler()` |
 | Operator sessions | Clerk + DB role check; `requireSessionOperator()` |
+| Admin sessions | Clerk + `User.role = ADMIN`; server-side route gate |
 | Listing ownership | `assertOwnsListing(userId, listingId)` |
 | Booking ownership | `assertOwnsBookingRef(userId, ref)` |
 | Webhooks | Razorpay HMAC verification |
-| Cron | `CRON_SECRET` header check |
+| Escrow | Captured payments stay `HELD` until trip completion + dispute window |
+| Sensitive trip data | Emergency/medical fields selected only on owned trip-roster route |
+| Cron | Both cron routes require `CRON_SECRET`; fail closed if missing |
 | Secrets | `.env` gitignored; never in client bundle except public Clerk/Razorpay keys |
 
 ---
@@ -246,6 +257,7 @@ Resend (transactional email)
 ```
 
 **Build:** `prisma generate && next build` (see `package.json`).
+**Schema changes:** committed Prisma migrations under `prisma/migrations/`.
 
 ---
 

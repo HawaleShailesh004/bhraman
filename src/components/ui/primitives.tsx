@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { type ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Star } from "lucide-react";
 import type { Difficulty } from "@prisma/client";
 import { DIFFICULTY_META } from "@/lib/ui-present";
+import { softSpring, springTap } from "@/lib/motion";
 
 type BtnProps = {
   children: ReactNode;
@@ -25,8 +29,9 @@ export function Button({
   type = "button",
   disabled,
 }: BtnProps) {
+  const reduce = useReducedMotion();
   const base =
-    "inline-flex items-center justify-center gap-2 font-body text-sm font-semibold rounded-full px-5 py-2.5 transition-all duration-150 cursor-pointer hover:-translate-y-px active:translate-y-0 disabled:pointer-events-none disabled:opacity-60";
+    "inline-flex items-center justify-center gap-2 font-body text-sm font-semibold rounded-full px-5 py-2.5 transition-shadow duration-150 cursor-pointer disabled:pointer-events-none disabled:opacity-60";
   const variants = {
     primary:
       "bg-amber text-[#3A2406] shadow-[0_6px_16px_rgba(224,138,43,0.24)] hover:shadow-[0_8px_20px_rgba(224,138,43,0.3)]",
@@ -34,11 +39,34 @@ export function Button({
     ghost: "bg-white text-ink border-[1.5px] border-line hover:border-ink",
   };
   const cls = `${base} ${variants[variant]} ${full ? "w-full" : ""} ${className}`;
-  if (href) return <Link href={href} className={cls}>{children}</Link>;
+
+  if (href) {
+    return (
+      <motion.span
+        className={full ? "block w-full max-w-full" : "inline-flex max-w-full"}
+        whileHover={reduce ? undefined : { y: -1 }}
+        whileTap={reduce ? undefined : { scale: 0.98 }}
+        transition={springTap}
+      >
+        <Link href={href} className={cls}>
+          {children}
+        </Link>
+      </motion.span>
+    );
+  }
+
   return (
-    <button type={type} onClick={onClick} className={cls} disabled={disabled}>
+    <motion.button
+      type={type}
+      onClick={onClick}
+      className={cls}
+      disabled={disabled}
+      whileHover={reduce || disabled ? undefined : { y: -1 }}
+      whileTap={reduce || disabled ? undefined : { scale: 0.98 }}
+      transition={softSpring}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 }
 
@@ -58,7 +86,7 @@ export function Badge({
   };
   return (
     <span
-      className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full ${tones[tone]}`}
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${tones[tone]}`}
     >
       {children}
     </span>
@@ -80,7 +108,7 @@ export function DifficultyMeter({
         {heights.map((h, i) => (
           <span
             key={i}
-            className="w-1 rounded-[1px]"
+            className="w-1 rounded-[1px] transition-colors duration-200"
             style={{
               height: h,
               background:
@@ -89,12 +117,20 @@ export function DifficultyMeter({
           />
         ))}
       </span>
-      {showLabel && <span className="text-[10px] font-semibold">{meta.label}</span>}
+      {showLabel && (
+        <span className="text-[10px] font-semibold">{meta.label}</span>
+      )}
     </span>
   );
 }
 
-export function StarRating({ rating, count }: { rating: number; count?: number }) {
+export function StarRating({
+  rating,
+  count,
+}: {
+  rating: number;
+  count?: number;
+}) {
   return (
     <span className="inline-flex items-center gap-1 text-xs font-semibold text-ink">
       <Star size={12} className="fill-amber text-amber" />
@@ -117,7 +153,7 @@ export function TopoLines({
 }) {
   return (
     <svg
-      className={`absolute inset-0 w-full h-full ${className}`}
+      className={`absolute inset-0 h-full w-full ${className}`}
       preserveAspectRatio="none"
       viewBox="0 0 1200 400"
       style={{ opacity }}

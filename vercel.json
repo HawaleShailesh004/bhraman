@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/release-seats",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/release-escrow",
+      "schedule": "0 * * * *"
+    }
+  ]
+}

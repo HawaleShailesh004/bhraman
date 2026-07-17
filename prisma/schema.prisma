@@ -28,8 +28,11 @@ enum ListingStatus {
 
 enum SlotStatus {
   OPEN
+  FILLING_FAST
+  CONFIRMED
   FULL
-  CLOSED
+  CANCELLED
+  COMPLETED
 }
 
 enum BookingStatus {
@@ -55,6 +58,45 @@ enum PayoutStatus {
   FAILED
 }
 
+enum PosHStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETE
+}
+
+enum VerificationStatus {
+  UNVERIFIED
+  PENDING
+  VERIFIED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum EscrowStatus {
+  HELD
+  RELEASED
+  REFUNDED
+  DISPUTED
+}
+
+enum DisputeStatus {
+  OPEN
+  PROCESSING
+  RESOLVED_OPERATOR
+  RESOLVED_CUSTOMER
+  RESOLVED_PARTIAL
+}
+
+enum DisputeActor {
+  TRAVELER
+  OPERATOR
+}
+
 model User {
   id           String      @id @default(cuid())
   clerkId      String?     @unique
@@ -68,23 +110,34 @@ model User {
 
   operator Operator?
   bookings Booking[]
-  reviews  Review[]
 }
 
 model Operator {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  businessName    String
-  baseCity        String
-  bio             String   @db.Text
-  isVerified      Boolean  @default(false)
-  verifiedAt      DateTime?
-  completedTrips  Int      @default(0)
-  avgResponseMins Int      @default(30)
-  ratingAvg       Float    @default(0)
-  ratingCount     Int      @default(0)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                 String             @id @default(cuid())
+  userId             String             @unique
+  slug               String             @unique
+  businessName       String
+  baseCity           String
+  bio                String             @db.Text
+  yearsOperating     Int?
+  panNumber          String?
+  gstNumber          String?
+  mtdcRegistrationNo String?
+  insuranceStatus    Boolean            @default(false)
+  insuranceProvider  String?
+  insuranceDetails   String?            @db.Text
+  femaleGuideCount   Int                @default(0)
+  totalGuideCount    Int                @default(0)
+  posHPolicyStatus   PosHStatus         @default(NOT_STARTED)
+  verificationStatus VerificationStatus @default(UNVERIFIED)
+  verifiedAt         DateTime?
+  phoneVerified      Boolean            @default(false)
+  completedTrips     Int                @default(0)
+  avgResponseMins    Int                @default(30)
+  ratingAvg          Float              @default(0)
+  ratingCount        Int                @default(0)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   listings Listing[]
@@ -139,6 +192,7 @@ model Listing {
   thingsToCarry      String[]
   meetingPoint       String?
   cancellationPolicy Json
+  attributes         Json?
   heroImageUrl       String?
   galleryUrls        String[]      @default([])
   status             ListingStatus @default(DRAFT)
@@ -172,16 +226,20 @@ model ItineraryStep {
 }
 
 model AvailabilitySlot {
-  id            String     @id @default(cuid())
-  listingId     String
-  startTime     DateTime
-  endTime       DateTime
-  capacity      Int
-  bookedSeats   Int        @default(0)
-  priceOverride Int?
-  status        SlotStatus @default(OPEN)
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  id                String     @id @default(cuid())
+  listingId         String
+  startTime         DateTime
+  endTime           DateTime
+  capacity          Int
+  bookedSeats       Int        @default(0)
+  maleCount         Int        @default(0)
+  femaleCount       Int        @default(0)
+  otherCount        Int        @default(0)
+  minSeatsToConfirm Int?
+  priceOverride     Int?
+  status            SlotStatus @default(OPEN)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
 
   listing  Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
   bookings Booking[]
@@ -190,62 +248,85 @@ model AvailabilitySlot {
 }
 
 model Booking {
-  id                   String        @id @default(cuid())
-  bookingRef           String        @unique
-  userId               String
-  listingId            String
-  slotId               String
-  groupSize            Int
-  pricePerHead         Int
-  totalAmount          Int
-  listingTitleSnapshot String
-  startTimeSnapshot    DateTime
-  status               BookingStatus @default(PENDING)
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
+  id                    String        @id @default(cuid())
+  bookingRef            String        @unique
+  userId                String
+  listingId             String
+  slotId                String
+  groupSize             Int
+  pricePerHead          Int
+  totalAmount           Int
+  listingTitleSnapshot  String
+  startTimeSnapshot     DateTime
+  customerEmail         String?
+  customerPhone         String?
+  customerGender        Gender?
+  isRepeatCustomer      Boolean       @default(false)
+  emergencyContactName  String?
+  emergencyContactPhone String?
+  medicalNotes          String?       @db.Text
+  status                BookingStatus @default(PENDING)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
 
   user    User             @relation(fields: [userId], references: [id])
   listing Listing          @relation(fields: [listingId], references: [id])
   slot    AvailabilitySlot @relation(fields: [slotId], references: [id])
   payment Payment?
+  review  Review?
 
   @@index([userId])
   @@index([listingId])
   @@index([status])
+  @@index([customerEmail])
+  @@index([customerPhone])
 }
 
 model Payment {
-  id                String        @id @default(cuid())
-  bookingId         String        @unique
-  amount            Int
-  razorpayOrderId   String        @unique
-  razorpayPaymentId String?
-  status            PaymentStatus @default(CREATED)
-  refundedAmount    Int?
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
+  id                    String         @id @default(cuid())
+  bookingId             String         @unique
+  amount                Int
+  razorpayOrderId       String         @unique
+  razorpayPaymentId     String?
+  razorpayRefundId      String?
+  status                PaymentStatus  @default(CREATED)
+  refundedAmount        Int?
+  escrowStatus          EscrowStatus?
+  heldAt                DateTime?
+  releasedAt            DateTime?
+  disputeReason         String?        @db.Text
+  disputeStatus         DisputeStatus?
+  disputeOpenedBy       DisputeActor?
+  disputeCreatedAt      DateTime?
+  disputeResolutionNote String?        @db.Text
+  disputeResolvedAt     DateTime?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
 
   booking Booking @relation(fields: [bookingId], references: [id])
+  payout  Payout?
+
+  @@index([escrowStatus])
 }
 
 model Review {
-  id         String   @id @default(cuid())
-  userId     String
-  listingId  String
-  rating     Int
-  comment    String   @db.Text
-  isVerified Boolean  @default(false)
-  createdAt  DateTime @default(now())
+  id        String   @id @default(cuid())
+  bookingId String   @unique
+  listingId String
+  rating    Int
+  comment   String   @db.Text
+  createdAt DateTime @default(now())
 
-  user    User    @relation(fields: [userId], references: [id])
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id])
 
-  @@unique([userId, listingId])
+  @@index([listingId])
 }
 
 model Payout {
   id          String       @id @default(cuid())
   operatorId  String
+  paymentId   String?      @unique
   amount      Int
   commission  Int
   netAmount   Int
@@ -257,6 +338,7 @@ model Payout {
   updatedAt   DateTime     @updatedAt
 
   operator Operator @relation(fields: [operatorId], references: [id])
+  payment  Payment? @relation(fields: [paymentId], references: [id])
 
   @@index([operatorId])
 }

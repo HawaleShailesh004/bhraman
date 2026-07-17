@@ -68,6 +68,11 @@ html {
   .font-body {
     font-variation-settings: "wdth" 100;
   }
+
+  :where(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid rgba(224, 138, 43, 0.35);
+    outline-offset: 2px;
+  }
 }
 
 @layer components {
@@ -205,7 +210,7 @@ html {
   }
 
   .booking-panel {
-    @apply sticky top-5 max-w-[360px] rounded-lg border border-line bg-white p-[22px] shadow-lg;
+    @apply sticky top-24 w-full max-w-none rounded-lg border border-line bg-white p-4 shadow-lg sm:p-[22px] lg:max-w-[360px];
   }
 
   .bk-trust {
@@ -273,7 +278,7 @@ html {
   }
 
   .wrap {
-    @apply relative z-[2] mx-auto max-w-[1180px] px-7;
+    @apply relative z-[2] mx-auto max-w-[1180px] px-4 sm:px-7;
   }
 
   /* design-system.html - masthead */
@@ -621,7 +626,7 @@ html {
   /* components-core.html - booking panel */
   .booking,
   .booking-panel {
-    @apply sticky top-5 max-w-[360px] rounded-lg border border-line bg-white p-[22px] shadow-lg;
+    @apply sticky top-24 w-full max-w-none rounded-lg border border-line bg-white p-4 shadow-lg sm:p-[22px] lg:max-w-[360px];
   }
 
   .bk-price b {
@@ -633,7 +638,7 @@ html {
   }
 
   .stepper button {
-    @apply grid h-[30px] w-[30px] place-items-center rounded-full border-[1.5px] border-line bg-white text-lg leading-none text-ink;
+    @apply grid h-11 w-11 place-items-center rounded-full border-[1.5px] border-line bg-white text-lg leading-none text-ink;
   }
 
   .bk-breakdown {
@@ -722,7 +727,7 @@ html {
   }
 
   .dash-main {
-    @apply bg-paper p-6;
+    @apply bg-paper p-4 sm:p-6;
   }
 
   .dash-top {
@@ -767,7 +772,7 @@ html {
 
   /* components-app.html - table */
   .tbl-wrap {
-    @apply overflow-hidden rounded-md border border-line bg-white shadow-sm;
+    @apply overflow-x-auto rounded-md border border-line bg-white shadow-sm;
   }
 
   .tbl-head {
@@ -901,12 +906,54 @@ html {
   }
 
   .page-shell {
-    @apply mx-auto max-w-6xl px-6 sm:px-8;
+    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
   }
 
   .section-y {
-    padding-top: var(--space-section);
-    padding-bottom: var(--space-section);
+    padding-top: clamp(3.5rem, 8vw, var(--space-section));
+    padding-bottom: clamp(3.5rem, 8vw, var(--space-section));
+  }
+
+  .safe-pb {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .safe-pt {
+    padding-top: max(0px, env(safe-area-inset-top));
+  }
+
+  .touch-target {
+    @apply min-h-11 min-w-11;
+  }
+
+  .reveal-up {
+    animation: reveal-up 600ms var(--ease) both;
+  }
+
+  .reveal-scale {
+    animation: reveal-scale 520ms var(--ease) both;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -917,6 +964,14 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 
   .listing-card:hover,
   .btn:hover,
@@ -926,5 +981,12 @@ html {
 
   .skeleton-shimmer {
     animation: none;
+  }
+
+  .reveal-up,
+  .reveal-scale {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

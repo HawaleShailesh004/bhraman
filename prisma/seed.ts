@@ -162,18 +162,22 @@ async function main() {
     const operator = await prisma.operator.upsert({
       where: { userId: user.id },
       update: {
+        slug: slugify(op.businessName),
         businessName: op.businessName,
         baseCity: op.baseCity,
         bio: op.bio,
-        isVerified: true,
+        yearsOperating: Math.max(0, new Date().getFullYear() - op.yearStarted),
+        verificationStatus: "VERIFIED",
         verifiedAt: new Date(),
       },
       create: {
         userId: user.id,
+        slug: slugify(op.businessName),
         businessName: op.businessName,
         baseCity: op.baseCity,
         bio: op.bio,
-        isVerified: true,
+        yearsOperating: Math.max(0, new Date().getFullYear() - op.yearStarted),
+        verificationStatus: "VERIFIED",
         verifiedAt: new Date(),
         completedTrips: Math.floor(Math.random() * 1200) + 200,
         avgResponseMins: Math.floor(Math.random() * 30) + 8,
@@ -287,8 +291,9 @@ async function main() {
     const existing = await prisma.booking.findFirst({
       where: { userId: demoUser.id, listingId: firstListing.id },
     });
-    if (!existing) {
-      await prisma.booking.create({
+    const booking =
+      existing ??
+      (await prisma.booking.create({
         data: {
           bookingRef: "BHR-DEMO1",
           userId: demoUser.id,
@@ -301,25 +306,18 @@ async function main() {
           startTimeSnapshot: slot.startTime,
           status: "COMPLETED",
         },
-      });
-      await prisma.review.upsert({
-        where: {
-          userId_listingId: {
-            userId: demoUser.id,
-            listingId: firstListing.id,
-          },
-        },
-        update: {},
-        create: {
-          userId: demoUser.id,
-          listingId: firstListing.id,
-          rating: 5,
-          isVerified: true,
-          comment:
-            "Guide was punctual and safety-first the whole way. Booking took two minutes.",
-        },
-      });
-    }
+      }));
+    await prisma.review.upsert({
+      where: { bookingId: booking.id },
+      update: {},
+      create: {
+        bookingId: booking.id,
+        listingId: firstListing.id,
+        rating: 5,
+        comment:
+          "Guide was punctual and safety-first the whole way. Booking took two minutes.",
+      },
+    });
   }
 
   const counts = {

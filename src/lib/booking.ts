@@ -1,6 +1,13 @@
 import "server-only";
 
-import { BookingStatus, PaymentStatus, SlotStatus } from "@prisma/client";
+import {
+  BookingStatus,
+  EscrowStatus,
+  Gender,
+  PaymentStatus,
+  SlotStatus,
+} from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/email";
 import { fetchCapturedPaymentForOrder } from "@/lib/razorpay";
 import { prisma } from "@/lib/prisma";
@@ -17,7 +24,67 @@ export type CreateBookingInput = {
   listingId: string;
   slotId: string;
   groupSize: number;
+  customerEmail?: string | null;
+  customerPhone?: string | null;
+  customerGender?: Gender | null;
+  emergencyContactName?: string | null;
+  emergencyContactPhone?: string | null;
+  medicalNotes?: string | null;
 };
+
+function getActiveSlotStatus(input: {
+  bookedSeats: number;
+  capacity: number;
+  minSeatsToConfirm: number | null;
+  confirmedSeats: number;
+}) {
+  if (input.bookedSeats >= input.capacity) return SlotStatus.FULL;
+  if (
+    input.minSeatsToConfirm !== null &&
+    input.confirmedSeats >= input.minSeatsToConfirm
+  ) {
+    return SlotStatus.CONFIRMED;
+  }
+  if (input.bookedSeats / input.capacity >= 0.7) {
+    return SlotStatus.FILLING_FAST;
+  }
+  return SlotStatus.OPEN;
+}
+
+async function refreshSlotStatus(
+  tx: Prisma.TransactionClient,
+  slotId: string,
+) {
+  const [slot, confirmed] = await Promise.all([
+    tx.availabilitySlot.findUniqueOrThrow({ where: { id: slotId } }),
+    tx.booking.aggregate({
+      where: {
+        slotId,
+        status: { in: [BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
+      },
+      _sum: { groupSize: true },
+    }),
+  ]);
+
+  if (
+    slot.status === SlotStatus.CANCELLED ||
+    slot.status === SlotStatus.COMPLETED
+  ) {
+    return slot;
+  }
+
+  return tx.availabilitySlot.update({
+    where: { id: slotId },
+    data: {
+      status: getActiveSlotStatus({
+        bookedSeats: slot.bookedSeats,
+        capacity: slot.capacity,
+        minSeatsToConfirm: slot.minSeatsToConfirm,
+        confirmedSeats: confirmed._sum.groupSize ?? 0,
+      }),
+    },
+  });
+}
 
 function genRef() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -36,6 +103,7 @@ export async function createBooking(input: CreateBookingInput) {
         listing: {
           select: {
             id: true,
+            operatorId: true,
             title: true,
             minGroupSize: true,
             maxGroupSize: true,
@@ -58,7 +126,11 @@ export async function createBooking(input: CreateBookingInput) {
       UPDATE "AvailabilitySlot"
       SET "bookedSeats" = "bookedSeats" + ${input.groupSize}
       WHERE id = ${input.slotId}
-        AND status = 'OPEN'::"SlotStatus"
+        AND status IN (
+          'OPEN'::"SlotStatus",
+          'FILLING_FAST'::"SlotStatus",
+          'CONFIRMED'::"SlotStatus"
+        )
         AND "bookedSeats" + ${input.groupSize} <= capacity
     `;
 
@@ -83,6 +155,14 @@ export async function createBooking(input: CreateBookingInput) {
     }
 
     const pricePerHead = slot.priceOverride ?? slot.listing.basePrice;
+    const priorCompletedBooking = await tx.booking.findFirst({
+      where: {
+        userId: input.userId,
+        listing: { operatorId: slotRecord.listing.operatorId },
+        status: BookingStatus.COMPLETED,
+      },
+      select: { id: true },
+    });
     const booking = await tx.booking.create({
       data: {
         bookingRef: genRef(),
@@ -94,16 +174,18 @@ export async function createBooking(input: CreateBookingInput) {
         totalAmount: pricePerHead * input.groupSize,
         listingTitleSnapshot: slot.listing.title,
         startTimeSnapshot: slot.startTime,
+        customerEmail: input.customerEmail ?? null,
+        customerPhone: input.customerPhone ?? null,
+        customerGender: input.customerGender ?? null,
+        isRepeatCustomer: Boolean(priorCompletedBooking),
+        emergencyContactName: input.emergencyContactName ?? null,
+        emergencyContactPhone: input.emergencyContactPhone ?? null,
+        medicalNotes: input.medicalNotes ?? null,
         status: BookingStatus.PENDING,
       },
     });
 
-    if (slot.bookedSeats >= slot.capacity) {
-      await tx.availabilitySlot.update({
-        where: { id: slot.id },
-        data: { status: SlotStatus.FULL },
-      });
-    }
+    await refreshSlotStatus(tx, slot.id);
 
     return booking;
   });
@@ -113,36 +195,94 @@ export async function confirmCapturedPayment(input: {
   razorpayOrderId: string;
   razorpayPaymentId: string;
 }) {
-  const existing = await prisma.payment.findUnique({
-    where: { razorpayOrderId: input.razorpayOrderId },
-  });
+  const result = await prisma.$transaction(
+    async (tx) => {
+      const existing = await tx.payment.findUnique({
+        where: { razorpayOrderId: input.razorpayOrderId },
+        include: {
+          booking: { select: { id: true, slotId: true, customerGender: true } },
+        },
+      });
 
-  if (!existing) {
-    return { confirmed: false as const, reason: "PAYMENT_NOT_FOUND" as const };
+      if (!existing) {
+        return {
+          confirmed: false as const,
+          reason: "PAYMENT_NOT_FOUND" as const,
+        };
+      }
+
+      if (existing.status === PaymentStatus.CAPTURED) {
+        return { confirmed: true as const, alreadyConfirmed: true as const };
+      }
+
+      const claimed = await tx.payment.updateMany({
+        where: { id: existing.id, status: PaymentStatus.CREATED },
+        data: {
+          status: PaymentStatus.CAPTURED,
+          razorpayPaymentId: input.razorpayPaymentId,
+          escrowStatus: EscrowStatus.HELD,
+          heldAt: new Date(),
+        },
+      });
+
+      if (claimed.count === 0) {
+        return {
+          confirmed: false as const,
+          reason: "PAYMENT_NOT_CONFIRMABLE" as const,
+        };
+      }
+
+      await tx.booking.update({
+        where: { id: existing.booking.id },
+        data: { status: BookingStatus.CONFIRMED },
+      });
+
+      // These counters describe lead travelers until participant manifests
+      // are introduced; groupSize must not be attributed to one gender.
+      if (existing.booking.customerGender === Gender.MALE) {
+        await tx.availabilitySlot.update({
+          where: { id: existing.booking.slotId },
+          data: { maleCount: { increment: 1 } },
+        });
+      } else if (existing.booking.customerGender === Gender.FEMALE) {
+        await tx.availabilitySlot.update({
+          where: { id: existing.booking.slotId },
+          data: { femaleCount: { increment: 1 } },
+        });
+      } else if (existing.booking.customerGender === Gender.OTHER) {
+        await tx.availabilitySlot.update({
+          where: { id: existing.booking.slotId },
+          data: { otherCount: { increment: 1 } },
+        });
+      }
+      await refreshSlotStatus(tx, existing.booking.slotId);
+
+      return {
+        confirmed: true as const,
+        alreadyConfirmed: false as const,
+        bookingId: existing.booking.id,
+      };
+    },
+    { isolationLevel: "Serializable" },
+  );
+
+  if (result.confirmed && !result.alreadyConfirmed && "bookingId" in result) {
+    try {
+      await sendBookingConfirmation(result.bookingId);
+    } catch (error) {
+      console.error("Booking confirmed but confirmation email failed", {
+        bookingId: result.bookingId,
+        error,
+      });
+    }
   }
 
-  if (existing.status === "CAPTURED") {
-    return { confirmed: true as const, alreadyConfirmed: true as const };
-  }
-
-  await prisma.$transaction(async (tx) => {
-    await tx.payment.update({
-      where: { razorpayOrderId: input.razorpayOrderId },
-      data: {
-        status: PaymentStatus.CAPTURED,
-        razorpayPaymentId: input.razorpayPaymentId,
-      },
-    });
-
-    await tx.booking.update({
-      where: { id: existing.bookingId },
-      data: { status: BookingStatus.CONFIRMED },
-    });
-  });
-
-  await sendBookingConfirmation(existing.bookingId);
-
-  return { confirmed: true as const, alreadyConfirmed: false as const };
+  return result.confirmed && "alreadyConfirmed" in result
+    ? {
+        confirmed: result.confirmed,
+        alreadyConfirmed: result.alreadyConfirmed,
+      }
+    : result;
 }
 
 export async function syncPendingPayment(razorpayOrderId: string) {
@@ -173,23 +313,54 @@ export async function releaseExpiredPendingBookings(cutoffMinutes = 15) {
   let released = 0;
 
   for (const booking of staleBookings) {
-    await prisma.$transaction(async (tx) => {
-      await tx.availabilitySlot.update({
-        where: { id: booking.slotId },
-        data: {
-          bookedSeats: { decrement: booking.groupSize },
-          status: SlotStatus.OPEN,
-        },
-      });
-
-      if (booking.payment) {
-        await tx.payment.delete({ where: { bookingId: booking.id } });
+    if (
+      booking.payment &&
+      !booking.payment.razorpayOrderId.startsWith("mock_order_")
+    ) {
+      try {
+        const synced = await syncPendingPayment(
+          booking.payment.razorpayOrderId,
+        );
+        if (synced.confirmed) continue;
+      } catch (error) {
+        console.error("Seat release skipped because payment sync failed", {
+          bookingId: booking.id,
+          error,
+        });
+        continue;
       }
+    }
 
-      await tx.booking.delete({ where: { id: booking.id } });
-    });
+    const didRelease = await prisma.$transaction(
+      async (tx) => {
+        const current = await tx.booking.findUnique({
+          where: { id: booking.id },
+          include: { payment: true, slot: true },
+        });
+        if (
+          !current ||
+          current.status !== BookingStatus.PENDING ||
+          current.payment?.status === PaymentStatus.CAPTURED
+        ) {
+          return false;
+        }
 
-    released += 1;
+        await tx.availabilitySlot.update({
+          where: { id: current.slotId },
+          data: { bookedSeats: { decrement: current.groupSize } },
+        });
+
+        if (current.payment) {
+          await tx.payment.delete({ where: { bookingId: current.id } });
+        }
+        await tx.booking.delete({ where: { id: current.id } });
+        await refreshSlotStatus(tx, current.slotId);
+        return true;
+      },
+      { isolationLevel: "Serializable" },
+    );
+
+    if (didRelease) released += 1;
   }
 
   return { released };
@@ -211,6 +382,12 @@ export async function cancelBooking(
   if (!booking) {
     throw new BookingError("BOOKING_NOT_FOUND");
   }
+  if (
+    booking.status !== BookingStatus.PENDING &&
+    booking.status !== BookingStatus.CONFIRMED
+  ) {
+    throw new BookingError("BOOKING_NOT_FOUND");
+  }
 
   const policy = booking.listing
     .cancellationPolicy as CancellationPolicy;
@@ -226,10 +403,7 @@ export async function cancelBooking(
   await prisma.$transaction(async (tx) => {
     await tx.availabilitySlot.update({
       where: { id: booking.slotId },
-      data: {
-        bookedSeats: { decrement: booking.groupSize },
-        status: SlotStatus.OPEN,
-      },
+      data: { bookedSeats: { decrement: booking.groupSize } },
     });
 
     if (booking.payment) {
@@ -241,7 +415,34 @@ export async function cancelBooking(
             refundAmount === booking.totalAmount
               ? PaymentStatus.REFUNDED
               : PaymentStatus.PARTIALLY_REFUNDED,
+          escrowStatus: EscrowStatus.REFUNDED,
         },
+      });
+    }
+
+    if (
+      booking.payment?.status === PaymentStatus.CAPTURED &&
+      booking.customerGender === Gender.MALE
+    ) {
+      await tx.availabilitySlot.update({
+        where: { id: booking.slotId },
+        data: { maleCount: { decrement: 1 } },
+      });
+    } else if (
+      booking.payment?.status === PaymentStatus.CAPTURED &&
+      booking.customerGender === Gender.FEMALE
+    ) {
+      await tx.availabilitySlot.update({
+        where: { id: booking.slotId },
+        data: { femaleCount: { decrement: 1 } },
+      });
+    } else if (
+      booking.payment?.status === PaymentStatus.CAPTURED &&
+      booking.customerGender === Gender.OTHER
+    ) {
+      await tx.availabilitySlot.update({
+        where: { id: booking.slotId },
+        data: { otherCount: { decrement: 1 } },
       });
     }
 
@@ -254,7 +455,8 @@ export async function cancelBooking(
             : BookingStatus.CANCELLED,
       },
     });
-  });
+    await refreshSlotStatus(tx, booking.slotId);
+  }, { isolationLevel: "Serializable" });
 
   return { refundAmount };
 }

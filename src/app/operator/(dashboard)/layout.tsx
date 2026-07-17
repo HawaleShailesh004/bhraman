@@ -20,7 +20,10 @@ export default async function OperatorDashboardLayout({
     }
 
     return (
-      <OperatorShell businessName={session.businessName}>
+      <OperatorShell
+        businessName={session.businessName}
+        verificationStatus={session.verificationStatus}
+      >
         {children}
       </OperatorShell>
     );
@@ -32,6 +35,11 @@ export default async function OperatorDashboardLayout({
   }
 
   return (
-    <OperatorShell businessName={session.businessName}>{children}</OperatorShell>
+    <OperatorShell
+      businessName={session.businessName}
+      verificationStatus={session.verificationStatus}
+    >
+      {children}
+    </OperatorShell>
   );
 }
