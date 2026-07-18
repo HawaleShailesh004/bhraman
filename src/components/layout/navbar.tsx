@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Menu, X, Sparkles } from "lucide-react";
+import { Heart, Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { AuthNav } from "@/components/layout/auth-nav";
 
@@ -93,12 +93,6 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
             <Heart size={17} className="text-ink" />
           </button>
           <AuthNav solid={solid} />
-          <Link
-            href="/plan"
-            className="hidden lg:inline-flex items-center gap-1.5 bg-amber text-[#3A2406] rounded-full px-5 py-2.5 font-bold text-sm transition-transform hover:-translate-y-0.5"
-          >
-            <Sparkles size={15} /> Plan trip
-          </Link>
 
           <button
             type="button"
@@ -156,13 +150,6 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
                   {clerkConfigured ? "Sign in" : "My bookings"}
                 </Link>
               </nav>
-              <Link
-                href="/plan"
-                onClick={() => setOpen(false)}
-                className="mt-6 inline-flex items-center justify-center gap-2 bg-amber text-[#3A2406] rounded-full px-6 py-3.5 font-bold"
-              >
-                <Sparkles size={16} /> Plan my trip
-              </Link>
             </motion.div>
           </>
         ) : null}

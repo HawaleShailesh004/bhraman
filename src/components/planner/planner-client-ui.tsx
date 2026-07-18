@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -28,6 +29,11 @@ const SUGGESTIONS = [
 ];
 
 export function PlannerClientUi() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const lastSeededQ = useRef<string | null>(null);
+
   const [input, setInput] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
   const [submitted, setSubmitted] = useState("");
@@ -40,8 +46,35 @@ export function PlannerClientUi() {
     listings: ListingCardData[];
   } | null>(null);
 
+  /** Seed input from dock / deep links: /plan?q=... */
+  useEffect(() => {
+    const q = searchParams.get("q")?.trim();
+    if (!q) {
+      lastSeededQ.current = null;
+      return;
+    }
+    if (q === lastSeededQ.current) return;
+    lastSeededQ.current = q;
+    setInput(q);
+    setPhase("idle");
+    window.requestAnimationFrame(() => {
+      inputRef.current?.focus();
+      inputRef.current?.setSelectionRange(q.length, q.length);
+    });
+    router.replace("/plan", { scroll: false });
+  }, [searchParams, router]);
+
+  function fillInput(text: string) {
+    setInput(text);
+    window.requestAnimationFrame(() => {
+      inputRef.current?.focus();
+      inputRef.current?.setSelectionRange(text.length, text.length);
+    });
+  }
+
   async function run(query: string) {
     if (!query.trim()) return;
+    if (phase === "thinking" || phase === "reasoning") return;
     setSubmitted(query);
     setInput("");
     setPhase("thinking");
@@ -82,6 +115,8 @@ export function PlannerClientUi() {
     return () => clearTimeout(t);
   }, [phase, reasoning]);
 
+  const busy = phase === "thinking" || phase === "reasoning";
+
   return (
     <div className="max-w-3xl mx-auto px-6 pt-28 pb-20">
       <div className="text-center mb-8">
@@ -103,28 +138,33 @@ export function PlannerClientUi() {
           <div className="flex items-center gap-3 bg-white/10 border border-white/15 rounded-full px-5 py-3.5">
             <Sparkles size={18} className="text-amber shrink-0" />
             <input
+              ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && run(input)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !busy) run(input);
+              }}
               placeholder="e.g. Pune, intermediate, ₹4000, want a waterfall"
-              className="bg-transparent flex-1 text-paper placeholder:text-[#8FA396] text-[15px] outline-none"
+              disabled={busy}
+              className="bg-transparent flex-1 text-paper placeholder:text-[#8FA396] text-[15px] outline-none disabled:opacity-60"
             />
             <button
               type="button"
               onClick={() => run(input)}
+              disabled={busy || !input.trim()}
               aria-label="Send"
-              className="w-10 h-10 rounded-full bg-amber grid place-items-center shrink-0 hover:scale-105 transition-transform"
+              className="w-10 h-10 rounded-full bg-amber grid place-items-center shrink-0 hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100"
             >
               <Send size={17} className="text-[#3A2406]" />
             </button>
           </div>
-          {phase === "idle" ? (
+          {phase === "idle" || phase === "results" ? (
             <div className="flex gap-2 flex-wrap mt-4">
               {SUGGESTIONS.map((s) => (
                 <button
                   key={s}
                   type="button"
-                  onClick={() => run(s)}
+                  onClick={() => fillInput(s)}
                   className="text-[13px] bg-white/10 border border-white/12 text-[#C9D2CB] px-3.5 py-2 rounded-full hover:bg-white/15 transition-colors text-left"
                 >
                   {s}
@@ -241,7 +281,17 @@ export function PlannerClientUi() {
                       </Link>
                       <button
                         type="button"
-                        onClick={() => setPhase("idle")}
+                        onClick={() => {
+                          setPhase("idle");
+                          setSubmitted("");
+                          setReasoning("");
+                          setMatches([]);
+                          setError(null);
+                          planRef.current = null;
+                          window.requestAnimationFrame(() =>
+                            inputRef.current?.focus(),
+                          );
+                        }}
                         className="text-mist text-sm hover:text-ink"
                       >
                         Start over

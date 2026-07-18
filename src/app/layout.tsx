@@ -14,9 +14,9 @@ import { isClerkEnabled } from "@/lib/auth";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Bhraman - Maharashtra's wild, made bookable",
+  title: "Bhraman - The Sahyadris, minus the guesswork",
   description:
-    "A trust-first marketplace connecting weekend adventurers with verified local operators.",
+    "Verified Maharashtra adventure operators, honest weather calls, and payments held until you're back. Plan with AI and book trips you can actually trust.",
 };
 
 export default function RootLayout({

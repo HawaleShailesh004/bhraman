@@ -9,6 +9,7 @@ import {
   getCatalogListings,
 } from "@/lib/seed-catalog";
 import type {
+  AdventureMapPin,
   ListingCardData,
   ListingDetailData,
   ListingFilters,
@@ -516,4 +517,72 @@ export async function searchPlannerListings(filters: ListingFilters) {
       .sort((a, b) => b.ratingAvg - a.ratingAvg)
       .slice(0, 6)
   );
+}
+
+function pinsFromListings(
+  listings: {
+    slug: string;
+    title: string;
+    category: { slug: string };
+    place: {
+      slug: string;
+      name: string;
+      district: string;
+      latitude: number;
+      longitude: number;
+    };
+  }[],
+): AdventureMapPin[] {
+  const byPlace = new Map<string, AdventureMapPin>();
+  for (const listing of listings) {
+    const key = listing.place.slug;
+    const existing = byPlace.get(key);
+    if (existing) {
+      existing.listingCount += 1;
+      continue;
+    }
+    byPlace.set(key, {
+      placeSlug: listing.place.slug,
+      placeName: listing.place.name,
+      district: listing.place.district,
+      latitude: listing.place.latitude,
+      longitude: listing.place.longitude,
+      listingCount: 1,
+      sampleSlug: listing.slug,
+      sampleTitle: listing.title,
+      categorySlug: listing.category.slug,
+    });
+  }
+  return Array.from(byPlace.values()).sort(
+    (a, b) => b.listingCount - a.listingCount,
+  );
+}
+
+export async function getAdventureMapPins(): Promise<AdventureMapPin[]> {
+  const fallback = () => pinsFromListings(getCatalogAllListings());
+
+  return withCatalogFallback(async () => {
+    if (!(await dbHasPublishedListings())) return fallback();
+
+    const listings = await prisma.listing.findMany({
+      where: { status: "PUBLISHED" },
+      select: {
+        slug: true,
+        title: true,
+        category: { select: { slug: true } },
+        place: {
+          select: {
+            slug: true,
+            name: true,
+            district: true,
+            latitude: true,
+            longitude: true,
+          },
+        },
+      },
+      take: 120,
+    });
+
+    return pinsFromListings(listings);
+  }, fallback);
 }

@@ -22,6 +22,7 @@ import { formatInr } from "@/lib/format";
 import { softSpring, springTap } from "@/lib/motion";
 import { listingImageStyle, operatorInitials } from "@/lib/ui-present";
 import { Button, StarRating } from "@/components/ui/primitives";
+import { EscrowReserveNote } from "@/components/home/proof-and-operators";
 import type { ReviewData } from "@/types/listing";
 import type { AvailabilitySlotData } from "@/types/listing";
 
@@ -259,27 +260,27 @@ export function OperatorBlockUi({ listing }: { listing: ListingDetailData }) {
           </div>
         ))}
       </div>
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div className="mt-3.5 flex flex-wrap items-center gap-x-2.5 gap-y-2">
         {op.yearsOperating !== null ? (
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-paper-2 px-3 py-1.5 text-xs font-semibold text-[#33433A]">
-            <BadgeCheck size={13} className="text-forest" />
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-paper-2 px-3 py-1.5 text-xs font-semibold text-[#33433A]">
+            <BadgeCheck size={13} className="shrink-0 text-forest" />
             {op.yearsOperating}+ years operating
           </span>
         ) : null}
         <span
-          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${
+          className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${
             op.insuranceStatus
               ? "bg-[#EAF1EC] text-forest"
               : "bg-paper-2 text-mist"
           }`}
         >
-          <Shield size={13} />
+          <Shield size={13} className="shrink-0" />
           {op.insuranceStatus
             ? `Insurance${op.insuranceProvider ? ` · ${op.insuranceProvider}` : ""}`
             : "Insurance not verified"}
         </span>
         {op.totalGuideCount > 0 ? (
-          <span className="rounded-full bg-paper-2 px-3 py-1.5 text-xs font-semibold text-[#33433A]">
+          <span className="inline-flex shrink-0 rounded-full bg-paper-2 px-3 py-1.5 text-xs font-semibold text-[#33433A]">
             {op.femaleGuideCount} of {op.totalGuideCount} guides are women
           </span>
         ) : null}
@@ -417,7 +418,8 @@ export function BookingPanelUi({ listing }: { listing: ListingDetailData }) {
       <Button href={`/book/${listing.slug}`} full className="py-3.5 text-center">
         Reserve now
       </Button>
-      <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-mist">
+      <EscrowReserveNote />
+      <p className="mt-2 flex items-center justify-center gap-1.5 text-xs text-mist">
         <Shield size={13} /> Free cancellation up to {cutoff}h · Secure payment
       </p>
     </div>

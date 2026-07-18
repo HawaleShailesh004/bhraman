@@ -9,12 +9,14 @@ import { Eyebrow } from "@/components/ui/primitives";
 
 function galleryPhotos(listing: ListingDetailData): string[] {
   const hero = listing.heroImageUrl;
-  return (listing.galleryUrls ?? []).filter(
-    (url) => url && url !== hero,
-  );
+  return (listing.galleryUrls ?? []).filter((url) => url && url !== hero);
 }
 
-export function ListingGalleryStrip({ listing }: { listing: ListingDetailData }) {
+export function ListingGalleryStrip({
+  listing,
+}: {
+  listing: ListingDetailData;
+}) {
   const photos = galleryPhotos(listing);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -46,10 +48,12 @@ export function ListingGalleryStrip({ listing }: { listing: ListingDetailData })
     const el = scrollRef.current;
     if (!el) return;
     const step = Math.max(el.clientWidth * 0.75, 280);
-    el.scrollBy({
-      left: direction === "left" ? -step : step,
-      behavior: "smooth",
-    });
+    const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+    const next = Math.min(
+      maxScroll,
+      Math.max(0, el.scrollLeft + (direction === "left" ? -step : step)),
+    );
+    el.scrollTo({ left: next, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -157,7 +161,7 @@ export function ListingGalleryStrip({ listing }: { listing: ListingDetailData })
             <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 sm:px-14">
               <img
                 src={photos[lightboxIndex]}
-                alt={`${listing.title} — photo ${lightboxIndex + 1}`}
+                alt={`${listing.title} - photo ${lightboxIndex + 1}`}
                 className="max-h-full max-w-full object-contain rounded-lg"
               />
 

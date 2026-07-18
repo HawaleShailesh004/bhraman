@@ -99,7 +99,7 @@ export function DiscoverClient({
         <div className="space-y-8">
           <motion.div
             layout
-            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10"
+            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5"
           >
             <AnimatePresence mode="popLayout">
               {pagination.pageItems.map((l, i) => (

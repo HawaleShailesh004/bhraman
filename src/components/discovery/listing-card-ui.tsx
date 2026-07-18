@@ -106,20 +106,22 @@ export function ListingCardUi({
               {listing.title}
             </h3>
 
-            <ul className="space-y-1.5 text-xs text-[#54635A]">
-              <li className="flex items-center gap-2">
-                <Clock size={12} className="shrink-0 text-mist" />
-                {listing.durationHours}h
-              </li>
-              <li className="flex items-center gap-2">
-                <Users size={12} className="shrink-0 text-mist" />
-                {listing.minGroupSize}–{listing.maxGroupSize} people
-              </li>
-              <li className="flex items-center gap-2 text-mist">
+            <div className="space-y-2 text-xs text-[#54635A]">
+              <div className="flex items-center justify-between gap-3">
+                <span className="inline-flex items-center gap-1.5">
+                  <Users size={12} className="shrink-0 text-mist" />
+                  {listing.minGroupSize}–{listing.maxGroupSize} people
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Clock size={12} className="shrink-0 text-mist" />
+                  {listing.durationHours}h
+                </span>
+              </div>
+              <p className="flex min-w-0 items-center gap-2 text-mist">
                 <BadgeCheck size={12} className="shrink-0 text-forest" />
                 <span className="truncate">{listing.operator.businessName}</span>
-              </li>
-            </ul>
+              </p>
+            </div>
 
             <div className="flex items-end justify-between border-t border-line/70 pt-3">
               <div className="text-sm">

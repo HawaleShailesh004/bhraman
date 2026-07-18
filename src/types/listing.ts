@@ -151,3 +151,15 @@ export type OperatorDirectoryCardData = {
   coverImageUrl: string | null;
   activeListingCount: number;
 };
+
+export type AdventureMapPin = {
+  placeSlug: string;
+  placeName: string;
+  district: string;
+  latitude: number;
+  longitude: number;
+  listingCount: number;
+  sampleSlug: string;
+  sampleTitle: string;
+  categorySlug: string;
+};

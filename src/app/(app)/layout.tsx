@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { AiConciergeDock } from "@/components/home/ai-concierge-dock";
 
 export default function TravelerAppLayout({
   children,
@@ -11,6 +12,7 @@ export default function TravelerAppLayout({
       <Navbar />
       {children}
       <Footer />
+      <AiConciergeDock />
     </>
   );
 }

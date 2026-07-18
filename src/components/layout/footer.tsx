@@ -20,7 +20,7 @@ export function Footer() {
     >
       <TopoLines opacity={0.1} />
       <div className="page-shell relative z-10 py-12 sm:py-16">
-        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="grid gap-5 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <div className="mb-4 flex items-center gap-2">
               <Logo size={32} dark />

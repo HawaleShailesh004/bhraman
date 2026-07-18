@@ -1,143 +1,169 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Sparkles, Search, ShieldCheck, Star } from "lucide-react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { useRef } from "react";
+import { Sparkles, Search } from "lucide-react";
 import { TopoLines } from "@/components/ui/primitives";
+import { COPY } from "@/lib/marketing-copy";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
 };
 
 export function Hero() {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  // Multi-speed layers - video drifts fastest, topo mid, ridge slowest
+  const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const topoY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const ridgeY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+  const contentOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.55, 0.85],
+    [1, 0.85, 0.15],
+  );
+
   return (
-    <section className="relative flex min-h-[88vh] items-center overflow-hidden pb-28">
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        aria-hidden
-        className="absolute inset-0 h-full w-full object-cover"
+    <section
+      ref={ref}
+      className="relative flex min-h-[86vh] items-center justify-center overflow-hidden pb-28 pt-28 sm:min-h-[88vh] sm:pb-32 sm:pt-24"
+    >
+      {/* Layer 1 - video (deepest, fastest) */}
+      <motion.div
+        className="absolute inset-0 will-change-transform"
+        style={reduce ? undefined : { y: videoY }}
       >
-        <source src="/videos/hero-bg.mp4" type="video/mp4" />
-      </video>
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-[#1A2E22]/75 via-[#1A2E22]/55 to-[#13231A]/85"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden
+          className="absolute inset-0 h-[120%] w-full object-cover"
+          poster="/images/hero-fallback.jpg"
+        >
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(26,46,34,0.78) 0%, rgba(19,35,26,0.58) 45%, rgba(14,27,19,0.94) 100%)",
+          }}
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 opacity-35"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 35%, rgba(224,138,43,0.2), transparent 55%)",
+          }}
+          aria-hidden
+        />
+      </motion.div>
+
+      {/* Layer 2 - topo lines (mid speed) */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 will-change-transform"
+        style={reduce ? undefined : { y: topoY }}
         aria-hidden
-      />
-      <div
-        className="absolute inset-0 opacity-50"
-        style={{
-          background:
-            "radial-gradient(ellipse at 70% 30%, rgba(224,138,43,0.2), transparent 55%)",
-        }}
-        aria-hidden
-      />
-      <TopoLines opacity={0.1} />
-      <svg
-        className="absolute bottom-0 left-0 right-0 w-full"
-        viewBox="0 0 1440 220"
+      >
+        <TopoLines opacity={0.11} />
+      </motion.div>
+
+      {/* Layer 3 - ridge SVG (slowest foreground) */}
+      <motion.svg
+        className="absolute bottom-0 left-0 right-0 w-full will-change-transform"
+        viewBox="0 0 1440 180"
         preserveAspectRatio="none"
         aria-hidden
+        style={reduce ? undefined : { y: ridgeY }}
       >
         <path
-          d="M0 220 L0 140 L180 90 L360 150 L520 70 L700 160 L880 60 L1060 140 L1240 80 L1440 150 L1440 220 Z"
+          d="M0 180 L0 110 L180 70 L360 120 L520 55 L700 125 L880 50 L1060 110 L1240 65 L1440 115 L1440 180 Z"
           fill="#13231A"
           opacity="0.55"
         />
         <path
-          d="M0 220 L0 180 L200 130 L420 185 L640 120 L860 190 L1080 130 L1300 185 L1440 150 L1440 220 Z"
+          d="M0 180 L0 145 L200 105 L420 150 L640 95 L860 155 L1080 105 L1300 150 L1440 120 L1440 180 Z"
           fill="#0E1B13"
-          opacity="0.7"
+          opacity="0.75"
         />
-      </svg>
+      </motion.svg>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-24">
-        <motion.div
+      <motion.div
+        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center sm:px-6"
+        style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
+      >
+        <motion.p
           {...fadeUp}
-          transition={{ duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }}
-          className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 backdrop-blur"
+          transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
+          className="mb-5 text-[10px] font-bold uppercase tracking-[0.22em] text-amber"
         >
-          <ShieldCheck size={13} className="text-amber" />
-          <span className="text-xs font-medium text-paper/90">
-            100% verified operators · secure booking
-          </span>
-        </motion.div>
+          {COPY.brandEyebrow}
+        </motion.p>
 
         <motion.h1
           {...fadeUp}
           transition={{
-            duration: 0.7,
-            delay: 0.08,
+            duration: 0.6,
+            delay: 0.05,
             ease: [0.22, 0.61, 0.36, 1],
           }}
-          className="font-display text-[clamp(2.25rem,6vw,4.5rem)] font-black leading-[0.98] tracking-[-0.03em] text-paper"
+          className="liquid-gradient-text font-display text-[clamp(2.4rem,7.5vw,4.5rem)] font-black leading-[1.02] tracking-[-0.03em]"
         >
-          Maharashtra&apos;s wild, made{" "}
-          <span className="text-amber">bookable.</span>
+          <span className="block">{COPY.hero.headlineLine1}</span>
+          <span className="block">{COPY.hero.headlineLine2}</span>
         </motion.h1>
 
         <motion.p
           {...fadeUp}
           transition={{
-            duration: 0.7,
-            delay: 0.16,
+            duration: 0.55,
+            delay: 0.1,
             ease: [0.22, 0.61, 0.36, 1],
           }}
-          className="mt-5 max-w-[48ch] text-base leading-relaxed text-[#C9D2CB] sm:text-lg"
+          className="mt-5 max-w-[34ch] text-base leading-relaxed text-[#D0D9D2] sm:max-w-[40ch] sm:text-lg"
         >
-          Discover treks, rafting, camping and more - plan your weekend with AI
-          and book trusted local operators in minutes.
+          {COPY.hero.subline}
         </motion.p>
 
         <motion.div
           {...fadeUp}
           transition={{
-            duration: 0.7,
-            delay: 0.24,
+            duration: 0.55,
+            delay: 0.16,
             ease: [0.22, 0.61, 0.36, 1],
           }}
-          className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:gap-3"
+          className="mt-8 flex w-full max-w-md flex-col gap-2.5 sm:max-w-none sm:flex-row sm:justify-center sm:gap-3"
         >
           <Link
             href="/plan"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-amber px-5 py-2.5 text-sm font-semibold text-[#3A2406] shadow-[0_6px_18px_rgba(224,138,43,0.32)] transition-transform hover:-translate-y-px"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-amber px-6 py-3 text-sm font-bold text-amber-text shadow-amber-glow transition-transform hover:-translate-y-px"
           >
-            <Sparkles size={16} /> Plan my weekend
+            <Sparkles size={16} /> {COPY.hero.ctaPrimary}
           </Link>
           <Link
             href="/discover"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-semibold text-paper backdrop-blur transition-colors hover:bg-white/15"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-paper backdrop-blur transition-colors hover:bg-white/15"
           >
-            <Search size={16} /> Browse adventures
+            <Search size={16} /> {COPY.hero.ctaSecondary}
           </Link>
         </motion.div>
-
-        <motion.div
-          {...fadeUp}
-          transition={{ duration: 0.7, delay: 0.32 }}
-          className="mt-12 flex flex-wrap gap-x-10 gap-y-4 pb-4"
-        >
-          {[
-            { n: "50+", l: "destinations" },
-            { n: "60+", l: "experiences" },
-            { n: "8", l: "adventure types" },
-            { n: "4.8", l: "avg rating", star: true },
-          ].map((s) => (
-            <div key={s.l}>
-              <div className="flex items-center gap-1 font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
-                {s.n}
-                {s.star ? (
-                  <Star size={15} className="fill-amber text-amber" aria-hidden />
-                ) : null}
-              </div>
-              <div className="text-xs text-[#9DB0A4]">{s.l}</div>
-            </div>
-          ))}
-        </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

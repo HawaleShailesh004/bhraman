@@ -88,7 +88,7 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
         </div>
       </section>
 
-      <section className="page-shell grid gap-8 py-8 sm:gap-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)]">
+      <section className="page-shell grid gap-5 py-8 sm:gap-5 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)]">
         <div className="min-w-0 space-y-10 sm:space-y-12">
           <div className="min-w-0">
             <p className="break-words font-serif text-base italic leading-relaxed text-ink-muted sm:text-lg">
@@ -153,9 +153,14 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
             </p>
             <p className="text-[11px] text-mist">per person</p>
           </div>
-          <Button href={`/book/${listing.slug}`} className="shrink-0 px-5 py-3 sm:px-6">
-            Reserve now
-          </Button>
+          <div className="flex shrink-0 flex-col items-end gap-1">
+            <Button href={`/book/${listing.slug}`} className="px-5 py-3 sm:px-6">
+              Reserve now
+            </Button>
+            <p className="max-w-[11rem] text-right text-[10px] leading-snug text-mist">
+              We hold your money · Operator paid after your trip
+            </p>
+          </div>
         </div>
       </div>
     </main>
