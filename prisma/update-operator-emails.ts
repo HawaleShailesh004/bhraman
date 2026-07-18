@@ -4,10 +4,7 @@
  */
 
 import { PrismaClient } from "@prisma/client";
-import {
-  legacyOperatorEmail,
-  operatorEmail,
-} from "../src/lib/operator-emails";
+import { legacyOperatorEmail, operatorEmail } from "../src/lib/operator-emails";
 
 const prisma = new PrismaClient();
 
@@ -31,13 +28,15 @@ async function main() {
 
     if (current !== legacyEmail && current !== nextEmail) {
       console.warn(
-        `  ⚠ ${op.businessName}: unexpected email "${current}" — updating to ${nextEmail}`,
+        `  ⚠ ${op.businessName}: unexpected email "${current}" - updating to ${nextEmail}`,
       );
     }
 
     const clash = await prisma.user.findUnique({ where: { email: nextEmail } });
     if (clash && clash.id !== op.userId) {
-      console.error(`  ✗ ${op.businessName}: ${nextEmail} already taken — skip`);
+      console.error(
+        `  ✗ ${op.businessName}: ${nextEmail} already taken - skip`,
+      );
       continue;
     }
 
@@ -50,8 +49,12 @@ async function main() {
     updated++;
   }
 
-  console.log(`\n✅ Done: ${updated}/${operators.length} operator emails updated`);
-  console.log(`   Sign up / sign in with e.g. ${operatorEmail("Sahyadri Trails")}`);
+  console.log(
+    `\n✅ Done: ${updated}/${operators.length} operator emails updated`,
+  );
+  console.log(
+    `   Sign up / sign in with e.g. ${operatorEmail("Sahyadri Trails")}`,
+  );
 }
 
 main()

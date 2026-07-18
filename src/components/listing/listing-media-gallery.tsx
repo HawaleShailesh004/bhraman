@@ -1,11 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { ListingDetailData } from "@/types/listing";
 import { listingImageStyle } from "@/lib/ui-present";
 import { Eyebrow } from "@/components/ui/primitives";
+import { CarouselNavButton } from "@/components/ui/carousel-nav-button";
+import { useHorizontalScroll } from "@/hooks/use-horizontal-scroll";
 
 function galleryPhotos(listing: ListingDetailData): string[] {
   const hero = listing.heroImageUrl;
@@ -18,43 +20,10 @@ export function ListingGalleryStrip({
   listing: ListingDetailData;
 }) {
   const photos = galleryPhotos(listing);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+  const { ref, canLeft, canRight, scrollByDir } = useHorizontalScroll(320, [
+    photos.length,
+  ]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  const updateScrollState = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const { scrollLeft, scrollWidth, clientWidth } = el;
-    setCanScrollLeft(scrollLeft > 4);
-    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 4);
-  }, []);
-
-  useEffect(() => {
-    updateScrollState();
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateScrollState, { passive: true });
-    const ro = new ResizeObserver(updateScrollState);
-    ro.observe(el);
-    return () => {
-      el.removeEventListener("scroll", updateScrollState);
-      ro.disconnect();
-    };
-  }, [photos, updateScrollState]);
-
-  const scrollBy = (direction: "left" | "right") => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const step = Math.max(el.clientWidth * 0.75, 280);
-    const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
-    const next = Math.min(
-      maxScroll,
-      Math.max(0, el.scrollLeft + (direction === "left" ? -step : step)),
-    );
-    el.scrollTo({ left: next, behavior: "smooth" });
-  };
 
   useEffect(() => {
     if (lightboxIndex === null) return;
@@ -92,30 +61,26 @@ export function ListingGalleryStrip({
       </div>
 
       <div className="group/gallery relative min-w-0">
-        {showArrows && canScrollLeft ? (
-          <button
-            type="button"
-            onClick={() => scrollBy("left")}
-            className="absolute left-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-[var(--shadow-md)] transition-colors hover:border-forest hover:text-forest sm:grid"
-            aria-label="Scroll photos left"
-          >
-            <ChevronLeft size={20} strokeWidth={2.5} />
-          </button>
+        {showArrows ? (
+          <CarouselNavButton
+            side="left"
+            disabled={!canLeft}
+            onClick={() => scrollByDir(-1)}
+            className="absolute left-2 top-1/2 z-10 hidden -translate-y-1/2 shadow-[var(--shadow-md)] sm:grid"
+          />
         ) : null}
 
-        {showArrows && canScrollRight ? (
-          <button
-            type="button"
-            onClick={() => scrollBy("right")}
-            className="absolute right-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-[var(--shadow-md)] transition-colors hover:border-forest hover:text-forest sm:grid"
-            aria-label="Scroll photos right"
-          >
-            <ChevronRight size={20} strokeWidth={2.5} />
-          </button>
+        {showArrows ? (
+          <CarouselNavButton
+            side="right"
+            disabled={!canRight}
+            onClick={() => scrollByDir(1)}
+            className="absolute right-2 top-1/2 z-10 hidden -translate-y-1/2 shadow-[var(--shadow-md)] sm:grid"
+          />
         ) : null}
 
         <div
-          ref={scrollRef}
+          ref={ref}
           className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-1 [scrollbar-width:none] sm:gap-4 [&::-webkit-scrollbar]:hidden"
         >
           {photos.map((url, i) => (
@@ -139,19 +104,19 @@ export function ListingGalleryStrip({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/92 flex flex-col"
+            className="fixed inset-0 z-[100] flex flex-col bg-black/92"
             role="dialog"
             aria-modal="true"
             aria-label="Photo gallery"
           >
-            <div className="flex items-center justify-between px-5 py-4 text-paper/90 text-sm shrink-0">
+            <div className="flex shrink-0 items-center justify-between px-5 py-4 text-sm text-paper/90">
               <span>
                 {lightboxIndex + 1} / {photos.length}
               </span>
               <button
                 type="button"
                 onClick={() => setLightboxIndex(null)}
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 grid place-items-center"
+                className="grid h-10 w-10 place-items-center rounded-full bg-white/10 hover:bg-white/20"
                 aria-label="Close"
               >
                 <X size={20} />
@@ -159,10 +124,11 @@ export function ListingGalleryStrip({
             </div>
 
             <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 sm:px-14">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photos[lightboxIndex]}
                 alt={`${listing.title} - photo ${lightboxIndex + 1}`}
-                className="max-h-full max-w-full object-contain rounded-lg"
+                className="max-h-full max-w-full rounded-lg object-contain"
               />
 
               {photos.length > 1 ? (
@@ -173,7 +139,7 @@ export function ListingGalleryStrip({
                       setLightboxIndex((i) => Math.max(0, (i ?? 0) - 1))
                     }
                     disabled={lightboxIndex === 0}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 text-paper grid place-items-center"
+                    className="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-paper hover:bg-white/20 disabled:opacity-30"
                     aria-label="Previous photo"
                   >
                     <ChevronLeft size={22} />
@@ -186,7 +152,7 @@ export function ListingGalleryStrip({
                       )
                     }
                     disabled={lightboxIndex === photos.length - 1}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 text-paper grid place-items-center"
+                    className="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-paper hover:bg-white/20 disabled:opacity-30"
                     aria-label="Next photo"
                   >
                     <ChevronRight size={22} />

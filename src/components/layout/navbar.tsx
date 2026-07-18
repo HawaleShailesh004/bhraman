@@ -11,8 +11,8 @@ import { AuthNav } from "@/components/layout/auth-nav";
 const LINKS = [
   { href: "/discover", label: "Discover" },
   { href: "/plan", label: "Plan with AI" },
+  { href: "/how-it-works", label: "How it works" },
   { href: "/operators", label: "Operators" },
-  { href: "/#destinations", label: "Destinations" },
   { href: "/operator/enter", label: "For Operators" },
 ];
 

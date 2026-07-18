@@ -116,7 +116,10 @@ export default async function BookingConfirmationPage({
           <CardHeader className="flex items-center justify-between gap-4">
             <div>
               <p className="text-sm text-mist">Reference</p>
-              <p className="font-display text-2xl font-extrabold" aria-label={`Booking reference ${display.bookingRef}`}>
+              <p
+                className="font-display text-2xl font-extrabold"
+                aria-label={`Booking reference ${display.bookingRef}`}
+              >
                 {display.bookingRef}
               </p>
             </div>
@@ -162,7 +165,10 @@ export default async function BookingConfirmationPage({
 
             <div className="rounded-lg border border-forest/20 bg-[#EAF1EC] p-4">
               <div className="flex items-start gap-3">
-                <ShieldCheck size={20} className="mt-0.5 shrink-0 text-forest" />
+                <ShieldCheck
+                  size={20}
+                  className="mt-0.5 shrink-0 text-forest"
+                />
                 <div>
                   <p className="text-sm font-semibold text-ink">
                     Payment protection
@@ -185,7 +191,7 @@ export default async function BookingConfirmationPage({
               </div>
               {display.status === "PENDING" ? (
                 <p className="mt-3 text-sm text-mist">
-                  If you completed payment, refresh this page — we sync status
+                  If you completed payment, refresh this page - we sync status
                   directly with Razorpay.
                 </p>
               ) : null}

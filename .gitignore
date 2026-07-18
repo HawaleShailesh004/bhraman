@@ -30,7 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# local env files — never commit secrets
+# local env files - never commit secrets
 .env
 .env*.local
 .env.development.local
@@ -55,6 +55,9 @@ tools/wikimedia/wikimedia-raw.json
 tools/wikimedia/places-images.json
 tools/wikimedia/wikimedia-output.json
 tools/wikimedia/finalize-log.txt
+
+# local screenshots of the running app
+/screenshots
 
 # IDE
 .idea/

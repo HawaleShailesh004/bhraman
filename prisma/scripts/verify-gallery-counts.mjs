@@ -6,7 +6,9 @@ const rows = await prisma.listing.findMany({
 });
 const counts = rows.map((r) => r.galleryUrls.length);
 console.log(
-  `Gallery counts — min: ${Math.min(...counts)}, max: ${Math.max(...counts)}, avg: ${(counts.reduce((a, b) => a + b, 0) / counts.length).toFixed(1)}`,
+  `Gallery counts - min: ${Math.min(...counts)}, max: ${Math.max(...counts)}, avg: ${(counts.reduce((a, b) => a + b, 0) / counts.length).toFixed(1)}`,
 );
-console.log(`2+ gallery: ${counts.filter((c) => c >= 2).length}/${rows.length}`);
+console.log(
+  `2+ gallery: ${counts.filter((c) => c >= 2).length}/${rows.length}`,
+);
 await prisma.$disconnect();

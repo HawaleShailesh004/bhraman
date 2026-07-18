@@ -253,7 +253,7 @@ export function WeekendStorySection() {
 
   if (reduce) {
     return (
-      <section className="bg-ink py-16 text-paper sm:py-24">
+      <section className="section-y bg-ink text-paper">
         <div className="page-shell">
           <div className="mb-12 max-w-2xl">
             <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber">

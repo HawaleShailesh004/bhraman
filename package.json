@@ -14,7 +14,10 @@
     "db:seed": "prisma db seed",
     "db:images": "tsx prisma/attach-listing-images.ts",
     "db:operators": "tsx prisma/update-operator-emails.ts",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "screenshots": "tsx scripts/screenshot-pages.ts --base=http://localhost:3001 --out=screenshots/latest",
+    "screenshots:motion": "tsx scripts/screenshot-pages.ts --base=http://localhost:3001 --out=screenshots/latest --motion",
+    "screenshots:headed": "tsx scripts/screenshot-pages.ts --base=http://localhost:3001 --out=screenshots/latest --headed"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -45,6 +48,7 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^8",
     "eslint-config-next": "14.2.29",
+    "playwright": "^1.61.1",
     "postcss": "^8",
     "prisma": "^6.9.0",
     "tailwindcss": "^3.4.17",

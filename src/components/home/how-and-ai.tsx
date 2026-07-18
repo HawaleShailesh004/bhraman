@@ -49,7 +49,7 @@ export function HowItWorksSection() {
 
 export function AiPlannerBand() {
   return (
-    <section className="page-shell pb-16 sm:pb-24">
+    <section className="page-shell section-y">
       <div className="relative overflow-hidden rounded-[22px] bg-ink px-6 py-10 text-paper sm:px-12 sm:py-14">
         <div
           className="pointer-events-none absolute -right-16 top-0 h-56 w-56 rounded-full bg-amber/20 blur-3xl"

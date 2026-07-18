@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
-  ArrowLeft,
-  BadgeCheck,
   BriefcaseBusiness,
-  MapPin,
   ShieldCheck,
   Star,
   Users,
 } from "lucide-react";
-import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ListingCardUi } from "@/components/discovery/listing-card-ui";
+import { OperatorProfileHero } from "@/components/operators/operator-profile-hero";
 import { getPublicOperatorProfile } from "@/lib/listings";
-import { listingImageStyle, operatorInitials } from "@/lib/ui-present";
+import { listingImageStyle } from "@/lib/ui-present";
 
 type OperatorProfilePageProps = {
   params: { slug: string };
@@ -37,52 +34,17 @@ export default async function OperatorProfilePage({
   const operator = await getPublicOperatorProfile(params.slug);
   if (!operator) notFound();
 
-  const cover = operator.galleryUrls[0] ?? null;
-  const verified = operator.verificationStatus === "VERIFIED";
-
   return (
     <main className="min-h-screen bg-paper">
       <Navbar onDark />
-      <section
-        className="relative min-h-[380px] overflow-hidden pt-28 sm:min-h-[420px] sm:pt-32"
-        style={listingImageStyle("trekking", cover)}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/65 to-ink/30" />
-        <div className="page-shell relative pb-10 sm:pb-12">
-          <Link
-            href="/operators"
-            className="mb-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-white/75 transition-colors hover:text-white sm:mb-7"
-          >
-            <ArrowLeft size={15} /> All operators
-          </Link>
-          <div className="reveal-up flex items-end gap-3 sm:gap-5">
-          <div className="grid h-14 w-14 shrink-0 place-items-center rounded-md border border-white/20 bg-forest text-lg font-black text-paper shadow-xl sm:h-20 sm:w-20 sm:rounded-lg sm:text-2xl">
-            {operatorInitials(operator.businessName)}
-          </div>
-          <div className="min-w-0">
-            <div className="mb-2 flex flex-wrap items-center gap-2">
-              {verified ? (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber px-3 py-1 text-xs font-bold text-amber-text">
-                  <BadgeCheck size={14} /> Verified operator
-                </span>
-              ) : (
-                <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-paper">
-                  {operator.verificationStatus === "PENDING"
-                    ? "Verification in review"
-                    : "Verification not started"}
-                </span>
-              )}
-            </div>
-            <h1 className="break-words font-display text-[clamp(1.75rem,7vw,3.6rem)] font-black leading-tight text-paper">
-              {operator.businessName}
-            </h1>
-            <p className="mt-2 flex items-center gap-1.5 text-sm text-white/80">
-              <MapPin size={15} /> Based in {operator.baseCity}
-            </p>
-          </div>
-          </div>
-        </div>
-      </section>
+      <OperatorProfileHero
+        businessName={operator.businessName}
+        baseCity={operator.baseCity}
+        verificationStatus={operator.verificationStatus}
+        logoUrl={operator.logoUrl}
+        bannerUrl={operator.bannerUrl}
+        galleryFirst={operator.galleryUrls[0] ?? null}
+      />
 
       <section className="page-shell py-8 sm:py-12">
         <div className="grid gap-6 lg:grid-cols-[1fr_320px] lg:gap-8">

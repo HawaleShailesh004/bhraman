@@ -119,6 +119,10 @@ model Operator {
   businessName       String
   baseCity           String
   bio                String             @db.Text
+  /** Public profile photo / logo (guide or brand mark) */
+  logoUrl            String?
+  /** Full-bleed profile banner; falls back to trip photos then theme default */
+  bannerUrl          String?
   yearsOperating     Int?
   panNumber          String?
   gstNumber          String?

@@ -22,6 +22,7 @@ export default async function OperatorDashboardLayout({
     return (
       <OperatorShell
         businessName={session.businessName}
+        logoUrl={session.logoUrl}
         verificationStatus={session.verificationStatus}
       >
         {children}
@@ -37,6 +38,7 @@ export default async function OperatorDashboardLayout({
   return (
     <OperatorShell
       businessName={session.businessName}
+      logoUrl={session.logoUrl}
       verificationStatus={session.verificationStatus}
     >
       {children}

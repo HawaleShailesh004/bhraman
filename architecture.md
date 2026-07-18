@@ -1,4 +1,4 @@
-# Bhraman — Architecture
+# Bhraman - Architecture
 
 System design for the TrailsMate / Bhraman adventure marketplace.
 
@@ -49,30 +49,30 @@ flowchart TB
 
 ### 1. Presentation (`src/app/`, `src/components/`)
 
-| Route group | Purpose | Auth |
-|-------------|---------|------|
-| `(marketing)` | SEO landing, about, operator recruitment | Public |
-| `(app)` | Discovery, listing detail, booking, planner | Partial (bookings) |
-| `operator/` | Dashboard, CRUD, payouts | Clerk + operator role |
-| `operators/[slug]` | Public operator trust portfolio | Public |
-| `admin/` | Escrow dispute operations | Clerk + ADMIN role |
-| `api/` | Serverless handlers | Session / secrets |
+| Route group        | Purpose                                     | Auth                  |
+| ------------------ | ------------------------------------------- | --------------------- |
+| `(marketing)`      | SEO landing, about, operator recruitment    | Public                |
+| `(app)`            | Discovery, listing detail, booking, planner | Partial (bookings)    |
+| `operator/`        | Dashboard, CRUD, payouts                    | Clerk + operator role |
+| `operators/[slug]` | Public operator trust portfolio             | Public                |
+| `admin/`           | Escrow dispute operations                   | Clerk + ADMIN role    |
+| `api/`             | Serverless handlers                         | Session / secrets     |
 
 UI is server-rendered where possible; client components for booking checkout, gallery scroll, planner chat, operator forms.
 
 ### 2. Domain logic (`src/lib/`)
 
-| Module | Responsibility |
-|--------|----------------|
-| `listings.ts` | Query listings from DB; fallback to `seed-catalog.ts` |
-| `listing-images.ts` | Map listing slug → hero + gallery (Wikimedia) |
-| `auth.ts` | Clerk sync, traveler/operator sessions, ownership checks |
-| `booking.ts` | Create booking, hold seats, pricing |
-| `razorpay.ts` | Order creation, signature verification |
-| `anthropic.ts` | Planner tool-calling + listing search |
-| `operator.ts` | Dashboard aggregates, operator CRUD helpers |
-| `weather.ts` | Open-Meteo signal for listing coordinates |
-| `operator-emails.ts` | Clerk-compatible operator email mapping |
+| Module               | Responsibility                                           |
+| -------------------- | -------------------------------------------------------- |
+| `listings.ts`        | Query listings from DB; fallback to `seed-catalog.ts`    |
+| `listing-images.ts`  | Map listing slug → hero + gallery (Wikimedia)            |
+| `auth.ts`            | Clerk sync, traveler/operator sessions, ownership checks |
+| `booking.ts`         | Create booking, hold seats, pricing                      |
+| `razorpay.ts`        | Order creation, signature verification                   |
+| `anthropic.ts`       | Planner tool-calling + listing search                    |
+| `operator.ts`        | Dashboard aggregates, operator CRUD helpers              |
+| `weather.ts`         | Open-Meteo signal for listing coordinates                |
+| `operator-emails.ts` | Clerk-compatible operator email mapping                  |
 
 ### 3. Data (`prisma/`)
 
@@ -146,33 +146,33 @@ flowchart LR
 
 ### Public / traveler
 
-| Method | Path | Purpose |
-|--------|------|---------|
-| GET | `/api/listings/[slug]/availability` | Open slots |
-| POST | `/api/bookings` | Create booking + Razorpay order |
-| POST | `/api/bookings/verify` | Confirm payment |
-| POST | `/api/planner` | AI listing search |
-| POST | `/api/webhooks/razorpay` | Payment webhook |
-| GET | `/api/cron/release-escrow` | Release held escrow after trip completion |
-| POST | `/api/bookings/[id]/dispute` | Traveler escrow dispute |
+| Method | Path                                | Purpose                                   |
+| ------ | ----------------------------------- | ----------------------------------------- |
+| GET    | `/api/listings/[slug]/availability` | Open slots                                |
+| POST   | `/api/bookings`                     | Create booking + Razorpay order           |
+| POST   | `/api/bookings/verify`              | Confirm payment                           |
+| POST   | `/api/planner`                      | AI listing search                         |
+| POST   | `/api/webhooks/razorpay`            | Payment webhook                           |
+| GET    | `/api/cron/release-escrow`          | Release held escrow after trip completion |
+| POST   | `/api/bookings/[id]/dispute`        | Traveler escrow dispute                   |
 
 ### Operator (authenticated)
 
-| Method | Path | Purpose |
-|--------|------|---------|
-| GET/POST | `/api/operator/listings` | List / create |
-| PATCH/DELETE | `/api/operator/listings/[id]` | Update / delete own |
-| GET/POST | `/api/operator/availability` | Slot management |
-| PATCH | `/api/operator/bookings/[id]` | Status updates |
-| PATCH | `/api/operator/payouts/[id]` | Reject operator self-settlement |
-| POST | `/api/operator/bookings/[id]/dispute` | Operator escrow dispute |
-| PATCH | `/api/admin/disputes/[id]` | Admin release/refund resolution |
+| Method       | Path                                  | Purpose                         |
+| ------------ | ------------------------------------- | ------------------------------- |
+| GET/POST     | `/api/operator/listings`              | List / create                   |
+| PATCH/DELETE | `/api/operator/listings/[id]`         | Update / delete own             |
+| GET/POST     | `/api/operator/availability`          | Slot management                 |
+| PATCH        | `/api/operator/bookings/[id]`         | Status updates                  |
+| PATCH        | `/api/operator/payouts/[id]`          | Reject operator self-settlement |
+| POST         | `/api/operator/bookings/[id]/dispute` | Operator escrow dispute         |
+| PATCH        | `/api/admin/disputes/[id]`            | Admin release/refund resolution |
 
 ### Cron
 
-| Method | Path | Purpose |
-|--------|------|---------|
-| GET | `/api/cron/release-seats` | Sync unpaid holds then release seats (`CRON_SECRET`) |
+| Method | Path                      | Purpose                                              |
+| ------ | ------------------------- | ---------------------------------------------------- |
+| GET    | `/api/cron/release-seats` | Sync unpaid holds then release seats (`CRON_SECRET`) |
 
 ---
 
@@ -183,7 +183,7 @@ flowchart LR
 ```
 prisma/data/seed-data.json
         ↓
-   prisma/seed.ts  (upsert by slug — safe to re-run)
+   prisma/seed.ts  (upsert by slug - safe to re-run)
         ↓
    Neon Postgres
 ```
@@ -210,11 +210,11 @@ If DB has no published listings, `seed-catalog.ts` reads JSON directly so the UI
 
 ### Listing detail composition
 
-1. **Hero** — full-width `heroImageUrl` with title overlay
-2. **Description** — summary + long text
-3. **Gallery strip** — `galleryUrls` only; horizontal scroll + lightbox
-4. **Itinerary** — animated timeline
-5. **Sidebar** — weather widget + sticky booking panel
+1. **Hero** - full-width `heroImageUrl` with title overlay
+2. **Description** - summary + long text
+3. **Gallery strip** - `galleryUrls` only; horizontal scroll + lightbox
+4. **Itinerary** - animated timeline
+5. **Sidebar** - weather widget + sticky booking panel
 
 ### Discover cards
 
@@ -224,18 +224,18 @@ Hero background, category/difficulty badges, photo count, hover peek of second g
 
 ## Security model
 
-| Concern | Approach |
-|---------|----------|
-| Traveler sessions | Clerk JWT; `getSessionTraveler()` |
-| Operator sessions | Clerk + DB role check; `requireSessionOperator()` |
-| Admin sessions | Clerk + `User.role = ADMIN`; server-side route gate |
-| Listing ownership | `assertOwnsListing(userId, listingId)` |
-| Booking ownership | `assertOwnsBookingRef(userId, ref)` |
-| Webhooks | Razorpay HMAC verification |
-| Escrow | Captured payments stay `HELD` until trip completion + dispute window |
-| Sensitive trip data | Emergency/medical fields selected only on owned trip-roster route |
-| Cron | Both cron routes require `CRON_SECRET`; fail closed if missing |
-| Secrets | `.env` gitignored; never in client bundle except public Clerk/Razorpay keys |
+| Concern             | Approach                                                                    |
+| ------------------- | --------------------------------------------------------------------------- |
+| Traveler sessions   | Clerk JWT; `getSessionTraveler()`                                           |
+| Operator sessions   | Clerk + DB role check; `requireSessionOperator()`                           |
+| Admin sessions      | Clerk + `User.role = ADMIN`; server-side route gate                         |
+| Listing ownership   | `assertOwnsListing(userId, listingId)`                                      |
+| Booking ownership   | `assertOwnsBookingRef(userId, ref)`                                         |
+| Webhooks            | Razorpay HMAC verification                                                  |
+| Escrow              | Captured payments stay `HELD` until trip completion + dispute window        |
+| Sensitive trip data | Emergency/medical fields selected only on owned trip-roster route           |
+| Cron                | Both cron routes require `CRON_SECRET`; fail closed if missing              |
+| Secrets             | `.env` gitignored; never in client bundle except public Clerk/Razorpay keys |
 
 ---
 
@@ -263,15 +263,15 @@ Resend (transactional email)
 
 ## Key design decisions
 
-1. **JSON seed + DB** — rich dataset in git; Postgres for production queries and bookings
-2. **Separate operator portal** — distinct Clerk paths, role gate in layout, unauthorized page prevents redirect loops
-3. **Payment verify + webhook** — client verify for instant UX; webhook as backup
-4. **Place-level images** — one Wikimedia pool per place; rotated hero for multi-listing places
-5. **No full reseed for email fixes** — `db:operators` script updates operator emails only
+1. **JSON seed + DB** - rich dataset in git; Postgres for production queries and bookings
+2. **Separate operator portal** - distinct Clerk paths, role gate in layout, unauthorized page prevents redirect loops
+3. **Payment verify + webhook** - client verify for instant UX; webhook as backup
+4. **Place-level images** - one Wikimedia pool per place; rotated hero for multi-listing places
+5. **No full reseed for email fixes** - `db:operators` script updates operator emails only
 
 ---
 
 ## Related docs
 
-- [`README.md`](README.md) — setup and usage
-- [`.env.example`](.env.example) — environment variables
+- [`README.md`](README.md) - setup and usage
+- [`.env.example`](.env.example) - environment variables

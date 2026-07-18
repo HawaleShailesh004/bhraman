@@ -3,9 +3,6 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   FormEvent,
-  useCallback,
-  useEffect,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -17,10 +14,10 @@ import {
   Calendar,
   Users,
   SlidersHorizontal,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { CategoryIcon } from "@/components/ui/category-icon";
+import { CarouselNavButton } from "@/components/ui/carousel-nav-button";
+import { useHorizontalScroll } from "@/hooks/use-horizontal-scroll";
 
 export type SortOption = "recommended" | "price-low" | "price-high";
 
@@ -114,71 +111,32 @@ function HorizontalScrollRow({
   children: ReactNode;
   itemCount: number;
 }) {
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-
-  const updateScrollState = useCallback(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    setCanScrollLeft(el.scrollLeft > 8);
-    setCanScrollRight(el.scrollLeft < maxScroll - 8);
-  }, []);
-
-  useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-
-    updateScrollState();
-
-    el.addEventListener("scroll", updateScrollState, { passive: true });
-    const observer = new ResizeObserver(updateScrollState);
-    observer.observe(el);
-
-    return () => {
-      el.removeEventListener("scroll", updateScrollState);
-      observer.disconnect();
-    };
-  }, [updateScrollState, itemCount]);
-
-  function scrollBy(direction: "left" | "right") {
-    scrollerRef.current?.scrollBy({
-      left: direction === "left" ? -320 : 320,
-      behavior: "smooth",
-    });
-  }
+  const { ref, canLeft, canRight, scrollByDir } = useHorizontalScroll(320, [
+    itemCount,
+  ]);
 
   return (
     <div className="flex items-center gap-2">
-      {canScrollLeft ? (
-        <button
-          type="button"
-          onClick={() => scrollBy("left")}
-          aria-label="Scroll categories left"
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-white text-ink shadow-[var(--shadow-sm)] transition-colors hover:border-ink hover:bg-paper-2"
-        >
-          <ChevronLeft size={18} strokeWidth={2.4} />
-        </button>
-      ) : null}
+      <CarouselNavButton
+        side="left"
+        disabled={!canLeft}
+        onClick={() => scrollByDir(-1)}
+        className="!h-9 !w-9"
+      />
 
       <div
-        ref={scrollerRef}
+        ref={ref}
         className="scrollbar-hide flex min-w-0 flex-1 gap-2.5 overflow-x-auto scroll-smooth"
       >
         {children}
       </div>
 
-      {canScrollRight ? (
-        <button
-          type="button"
-          onClick={() => scrollBy("right")}
-          aria-label="Scroll categories right"
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-white text-ink shadow-[var(--shadow-sm)] transition-colors hover:border-ink hover:bg-paper-2"
-        >
-          <ChevronRight size={18} strokeWidth={2.4} />
-        </button>
-      ) : null}
+      <CarouselNavButton
+        side="right"
+        disabled={!canRight}
+        onClick={() => scrollByDir(1)}
+        className="!h-9 !w-9"
+      />
     </div>
   );
 }

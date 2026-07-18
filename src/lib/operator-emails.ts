@@ -1,6 +1,6 @@
 import { slugify } from "@/lib/slugify";
 
-/** Clerk rejects `.demo` domains — use example.com for dev operator accounts */
+/** Clerk rejects `.demo` domains - use example.com for dev operator accounts */
 export const OPERATOR_EMAIL_DOMAIN = "example.com";
 
 export function operatorEmail(businessName: string): string {

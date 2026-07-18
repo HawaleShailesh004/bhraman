@@ -16,7 +16,9 @@ export function OperatorSignUpCompleteClient() {
 
   return (
     <main className="min-h-screen bg-paper grid place-items-center px-6">
-      <p className="text-sm text-mist">Account created — taking you to sign in…</p>
+      <p className="text-sm text-mist">
+        Account created - taking you to sign in…
+      </p>
     </main>
   );
 }

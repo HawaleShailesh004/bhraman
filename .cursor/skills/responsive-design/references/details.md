@@ -1,4 +1,4 @@
-# responsive-design — detailed patterns and worked examples
+# responsive-design - detailed patterns and worked examples
 
 ## Core Capabilities
 

@@ -9,6 +9,7 @@ export type OperatorSession = {
   operatorId: string;
   businessName: string;
   email: string;
+  logoUrl: string | null;
   verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
 };
 

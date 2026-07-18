@@ -4,13 +4,15 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
-  BadgeCheck,
   MapPin,
   ShieldCheck,
 } from "lucide-react";
 import type { OperatorDirectoryCardData } from "@/types/listing";
-import { listingImageStyle, operatorInitials } from "@/lib/ui-present";
+import { listingImageStyle } from "@/lib/ui-present";
+import { resolveOperatorBanner } from "@/lib/operator-media";
 import { brandEase, softSpring } from "@/lib/motion";
+import { OperatorAvatar } from "@/components/ui/operator-avatar";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 import {
   PaginationControls,
   useClientPagination,
@@ -51,22 +53,31 @@ export function OperatorDirectoryGrid({
           >
             <div
               className="relative h-36 overflow-hidden sm:h-40"
-              style={listingImageStyle("trekking", operator.coverImageUrl)}
+              style={listingImageStyle(
+                "trekking",
+                resolveOperatorBanner(operator.bannerUrl, operator.coverImageUrl),
+              )}
               role="img"
               aria-label={`Trips by ${operator.businessName}`}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent transition-opacity duration-300 group-hover:opacity-95" />
               <motion.div
-                className="absolute bottom-4 left-4 grid h-11 w-11 place-items-center rounded-md border border-white/20 bg-forest font-display font-extrabold text-paper shadow-lg sm:h-12 sm:w-12"
+                className="absolute bottom-4 left-4"
                 transition={softSpring}
                 whileHover={reduce ? undefined : { scale: 1.05 }}
               >
-                {operatorInitials(operator.businessName)}
+                <OperatorAvatar
+                  name={operator.businessName}
+                  src={operator.logoUrl}
+                  size="md"
+                  rounded="md"
+                  className="shadow-lg sm:h-12 sm:w-12"
+                />
               </motion.div>
               {operator.verificationStatus === "VERIFIED" ? (
-                <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-amber px-2.5 py-1 text-[10px] font-bold text-amber-text">
-                  <BadgeCheck size={12} /> Verified
-                </span>
+                <VerifiedBadge
+                  className="absolute right-3 top-3 !px-2.5 !py-1 !text-[10px]"
+                />
               ) : null}
             </div>
             <div className="p-4 sm:p-5">

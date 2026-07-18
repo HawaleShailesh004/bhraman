@@ -55,6 +55,7 @@ async function getDemoOperator(): Promise<OperatorSession | null> {
     operatorId: user.operator.id,
     businessName: user.operator.businessName,
     email: user.email,
+    logoUrl: user.operator.logoUrl,
     verificationStatus: user.operator.verificationStatus,
   };
 }
@@ -146,6 +147,7 @@ export async function getSessionOperator(): Promise<OperatorSession | null> {
     operatorId: user.operator.id,
     businessName: user.operator.businessName,
     email: user.email,
+    logoUrl: user.operator.logoUrl,
     verificationStatus: user.operator.verificationStatus,
   };
 }

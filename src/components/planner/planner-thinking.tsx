@@ -20,7 +20,7 @@ const PHRASES: { text: string; sub: string; icon: LucideIcon }[] = [
   },
   {
     text: "Scanning verified listings…",
-    sub: "Only real operators — no scraped junk",
+    sub: "Only real operators - no scraped junk",
     icon: Compass,
   },
   {
@@ -40,7 +40,7 @@ const PHRASES: { text: string; sub: string; icon: LucideIcon }[] = [
   },
   {
     text: "Ranking your best fits…",
-    sub: "Almost there — crafting recommendations",
+    sub: "Almost there - crafting recommendations",
     icon: MapPin,
   },
 ];
@@ -60,7 +60,12 @@ function ThinkingOrb() {
       <motion.div
         className="absolute inset-1.5 rounded-full border border-amber/15"
         animate={{ scale: [1.05, 1, 1.05], opacity: [0.2, 0.45, 0.2] }}
-        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+        transition={{
+          duration: 2.2,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 0.4,
+        }}
       />
 
       {[0, 120, 240].map((startDeg, i) => (

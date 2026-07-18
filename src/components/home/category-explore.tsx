@@ -26,7 +26,7 @@ export function CategoryExploreSection({
   if (!rows.length) return null;
 
   return (
-    <section className="overflow-x-hidden bg-ink py-16 text-paper sm:py-20">
+    <section className="section-y overflow-x-hidden bg-ink text-paper">
       <div className="page-shell">
         <SectionHeader
           eyebrow={COPY.explore.eyebrow}

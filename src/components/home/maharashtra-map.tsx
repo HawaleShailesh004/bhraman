@@ -73,7 +73,7 @@ export function MaharashtraMapSection({ pins }: { pins: AdventureMapPin[] }) {
       : "bg-white/85 text-ink shadow-sm";
 
   return (
-    <section id="destinations" className="bg-paper-2 py-16 sm:py-24">
+    <section id="destinations" className="section-y bg-paper-2">
       <div className="page-shell">
         <div className="mb-10 max-w-2xl">
           <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">

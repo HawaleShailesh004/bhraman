@@ -1,6 +1,6 @@
 # Bhraman
 
-**Maharashtra's trust-first adventure marketplace** — discover verified treks, camps, rafting, and fort trails; plan trips with AI; book securely with Razorpay.
+**Maharashtra's trust-first adventure marketplace** - discover verified treks, camps, rafting, and fort trails; plan trips with AI; book securely with Razorpay.
 
 Built for [TrailsMate](https://github.com/HawaleShailesh004/bhraman) hackathon. Repo name: `bhraman`.
 
@@ -8,15 +8,15 @@ Built for [TrailsMate](https://github.com/HawaleShailesh004/bhraman) hackathon. 
 
 ## Features
 
-- **Discover** — 73 curated listings across 50 destinations, filterable by category, difficulty, price, and date
-- **Listing detail** — hero image, photo gallery, itinerary, inclusions, weather signal, verified operator block
-- **AI planner** — natural-language trip search powered by Anthropic Claude (`/plan`)
-- **Booking** — slot selection, group pricing, Razorpay checkout, email confirmation
-- **Operator portal** — dashboard, listings, availability, bookings, payouts
-- **Trust profiles** — public operator portfolios, insurance/guide signals, verification workflow
-- **Safety & CRM** — emergency details, private trip rosters, completed-customer history
-- **Escrow disputes** — traveler/operator escrow freeze and admin resolution with Razorpay refunds
-- **Real photos** — Wikimedia Commons images per place (hero + gallery)
+- **Discover** - 73 curated listings across 50 destinations, filterable by category, difficulty, price, and date
+- **Listing detail** - hero image, photo gallery, itinerary, inclusions, weather signal, verified operator block
+- **AI planner** - natural-language trip search powered by Anthropic Claude (`/plan`)
+- **Booking** - slot selection, group pricing, Razorpay checkout, email confirmation
+- **Operator portal** - dashboard, listings, availability, bookings, payouts
+- **Trust profiles** - public operator portfolios, insurance/guide signals, verification workflow
+- **Safety & CRM** - emergency details, private trip rosters, completed-customer history
+- **Escrow disputes** - traveler/operator escrow freeze and admin resolution with Razorpay refunds
+- **Real photos** - Wikimedia Commons images per place (hero + gallery)
 
 ---
 
@@ -37,13 +37,13 @@ Open **http://localhost:3000**
 
 ### Minimum env for local dev
 
-| Variable | Required for |
-|----------|----------------|
-| `DATABASE_URL` | Neon Postgres connection string |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Auth (optional — demo mode without Clerk) |
-| `CLERK_SECRET_KEY` | Auth |
-| `ANTHROPIC_API_KEY` | AI planner |
-| `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` | Payments |
+| Variable                                  | Required for                              |
+| ----------------------------------------- | ----------------------------------------- |
+| `DATABASE_URL`                            | Neon Postgres connection string           |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`       | Auth (optional - demo mode without Clerk) |
+| `CLERK_SECRET_KEY`                        | Auth                                      |
+| `ANTHROPIC_API_KEY`                       | AI planner                                |
+| `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` | Payments                                  |
 
 See [`.env.example`](.env.example) for the full list.
 
@@ -51,10 +51,10 @@ See [`.env.example`](.env.example) for the full list.
 
 ## Demo credentials
 
-| Role | Email | Password |
-|------|-------|----------|
-| **Operator** | `konkan-wave-adventures@example.com` | `password` |
-| **Traveler** | `demo@bhraman.app` | _(create via `/sign-up`)_ |
+| Role         | Email                                | Password                  |
+| ------------ | ------------------------------------ | ------------------------- |
+| **Operator** | `konkan-wave-adventures@example.com` | `password`                |
+| **Traveler** | `demo@bhraman.app`                   | _(create via `/sign-up`)_ |
 
 These are also shown on **`/operator/sign-in`** and **`/operator/sign-up`**.
 
@@ -75,12 +75,12 @@ npm run dev
 
 ### 2. Browse as a guest
 
-| Step | URL | What to check |
-|------|-----|----------------|
-| Home | `/` | Hero, featured listings |
-| Discover | `/discover` | Filters, listing cards with photo badges |
-| Listing | `/discover` → any card | Hero, gallery strip, itinerary, weather, booking panel |
-| AI planner | `/plan` | Chat; ask e.g. “easy trek near Pune this weekend” |
+| Step       | URL                    | What to check                                          |
+| ---------- | ---------------------- | ------------------------------------------------------ |
+| Home       | `/`                    | Hero, featured listings                                |
+| Discover   | `/discover`            | Filters, listing cards with photo badges               |
+| Listing    | `/discover` → any card | Hero, gallery strip, itinerary, weather, booking panel |
+| AI planner | `/plan`                | Chat; ask e.g. “easy trek near Pune this weekend”      |
 
 ### 3. Test traveler flow
 
@@ -94,7 +94,7 @@ npm run dev
 
 **Credentials:** `konkan-wave-adventures@example.com` / `password`
 
-**First time only — create Clerk account:**
+**First time only - create Clerk account:**
 
 1. **`/operator/sign-up`**
 2. Email: `konkan-wave-adventures@example.com` · Password: `password`
@@ -102,7 +102,7 @@ npm run dev
 4. You are redirected to **`/operator/sign-in`** → sign in with same credentials
 5. Dashboard: **`/operator`**
 
-**Already registered — sign in:**
+**Already registered - sign in:**
 
 1. **`/operator/sign-in`**
 2. Use email + password above → **`/operator`**
@@ -116,33 +116,33 @@ npm run dev
 
 ### 5. Operator dashboard
 
-| Page | URL |
-|------|-----|
-| Overview | `/operator` |
-| Bookings | `/operator/bookings` |
-| Listings | `/operator/listings` |
+| Page         | URL                      |
+| ------------ | ------------------------ |
+| Overview     | `/operator`              |
+| Bookings     | `/operator/bookings`     |
+| Listings     | `/operator/listings`     |
 | Availability | `/operator/availability` |
-| Payouts | `/operator/payouts` |
-| Customers | `/operator/customers` |
+| Payouts      | `/operator/payouts`      |
+| Customers    | `/operator/customers`    |
 | Verification | `/operator/verification` |
 
 ### 6. Other operator demo emails
 
-`konkan-wave-adventures@example.com`, `maval-adventure-co@example.com`, etc. — same flow; sign up in Clerk first with that exact email.
+`konkan-wave-adventures@example.com`, `maval-adventure-co@example.com`, etc. - same flow; sign up in Clerk first with that exact email.
 
 ---
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Development server |
-| `npm run build` | Production build (`prisma generate` + `next build`) |
-| `npm run db:seed` | Seed operators, places, listings (idempotent) |
-| `npm run db:migrate:deploy` | Apply committed schema migrations |
-| `npm run db:images` | Attach hero + gallery URLs to listings |
-| `npm run db:operators` | Update operator emails only (no full reseed) |
-| `npm run db:studio` | Prisma Studio GUI |
+| Command                     | Description                                         |
+| --------------------------- | --------------------------------------------------- |
+| `npm run dev`               | Development server                                  |
+| `npm run build`             | Production build (`prisma generate` + `next build`) |
+| `npm run db:seed`           | Seed operators, places, listings (idempotent)       |
+| `npm run db:migrate:deploy` | Apply committed schema migrations                   |
+| `npm run db:images`         | Attach hero + gallery URLs to listings              |
+| `npm run db:operators`      | Update operator emails only (no full reseed)        |
+| `npm run db:studio`         | Prisma Studio GUI                                   |
 
 ---
 
@@ -188,11 +188,11 @@ public/            Static assets
 
 ## Dataset
 
-| Entity | Count |
-|--------|------:|
-| Operators | 6 |
-| Places | 50 |
-| Listings | 73 |
+| Entity        |  Count |
+| ------------- | -----: |
+| Operators     |      6 |
+| Places        |     50 |
+| Listings      |     73 |
 | Weekend slots | ~1,460 |
 
 Source: `prisma/data/seed-data.json` (researched Maharashtra adventure destinations).
@@ -207,4 +207,4 @@ Next.js 14 · TypeScript · Tailwind CSS · Prisma · PostgreSQL (Neon) · Clerk
 
 ## License
 
-Private — hackathon project.
+Private - hackathon project.

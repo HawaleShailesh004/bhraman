@@ -8,7 +8,7 @@ import {
 
 const DEFAULT_TRAVELER_EMAIL = "demo@bhraman.app";
 
-/** @deprecated Use requireSessionTraveler() — kept for demo fallback only */
+/** @deprecated Use requireSessionTraveler() - kept for demo fallback only */
 export async function resolveTraveler(input?: {
   email?: string;
   name?: string;

@@ -21,7 +21,7 @@ export function TrendingCarousel({ listings }: { listings: ListingCardData[] }) 
   if (!listings.length) return null;
 
   return (
-    <section className="overflow-x-hidden bg-paper pt-16 pb-4">
+    <section className="section-y overflow-x-hidden bg-paper">
       <div className="page-shell min-w-0">
         <SectionHeader
           eyebrow={COPY.trending.eyebrow}

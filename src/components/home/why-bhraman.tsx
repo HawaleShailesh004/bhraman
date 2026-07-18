@@ -27,7 +27,7 @@ export function WhyBhramanSection() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-ink py-16 text-paper sm:py-24">
+    <section className="section-y relative overflow-hidden bg-ink text-paper">
       <div
         className="pointer-events-none absolute inset-0 opacity-30"
         style={{

@@ -39,6 +39,7 @@ export type ListingCardData = {
     businessName: string;
     isVerified: boolean;
     verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
+    logoUrl: string | null;
     yearsOperating: number | null;
     insuranceStatus: boolean;
     insuranceProvider: string | null;
@@ -125,6 +126,8 @@ export type PublicOperatorProfileData = {
   businessName: string;
   baseCity: string;
   bio: string;
+  logoUrl: string | null;
+  bannerUrl: string | null;
   yearsOperating: number | null;
   verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
   insuranceStatus: boolean;
@@ -143,6 +146,8 @@ export type OperatorDirectoryCardData = {
   businessName: string;
   baseCity: string;
   bio: string;
+  logoUrl: string | null;
+  bannerUrl: string | null;
   verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
   yearsOperating: number | null;
   insuranceStatus: boolean;

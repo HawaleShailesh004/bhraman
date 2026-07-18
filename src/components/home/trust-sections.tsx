@@ -77,18 +77,16 @@ export function TrustFaqSection() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="bg-paper-2 py-16 sm:py-24">
-      <div className="page-shell grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-        <div>
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
-            {COPY.faq.eyebrow}
-          </p>
-          <h2 className="max-w-[16ch] font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight text-ink">
-            {COPY.faq.title}
-          </h2>
-        </div>
+    <section className="bg-paper-2 section-y">
+      <div className="page-shell mx-auto flex max-w-2xl flex-col items-center text-center">
+        <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+          {COPY.faq.eyebrow}
+        </p>
+        <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight text-ink">
+          {COPY.faq.title}
+        </h2>
 
-        <div className="space-y-2">
+        <div className="mt-10 w-full space-y-2 text-left">
           {COPY.faq.items.map((item, index) => {
             const isOpen = open === index;
             return (

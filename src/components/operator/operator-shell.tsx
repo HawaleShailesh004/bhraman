@@ -14,7 +14,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
-import { operatorInitials } from "@/lib/ui-present";
+import { OperatorAvatar } from "@/components/ui/operator-avatar";
 
 const NAV = [
   { icon: LayoutGrid, label: "Overview", href: "/operator" },
@@ -32,15 +32,16 @@ const clerkConfigured = Boolean(
 
 export function OperatorShell({
   businessName,
+  logoUrl,
   verificationStatus,
   children,
 }: {
   businessName: string;
+  logoUrl?: string | null;
   verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED";
   children: React.ReactNode;
 }) {
   const path = usePathname();
-  const initials = operatorInitials(businessName);
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[230px_1fr]">
@@ -71,12 +72,12 @@ export function OperatorShell({
         </nav>
         <div className="mt-auto pt-6">
           <div className="flex items-center gap-2.5 rounded-xl bg-white/5 px-2 py-3">
-            <div
-              className="grid h-9 w-9 place-items-center rounded-full font-display text-sm font-bold text-paper"
-              style={{ background: "linear-gradient(135deg,#2D5A3D,#1A2E22)" }}
-            >
-              {initials}
-            </div>
+            <OperatorAvatar
+              name={businessName}
+              src={logoUrl}
+              size="sm"
+              rounded="full"
+            />
             <div className="min-w-0">
               <div className="truncate text-sm font-semibold">{businessName}</div>
               <Link

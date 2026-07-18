@@ -159,6 +159,7 @@ function buildCatalog(): ListingDetailData[] {
           bio: operator.bio,
           isVerified: true,
           verificationStatus: "VERIFIED",
+          logoUrl: null,
           yearsOperating: Math.max(
             0,
             new Date().getFullYear() - operator.yearStarted,

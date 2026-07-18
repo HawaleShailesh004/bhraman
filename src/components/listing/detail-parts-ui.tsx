@@ -20,7 +20,8 @@ import type { ListingDetailData } from "@/types/listing";
 import type { WeatherSignal } from "@/lib/weather";
 import { formatInr } from "@/lib/format";
 import { softSpring, springTap } from "@/lib/motion";
-import { listingImageStyle, operatorInitials } from "@/lib/ui-present";
+import { listingImageStyle } from "@/lib/ui-present";
+import { OperatorAvatar } from "@/components/ui/operator-avatar";
 import { Button, StarRating } from "@/components/ui/primitives";
 import { EscrowReserveNote } from "@/components/home/proof-and-operators";
 import type { ReviewData } from "@/types/listing";
@@ -195,17 +196,16 @@ export function WeatherSignalUi({ weather }: { weather: WeatherSignal }) {
 
 export function OperatorBlockUi({ listing }: { listing: ListingDetailData }) {
   const op = listing.operator;
-  const initials = operatorInitials(op.businessName);
 
   return (
     <div className="rounded-[22px] border border-line bg-white p-4 shadow-[var(--shadow-sm)] sm:p-6">
       <div className="mb-5 flex min-w-0 items-center gap-3.5">
-        <div
-          className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl font-display text-xl font-extrabold text-paper"
-          style={{ background: "linear-gradient(135deg,#2D5A3D,#1A2E22)" }}
-        >
-          {initials}
-        </div>
+        <OperatorAvatar
+          name={op.businessName}
+          src={op.logoUrl}
+          size="lg"
+          rounded="xl"
+        />
         <div className="min-w-0">
           <div className="flex min-w-0 flex-wrap items-center gap-2 font-display text-lg font-extrabold">
             <Link

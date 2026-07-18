@@ -9,6 +9,7 @@ import {
 import type { ListingCardData } from "@/types/listing";
 import type { OperatorDirectoryCardData } from "@/types/listing";
 import { COPY } from "@/lib/marketing-copy";
+import { OperatorAvatar } from "@/components/ui/operator-avatar";
 
 export function ProofStrip({
   listings,
@@ -30,7 +31,7 @@ export function ProofStrip({
   ).length;
 
   return (
-    <section className="page-shell py-10 sm:py-14">
+    <section className="page-shell section-y">
       <div className="mb-5 max-w-xl">
         <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
           {COPY.proof.eyebrow}
@@ -93,7 +94,7 @@ export function OperatorSpotlight({
   if (featured.length === 0) return null;
 
   return (
-    <section className="page-shell section-y pt-8 sm:pt-12">
+    <section className="page-shell section-y">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
@@ -118,14 +119,12 @@ export function OperatorSpotlight({
             className="group rounded-[18px] border border-line bg-white p-5 transition-shadow hover:shadow-[var(--shadow-md)]"
           >
             <div className="flex items-center gap-3">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-forest font-display font-extrabold text-paper">
-                {op.businessName
-                  .split(" ")
-                  .slice(0, 2)
-                  .map((p) => p[0])
-                  .join("")
-                  .toUpperCase()}
-              </span>
+              <OperatorAvatar
+                name={op.businessName}
+                src={op.logoUrl}
+                size="md"
+                rounded="xl"
+              />
               <div className="min-w-0">
                 <p className="truncate font-display text-base font-bold text-ink group-hover:text-forest">
                   {op.businessName}

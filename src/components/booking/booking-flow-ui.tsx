@@ -31,9 +31,7 @@ import type { AvailabilitySlotData, ListingDetailData } from "@/types/listing";
 import type { TravelerSession } from "@/types/auth";
 import type { ReactNode } from "react";
 
-const clerkConfigured = Boolean(
-  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-);
+const clerkConfigured = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 const STEPS = ["Details", "Travelers", "Safety", "Payment", "Confirmed"];
 
@@ -154,9 +152,12 @@ function BookingFlowContent({
     async function loadSlots() {
       setLoading(true);
       try {
-        const response = await fetch(`/api/listings/${listing.slug}/availability`, {
-          cache: "no-store",
-        });
+        const response = await fetch(
+          `/api/listings/${listing.slug}/availability`,
+          {
+            cache: "no-store",
+          },
+        );
         if (!response.ok) throw new Error("Failed");
         const data = (await response.json()) as AvailabilitySlotData[];
         if (!active) return;
@@ -239,7 +240,8 @@ function BookingFlowContent({
 
   const seatLabel = useMemo(() => {
     if (!selectedSlot) return "Select a date";
-    if (selectedSlot.seatsLeft <= 3) return `${selectedSlot.seatsLeft} seats left`;
+    if (selectedSlot.seatsLeft <= 3)
+      return `${selectedSlot.seatsLeft} seats left`;
     return "Seats available";
   }, [selectedSlot]);
 
@@ -314,7 +316,9 @@ function BookingFlowContent({
         }),
       });
 
-      const data = (await response.json()) as BookingCheckoutResponse | { error?: string; message?: string };
+      const data = (await response.json()) as
+        | BookingCheckoutResponse
+        | { error?: string; message?: string };
       if (response.status === 401) {
         pushToast({
           tone: "err",
@@ -366,7 +370,7 @@ function BookingFlowContent({
                 }),
               });
             } catch {
-              // Still redirect — booking page will sync from Razorpay on load
+              // Still redirect - booking page will sync from Razorpay on load
             }
             router.push(`/booking/${data.bookingRef}`);
           },
@@ -394,7 +398,10 @@ function BookingFlowContent({
     <div className="mx-auto max-w-2xl px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
       <nav className="mb-3 flex items-center" aria-label="Booking progress">
         {STEPS.map((label, i) => (
-          <div key={label} className={`flex min-w-0 items-center ${i < STEPS.length - 1 ? "flex-1" : ""}`}>
+          <div
+            key={label}
+            className={`flex min-w-0 items-center ${i < STEPS.length - 1 ? "flex-1" : ""}`}
+          >
             <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
               <div
                 aria-current={i === step ? "step" : undefined}
@@ -454,7 +461,10 @@ function BookingFlowContent({
               </p>
               <div
                 className="rounded-xl overflow-hidden h-40 mb-6"
-                style={listingImageStyle(listing.category.slug, listing.heroImageUrl)}
+                style={listingImageStyle(
+                  listing.category.slug,
+                  listing.heroImageUrl,
+                )}
               />
               <div className="space-y-3">
                 <div className="rounded-lg border border-line p-4">
@@ -487,7 +497,9 @@ function BookingFlowContent({
                     </motion.button>
                     <motion.span
                       key={group}
-                      initial={reduceMotion ? false : { scale: 0.92, opacity: 0.6 }}
+                      initial={
+                        reduceMotion ? false : { scale: 0.92, opacity: 0.6 }
+                      }
                       animate={{ scale: 1, opacity: 1 }}
                       transition={softSpring}
                       className="font-semibold"
@@ -561,17 +573,25 @@ function BookingFlowContent({
 
           {step === 1 ? (
             <StepPanel key="s1" direction={direction} reduce={reduceMotion}>
-              <h2 className="font-display text-2xl mb-1">Lead traveler details</h2>
+              <h2 className="font-display text-2xl mb-1">
+                Lead traveler details
+              </h2>
               <p className="text-mist text-sm mb-6">
                 {traveler && clerkConfigured
                   ? "Confirmation will be sent to your signed-in email."
                   : isGuest
-                    ? "Add your details now — you'll sign in before payment."
+                    ? "Add your details now - you'll sign in before payment."
                     : "We'll send the confirmation here."}
               </p>
               <div className="space-y-4">
                 {[
-                  { k: "name", label: "Full name", ph: "Aditya Kulkarni", type: "text", readOnly: false },
+                  {
+                    k: "name",
+                    label: "Full name",
+                    ph: "Aditya Kulkarni",
+                    type: "text",
+                    readOnly: false,
+                  },
                   {
                     k: "email",
                     label: "Email",
@@ -579,7 +599,13 @@ function BookingFlowContent({
                     type: "email",
                     readOnly: Boolean(traveler && clerkConfigured),
                   },
-                  { k: "phone", label: "Phone", ph: "+91 98765 43210", type: "tel", readOnly: false },
+                  {
+                    k: "phone",
+                    label: "Phone",
+                    ph: "+91 98765 43210",
+                    type: "tel",
+                    readOnly: false,
+                  },
                 ].map((f) => (
                   <div key={f.k}>
                     <label
@@ -643,8 +669,7 @@ function BookingFlowContent({
                         { value: "OTHER", label: "Other" },
                       ] as const
                     ).map((option) => {
-                      const selected =
-                        safety.customerGender === option.value;
+                      const selected = safety.customerGender === option.value;
                       return (
                         <motion.button
                           key={option.value}
@@ -657,9 +682,7 @@ function BookingFlowContent({
                               customerGender: option.value,
                             })
                           }
-                          whileTap={
-                            reduceMotion ? undefined : { scale: 0.98 }
-                          }
+                          whileTap={reduceMotion ? undefined : { scale: 0.98 }}
                           transition={springTap}
                           className={`relative flex min-h-12 items-center justify-center rounded-xl border-[1.5px] px-2 py-3 text-center text-sm font-semibold transition-colors duration-200 sm:px-3 ${
                             selected
@@ -671,9 +694,7 @@ function BookingFlowContent({
                           {selected ? (
                             <motion.span
                               layoutId={
-                                reduceMotion
-                                  ? undefined
-                                  : "gender-choice-check"
+                                reduceMotion ? undefined : "gender-choice-check"
                               }
                               className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-amber sm:right-2 sm:top-2"
                               transition={softSpring}
@@ -819,8 +840,8 @@ function BookingFlowContent({
               </p>
               {isGuest ? (
                 <div className="mb-5 rounded-[14px] border border-amber/30 bg-[#FFF9F0] px-4 py-3 text-sm text-[#54635A]">
-                  Sign in to complete payment. Your slot and traveler details are
-                  saved on this page.{" "}
+                  Sign in to complete payment. Your slot and traveler details
+                  are saved on this page.{" "}
                   <button
                     type="button"
                     onClick={redirectToSignInForPayment}
@@ -832,9 +853,24 @@ function BookingFlowContent({
               ) : null}
               <div className="mb-6 space-y-3">
                 {[
-                  { k: "upi", icon: Smartphone, name: "UPI", sub: "GPay, PhonePe, Paytm" },
-                  { k: "card", icon: CreditCard, name: "Card", sub: "Credit / Debit" },
-                  { k: "netbanking", icon: Building2, name: "Netbanking", sub: "All major banks" },
+                  {
+                    k: "upi",
+                    icon: Smartphone,
+                    name: "UPI",
+                    sub: "GPay, PhonePe, Paytm",
+                  },
+                  {
+                    k: "card",
+                    icon: CreditCard,
+                    name: "Card",
+                    sub: "Credit / Debit",
+                  },
+                  {
+                    k: "netbanking",
+                    icon: Building2,
+                    name: "Netbanking",
+                    sub: "All major banks",
+                  },
                 ].map((m) => (
                   <motion.button
                     key={m.k}
@@ -860,9 +896,15 @@ function BookingFlowContent({
                       {method === m.k ? (
                         <motion.span
                           key="check"
-                          initial={reduceMotion ? false : { scale: 0.6, opacity: 0 }}
+                          initial={
+                            reduceMotion ? false : { scale: 0.6, opacity: 0 }
+                          }
                           animate={{ scale: 1, opacity: 1 }}
-                          exit={reduceMotion ? undefined : { scale: 0.6, opacity: 0 }}
+                          exit={
+                            reduceMotion
+                              ? undefined
+                              : { scale: 0.6, opacity: 0 }
+                          }
                           transition={softSpring}
                         >
                           <Check size={18} className="text-amber-deep" />
@@ -893,11 +935,13 @@ function BookingFlowContent({
               <h2 className="mb-2 font-display text-2xl">Booking created!</h2>
               {bookingRef ? (
                 <p className="mb-1 text-mist">
-                  Reference <span className="font-bold text-ink">{bookingRef}</span>
+                  Reference{" "}
+                  <span className="font-bold text-ink">{bookingRef}</span>
                 </p>
               ) : null}
               <p className="mb-6 text-sm text-mist">
-                Complete payment in the Razorpay window or check your booking status.
+                Complete payment in the Razorpay window or check your booking
+                status.
               </p>
               <Link
                 href={bookingRef ? `/booking/${bookingRef}` : "/bookings"}
