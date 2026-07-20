@@ -57,23 +57,24 @@ export function MarketingCtaBand({
       <div className="page-shell">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p
-            className={`mb-3 text-[10px] font-bold uppercase tracking-[0.2em] ${
+            className={`mb-3 text-[10px] font-bold uppercase tracking-eyebrow ${
               ink ? "text-amber" : "text-amber-deep"
             }`}
           >
             {eyebrow}
           </p>
           <h2
-            className={`font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight ${
+            className={`font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight ${
               ink ? "text-paper" : "text-ink"
             }`}
           >
             {title}
           </h2>
           <p
-            className={`mx-auto mt-3 max-w-md text-sm leading-relaxed ${
+            className={`mx-auto mt-3 max-w-md text-sm leading-relaxed tracking-sub ${
               ink ? "text-[#A8B7AD]" : "text-body"
             }`}
+            data-sub
           >
             {sub}
           </p>

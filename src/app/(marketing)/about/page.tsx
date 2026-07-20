@@ -6,7 +6,7 @@ import { AboutPageContent } from "@/components/marketing/about-page-content";
 export const metadata: Metadata = {
   title: "About us | Bhraman",
   description:
-    "Bhraman is Maharashtra's trust-first adventure marketplace — verified operators, honest weather, and payments held until you're back.",
+    "Bhraman is Maharashtra's trust-first adventure marketplace - verified operators, honest weather, and payments held until you're back.",
 };
 
 export default function AboutPage() {

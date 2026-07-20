@@ -1,8 +1,6 @@
-import {
-  assertOwnsBooking,
-  ForbiddenError,
-  getSessionOperator,
-} from "@/lib/auth";
+import { assertOwnsBooking } from "@/lib/auth";
+import { toApiErrorResponse } from "@/lib/api-errors";
+import { loadOperatorSession } from "@/app/api/operator/helpers";
 import { prisma } from "@/lib/prisma";
 
 type UpdateBookingBody = {
@@ -13,10 +11,9 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const session = await getSessionOperator();
-  if (!session) {
-    return Response.json({ error: "UNAUTHORIZED" }, { status: 401 });
-  }
+  const auth = await loadOperatorSession();
+  if ("response" in auth) return auth.response;
+  const { session } = auth;
 
   const body = (await request.json()) as UpdateBookingBody;
   if (body.status !== "COMPLETED") {
@@ -49,9 +46,9 @@ export async function PATCH(
 
     return Response.json(booking);
   } catch (error) {
-    if (error instanceof ForbiddenError) {
-      return Response.json({ error: "FORBIDDEN" }, { status: 403 });
-    }
-    return Response.json({ error: "UPDATE_FAILED" }, { status: 500 });
+    return (
+      toApiErrorResponse(error) ??
+      Response.json({ error: "UPDATE_FAILED" }, { status: 500 })
+    );
   }
 }

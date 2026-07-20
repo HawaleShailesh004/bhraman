@@ -122,7 +122,7 @@ function SceneChaos({ active }: { active: boolean }) {
           </motion.div>
         ))}
       </div>
-      <p className="absolute bottom-5 left-5 text-[10px] font-bold uppercase tracking-[0.2em] text-amber/80">
+      <p className="absolute bottom-5 left-5 text-[10px] font-bold uppercase tracking-eyebrow text-amber/80">
         Friday · WhatsApp spiral
       </p>
     </SceneShell>
@@ -164,7 +164,7 @@ function SceneRidge({ active }: { active: boolean }) {
       <div className="absolute right-[10%] top-[42%] rounded-full bg-amber px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-amber-text shadow-amber-glow">
         Verified · seats open
       </div>
-      <p className="absolute bottom-5 left-5 text-[10px] font-bold uppercase tracking-[0.2em] text-paper/80">
+      <p className="absolute bottom-5 left-5 text-[10px] font-bold uppercase tracking-eyebrow text-paper/80">
         Saturday · The ridge
       </p>
     </SceneShell>
@@ -219,7 +219,7 @@ function SceneChai({ active }: { active: boolean }) {
           Operator paid · You didn&apos;t chase anyone
         </p>
       </div>
-      <p className="absolute bottom-5 left-5 text-[10px] font-bold uppercase tracking-[0.2em] text-amber/80">
+      <p className="absolute bottom-5 left-5 text-[10px] font-bold uppercase tracking-eyebrow text-amber/80">
         Sunday · Chai
       </p>
     </SceneShell>
@@ -256,10 +256,10 @@ export function WeekendStorySection() {
       <section className="section-y bg-ink text-paper">
         <div className="page-shell">
           <div className="mb-12 max-w-2xl">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber">
               Weekend arc
             </p>
-            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight">
+            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight">
               Chaos → ridge → chai
             </h2>
           </div>
@@ -269,7 +269,7 @@ export function WeekendStorySection() {
                 <span className="mb-3 inline-flex rounded-full bg-amber px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-text">
                   {b.when}
                 </span>
-                <h3 className="font-display text-lg font-bold">{b.title}</h3>
+                <h3 className="font-display text-lg font-medium">{b.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#A8B7AD]">
                   {b.text}
                 </p>
@@ -306,7 +306,7 @@ export function WeekendStorySection() {
           </div>
 
           <div className="relative flex min-h-[260px] flex-col justify-center overflow-hidden lg:pl-2">
-            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.2em] text-amber">
+            <p className="mb-5 text-[10px] font-bold uppercase tracking-eyebrow text-amber">
               Weekend arc
             </p>
 
@@ -320,7 +320,7 @@ export function WeekendStorySection() {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.55, ease: slideEase }}
-                  className="absolute inset-x-0 top-0 font-display text-[clamp(1.7rem,4vw,2.5rem)] font-bold tracking-tight text-paper"
+                  className="absolute inset-x-0 top-0 font-display text-[clamp(1.7rem,4vw,2.5rem)] font-medium tracking-tight text-paper"
                 >
                   {beat.phrase}
                 </motion.h2>
@@ -342,7 +342,7 @@ export function WeekendStorySection() {
                   <span className="mb-3 inline-flex rounded-full bg-amber px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-text">
                     {beat.when}
                   </span>
-                  <h3 className="font-display text-xl font-bold text-paper sm:text-2xl">
+                  <h3 className="font-display text-xl font-medium text-paper sm:text-2xl">
                     {beat.title}
                   </h3>
                   <p className="mt-2 max-w-sm text-sm text-[#A8B7AD]">

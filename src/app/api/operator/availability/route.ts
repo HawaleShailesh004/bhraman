@@ -1,8 +1,6 @@
-import {
-  assertOwnsListing,
-  ForbiddenError,
-  getSessionOperator,
-} from "@/lib/auth";
+import { assertOwnsListing } from "@/lib/auth";
+import { toApiErrorResponse } from "@/lib/api-errors";
+import { loadOperatorSession } from "@/app/api/operator/helpers";
 import { generateSlots } from "@/lib/availability-generator";
 
 type AvailabilityBody = {
@@ -17,10 +15,9 @@ type AvailabilityBody = {
 };
 
 export async function POST(request: Request) {
-  const session = await getSessionOperator();
-  if (!session) {
-    return Response.json({ error: "UNAUTHORIZED" }, { status: 401 });
-  }
+  const auth = await loadOperatorSession();
+  if ("response" in auth) return auth.response;
+  const { session } = auth;
 
   const body = (await request.json()) as AvailabilityBody;
 
@@ -68,9 +65,8 @@ export async function POST(request: Request) {
 
     return Response.json(result);
   } catch (error) {
-    if (error instanceof ForbiddenError) {
-      return Response.json({ error: "FORBIDDEN" }, { status: 403 });
-    }
+    const mapped = toApiErrorResponse(error);
+    if (mapped) return mapped;
     if (error instanceof Error && error.message === "LISTING_NOT_FOUND") {
       return Response.json({ error: "LISTING_NOT_FOUND" }, { status: 404 });
     }

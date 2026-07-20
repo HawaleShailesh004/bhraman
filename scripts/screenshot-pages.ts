@@ -1,5 +1,5 @@
 /**
- * Screenshot Bhraman pages — including authenticated operator dashboards.
+ * Screenshot Bhraman pages - including authenticated operator dashboards.
  *
  * Usage:
  *   npm run dev -- -p 3001
@@ -26,15 +26,14 @@ const DEFAULT_BASE = "http://localhost:3001";
 /** Matches src/lib/operator-emails.ts DEMO_OPERATOR_CREDENTIALS */
 const DEMO_OPERATOR = {
   email:
-    process.env.OPERATOR_SHOT_EMAIL ||
-    "konkan-wave-adventures@example.com",
+    process.env.OPERATOR_SHOT_EMAIL || "konkan-wave-adventures@example.com",
   password: process.env.OPERATOR_SHOT_PASSWORD || "password",
   otp: process.env.OPERATOR_SHOT_OTP || "424242",
 };
 
 type Route = { path: string; name: string; settleMs?: number };
 
-/** Public / marketing — no login */
+/** Public / marketing - no login */
 const PUBLIC_ROUTES: Route[] = [
   { path: "/", name: "00-home", settleMs: 1400 },
   { path: "/discover", name: "01-discover" },
@@ -51,7 +50,7 @@ const PUBLIC_ROUTES: Route[] = [
   { path: "/terms", name: "08-terms" },
 ];
 
-/** Auth UI only (capture once — not dashboards) */
+/** Auth UI only (capture once - not dashboards) */
 const AUTH_UI_ROUTES: Route[] = [
   { path: "/operator/sign-in", name: "auth-operator-sign-in", settleMs: 900 },
   { path: "/operator/sign-up", name: "auth-operator-sign-up", settleMs: 900 },
@@ -73,7 +72,9 @@ const OPERATOR_APP_ROUTES: Route[] = [
 type ShotMode = "both" | "fold" | "full";
 
 function parseArgs(argv: string[]) {
-  const flags = new Set(argv.filter((a) => a.startsWith("--") && !a.includes("=")));
+  const flags = new Set(
+    argv.filter((a) => a.startsWith("--") && !a.includes("=")),
+  );
   const outArg = argv.find((a) => a.startsWith("--out="));
   const baseArg = argv.find((a) => a.startsWith("--base="));
   return {
@@ -164,7 +165,10 @@ async function clickContinue(page: Page) {
     await btn.first().click();
     return;
   }
-  await page.locator('button[data-localization-key="formButtonPrimary"]').first().click();
+  await page
+    .locator('button[data-localization-key="formButtonPrimary"]')
+    .first()
+    .click();
 }
 
 async function fillClerkIdentifier(page: Page, email: string) {
@@ -318,7 +322,10 @@ async function discoverDynamicRoutes(page: Page, baseUrl: string) {
   const found: Route[] = [];
 
   async function collect(hrefs: string[], kind: "listing" | "operator") {
-    const uniq = [...new Set(hrefs)].slice(0, kind === "listing" ? 4 : 3);
+    const uniq = Array.from(new Set(hrefs)).slice(
+      0,
+      kind === "listing" ? 4 : 3,
+    );
     for (const href of uniq) {
       try {
         const u = new URL(href, baseUrl);
@@ -476,11 +483,7 @@ async function shotPage(
       landed.includes("sign-up") ||
       landed.includes("/enter"));
 
-  await waitForPageReady(
-    page,
-    opts.route.settleMs ?? 700,
-    opts.keepMotion,
-  );
+  await waitForPageReady(page, opts.route.settleMs ?? 700, opts.keepMotion);
   await hideFloatingChrome(page);
 
   const baseName = `${String(opts.index).padStart(2, "0")}-${opts.route.name}`;
@@ -560,7 +563,9 @@ async function main() {
   console.log(`  base:   ${baseUrl}`);
   console.log(`  out:    ${outDir}`);
   console.log(`  mode:   ${mode}`);
-  console.log(`  auth:   ${skipAuth ? "skipped" : "operator login + dashboards"}`);
+  console.log(
+    `  auth:   ${skipAuth ? "skipped" : "operator login + dashboards"}`,
+  );
   console.log(`  motion: ${keepMotion ? "on" : "reduced"}\n`);
 
   try {
@@ -596,7 +601,10 @@ async function main() {
   });
 
   let allRoutesEstimate =
-    uniquePublic.length + AUTH_UI_ROUTES.length + OPERATOR_APP_ROUTES.length + 2;
+    uniquePublic.length +
+    AUTH_UI_ROUTES.length +
+    OPERATOR_APP_ROUTES.length +
+    2;
   let index = 1;
   const results: Awaited<ReturnType<typeof shotPage>>[] = [];
 
@@ -664,7 +672,7 @@ async function main() {
       }
     } else {
       console.warn(
-        "\nSkipping operator dashboards — could not complete Clerk login.\n",
+        "\nSkipping operator dashboards - could not complete Clerk login.\n",
       );
     }
   }

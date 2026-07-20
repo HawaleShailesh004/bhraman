@@ -47,66 +47,78 @@ async function dbHasPublishedListings() {
 }
 
 export async function getListingAvailability(slug: string) {
-  if (!(await dbHasPublishedListings())) {
+  const catalogFallback = () => {
     const listing = getCatalogListingBySlug(slug);
     if (!listing) return [];
-    return generateMockSlots(listing.id, listing.durationHours, listing.maxGroupSize);
+    return generateMockSlots(
+      listing.id,
+      listing.durationHours,
+      listing.maxGroupSize,
+    );
+  };
+
+  if (!(await dbHasPublishedListings())) {
+    return catalogFallback();
   }
 
-  const listing = await prisma.listing.findFirst({
-    where: { slug, status: "PUBLISHED" },
-    select: { id: true },
-  });
-  if (!listing) return [];
+  try {
+    const listing = await prisma.listing.findFirst({
+      where: { slug, status: "PUBLISHED" },
+      select: { id: true },
+    });
+    if (!listing) return [];
 
-  const slots = await prisma.availabilitySlot.findMany({
-    where: {
-      listingId: listing.id,
-      status: { in: ["OPEN", "FILLING_FAST", "CONFIRMED"] },
-      startTime: { gte: new Date() },
-    },
-    orderBy: { startTime: "asc" },
-    take: 20,
-    select: {
-      id: true,
-      startTime: true,
-      endTime: true,
-      capacity: true,
-      bookedSeats: true,
-      maleCount: true,
-      femaleCount: true,
-      otherCount: true,
-      minSeatsToConfirm: true,
-      priceOverride: true,
-      status: true,
-    },
-  });
+    const slots = await prisma.availabilitySlot.findMany({
+      where: {
+        listingId: listing.id,
+        status: { in: ["OPEN", "FILLING_FAST", "CONFIRMED"] },
+        startTime: { gte: new Date() },
+      },
+      orderBy: { startTime: "asc" },
+      take: 20,
+      select: {
+        id: true,
+        startTime: true,
+        endTime: true,
+        capacity: true,
+        bookedSeats: true,
+        maleCount: true,
+        femaleCount: true,
+        otherCount: true,
+        minSeatsToConfirm: true,
+        priceOverride: true,
+        status: true,
+      },
+    });
 
-  const confirmedBySlot = await prisma.booking.groupBy({
-    by: ["slotId"],
-    where: {
-      slotId: { in: slots.map((slot) => slot.id) },
-      status: { in: ["CONFIRMED", "COMPLETED"] },
-    },
-    _sum: { groupSize: true },
-  });
-  const confirmedSeats = new Map(
-    confirmedBySlot.map((row) => [row.slotId, row._sum.groupSize ?? 0]),
-  );
+    const confirmedBySlot = await prisma.booking.groupBy({
+      by: ["slotId"],
+      where: {
+        slotId: { in: slots.map((slot) => slot.id) },
+        status: { in: ["CONFIRMED", "COMPLETED"] },
+      },
+      _sum: { groupSize: true },
+    });
+    const confirmedSeats = new Map(
+      confirmedBySlot.map((row) => [row.slotId, row._sum.groupSize ?? 0]),
+    );
 
-  return slots.map((slot) => ({
-    id: slot.id,
-    startTime: slot.startTime.toISOString(),
-    endTime: slot.endTime.toISOString(),
-    capacity: slot.capacity,
-    bookedSeats: slot.bookedSeats,
-    confirmedSeats: confirmedSeats.get(slot.id) ?? 0,
-    seatsLeft: Math.max(slot.capacity - slot.bookedSeats, 0),
-    maleCount: slot.maleCount,
-    femaleCount: slot.femaleCount,
-    otherCount: slot.otherCount,
-    minSeatsToConfirm: slot.minSeatsToConfirm,
-    status: slot.status,
-    priceOverride: slot.priceOverride,
-  }));
+    return slots.map((slot) => ({
+      id: slot.id,
+      startTime: slot.startTime.toISOString(),
+      endTime: slot.endTime.toISOString(),
+      capacity: slot.capacity,
+      bookedSeats: slot.bookedSeats,
+      confirmedSeats: confirmedSeats.get(slot.id) ?? 0,
+      seatsLeft: Math.max(slot.capacity - slot.bookedSeats, 0),
+      maleCount: slot.maleCount,
+      femaleCount: slot.femaleCount,
+      otherCount: slot.otherCount,
+      minSeatsToConfirm: slot.minSeatsToConfirm,
+      status: slot.status,
+      priceOverride: slot.priceOverride,
+    }));
+  } catch {
+    return catalogFallback();
+  }
 }

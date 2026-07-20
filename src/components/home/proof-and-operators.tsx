@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   ArrowRight,
@@ -10,6 +12,8 @@ import type { ListingCardData } from "@/types/listing";
 import type { OperatorDirectoryCardData } from "@/types/listing";
 import { COPY } from "@/lib/marketing-copy";
 import { OperatorAvatar } from "@/components/ui/operator-avatar";
+import { CountUp } from "@/components/motion/count-up";
+import { Reveal } from "@/components/motion/scroll-reveal";
 
 export function ProofStrip({
   listings,
@@ -29,55 +33,58 @@ export function ProofStrip({
   const womanLed = operators.filter(
     (o) => o.totalGuideCount > 0 && o.femaleGuideCount > 0,
   ).length;
+  const verifiedN = verified || operators.length;
 
   return (
     <section className="page-shell section-y">
-      <div className="mb-5 max-w-xl">
-        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+      <Reveal kind="up" className="mb-5 max-w-xl">
+        <p className="mb-2 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
           {COPY.proof.eyebrow}
         </p>
-        <h2 className="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl">
+        <h2 className="font-display text-xl font-medium tracking-tight text-ink sm:text-2xl">
           {COPY.proof.title}
         </h2>
-      </div>
-      <div className="overflow-hidden rounded-[22px] border border-line/80 bg-white shadow-[var(--shadow-md)]">
-        <div className="grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-          <div className="flex items-start gap-3 p-4 sm:p-5">
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#EAF1EC] text-forest">
-              <BadgeCheck size={18} />
-            </span>
-            <div>
-              <p className="font-display text-xl font-bold text-ink">
-                {verified || operators.length}+
-              </p>
-              <p className="text-xs text-body">Verified operators</p>
+      </Reveal>
+      <Reveal kind="up" delay={0.06}>
+        <div className="overflow-hidden rounded-[22px] border border-line/80 bg-white shadow-[var(--shadow-md)]">
+          <div className="grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            <div className="flex items-start gap-3 p-4 sm:p-5">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#EAF1EC] text-forest">
+                <BadgeCheck size={18} />
+              </span>
+              <div>
+                <p className="font-display text-xl font-medium text-ink">
+                  <CountUp to={verifiedN} suffix="+" />
+                </p>
+                <p className="text-xs text-body">Verified operators</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 sm:p-5">
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#FFF4E8] text-amber-deep">
-              <LockKeyhole size={18} />
-            </span>
-            <div>
-              <p className="text-sm font-bold text-ink">{COPY.escrow.short}</p>
-              <p className="mt-1 text-xs text-body">Not a stranger&apos;s UPI</p>
+            <div className="flex items-start gap-3 p-4 sm:p-5">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#FFF4E8] text-amber-deep">
+                <LockKeyhole size={18} />
+              </span>
+              <div>
+                <p className="text-sm font-bold text-ink">{COPY.escrow.short}</p>
+                <p className="mt-1 text-xs text-body">Not a stranger&apos;s UPI</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 sm:p-5">
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#EAF1EC] text-forest">
-              <UsersRound size={18} />
-            </span>
-            <div>
-              <p className="flex items-center gap-1 font-display text-xl font-bold text-ink">
-                {avg.toFixed(1)}
-                <Star size={14} className="fill-amber text-amber" aria-hidden />
-              </p>
-              <p className="text-xs text-body">
-                Traveler rating · {womanLed} with women guides
-              </p>
+            <div className="flex items-start gap-3 p-4 sm:p-5">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#EAF1EC] text-forest">
+                <UsersRound size={18} />
+              </span>
+              <div>
+                <p className="flex items-center gap-1 font-display text-xl font-medium text-ink">
+                  <CountUp to={avg} decimals={1} />
+                  <Star size={14} className="fill-amber text-amber" aria-hidden />
+                </p>
+                <p className="text-xs text-body">
+                  Traveler rating · {womanLed} with women guides
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -97,10 +104,10 @@ export function OperatorSpotlight({
     <section className="page-shell section-y">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
             Who leads the trip
           </p>
-          <h2 className="font-display text-[clamp(1.45rem,3.2vw,2rem)] font-bold tracking-tight text-ink">
+          <h2 className="font-display text-[clamp(1.45rem,3.2vw,2rem)] font-medium tracking-tight text-ink">
             Operators you can look up.
           </h2>
         </div>
@@ -126,7 +133,7 @@ export function OperatorSpotlight({
                 rounded="xl"
               />
               <div className="min-w-0">
-                <p className="truncate font-display text-base font-bold text-ink group-hover:text-forest">
+                <p className="truncate font-display text-base font-medium text-ink group-hover:text-forest">
                   {op.businessName}
                 </p>
                 <p className="text-xs text-mist">{op.baseCity}</p>

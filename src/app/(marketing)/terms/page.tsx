@@ -16,7 +16,7 @@ const SECTIONS = [
   },
   {
     t: "Bookings & payments",
-    d: "When you book, you pay Bhraman. Funds are held until the trip runs (or refunded per the listing cancellation policy — including weather cancellations). Operators are paid after completion according to platform rules.",
+    d: "When you book, you pay Bhraman. Funds are held until the trip runs (or refunded per the listing cancellation policy - including weather cancellations). Operators are paid after completion according to platform rules.",
   },
   {
     t: "Your responsibilities",
@@ -41,10 +41,10 @@ export default function TermsPage() {
     <main className="overflow-x-clip bg-paper">
       <Navbar />
       <article className="page-shell section-y pt-28 sm:pt-32">
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+        <p className="text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
           Legal
         </p>
-        <h1 className="mt-3 font-display text-[clamp(1.8rem,4vw,2.8rem)] font-bold tracking-tight text-ink">
+        <h1 className="mt-3 font-display text-[clamp(1.8rem,4vw,2.8rem)] font-medium tracking-tight text-ink">
           Terms of use
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-body">
@@ -54,7 +54,9 @@ export default function TermsPage() {
         <div className="mt-12 max-w-2xl space-y-10">
           {SECTIONS.map((s) => (
             <section key={s.t}>
-              <h2 className="font-display text-xl font-bold text-ink">{s.t}</h2>
+              <h2 className="font-display text-xl font-medium text-ink">
+                {s.t}
+              </h2>
               <p className="mt-2 text-sm leading-relaxed text-body">{s.d}</p>
             </section>
           ))}

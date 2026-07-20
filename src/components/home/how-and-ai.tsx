@@ -12,10 +12,10 @@ export function HowItWorksSection() {
   return (
     <section className="page-shell section-y">
       <div className="mb-10 max-w-2xl">
-        <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+        <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
           {COPY.how.eyebrow}
         </p>
-        <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight text-ink">
+        <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight text-ink">
           {COPY.how.title}
         </h2>
       </div>
@@ -33,10 +33,10 @@ export function HowItWorksSection() {
             }
             className="relative rounded-[18px] border border-line bg-white p-5 sm:p-6"
           >
-            <span className="font-display text-4xl font-black text-amber/35">
+            <span className="font-display text-4xl font-medium text-amber/35">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <h3 className="mt-3 font-display text-lg font-bold text-ink">
+            <h3 className="mt-3 font-display text-lg font-medium text-ink">
               {step.title}
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-body">{step.text}</p>
@@ -56,13 +56,15 @@ export function AiPlannerBand() {
           aria-hidden
         />
         <div className="relative z-10 max-w-xl">
-          <span className="mb-3 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-amber">
+          <span className="mb-3 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-eyebrow text-amber">
             <Sparkles size={13} /> {COPY.ai.eyebrow}
           </span>
-          <h2 className="font-display text-[clamp(1.45rem,3.2vw,2rem)] font-bold leading-tight text-paper">
+          <h2 className="font-display text-[clamp(1.45rem,3.2vw,2rem)] font-medium leading-tight text-paper">
             {COPY.ai.title}
           </h2>
-          <p className="mt-2 text-sm text-[#C9D2CB]">{COPY.ai.sub}</p>
+          <p className="mt-2 text-sm tracking-sub text-[#C9D2CB]" data-sub>
+            {COPY.ai.sub}
+          </p>
           <Link
             href="/plan"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber px-5 py-2.5 text-sm font-bold text-amber-text shadow-amber-glow transition-transform hover:-translate-y-px"

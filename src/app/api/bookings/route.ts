@@ -1,12 +1,48 @@
 import { BookingError, createBooking } from "@/lib/booking";
-import { Gender } from "@prisma/client";
+import { AgeBand, Gender } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getRazorpayClient } from "@/lib/razorpay";
+import { toApiErrorResponse } from "@/lib/api-errors";
 import type { BookingCheckoutResponse } from "@/types/booking";
 import {
   resolveTraveler,
   UnauthorizedError,
 } from "@/app/api/bookings/helpers";
+
+function parseParticipants(raw: unknown, groupSize: number) {
+  if (!Array.isArray(raw)) return undefined;
+  const list = raw
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const p = item as Record<string, unknown>;
+      if (typeof p.name !== "string" || !p.name.trim()) return null;
+      return {
+        name: p.name.trim().slice(0, 120),
+        gender:
+          typeof p.gender === "string" &&
+          Object.values(Gender).includes(p.gender as Gender)
+            ? (p.gender as Gender)
+            : null,
+        ageBand:
+          typeof p.ageBand === "string" &&
+          Object.values(AgeBand).includes(p.ageBand as AgeBand)
+            ? (p.ageBand as AgeBand)
+            : null,
+        age:
+          typeof p.age === "number" && p.age >= 1 && p.age <= 120
+            ? p.age
+            : null,
+      };
+    })
+    .filter(Boolean) as {
+    name: string;
+    gender: Gender | null;
+    ageBand: AgeBand | null;
+    age: number | null;
+  }[];
+  if (!list.length) return undefined;
+  return list.slice(0, groupSize);
+}
 
 type BookingRequestBody = {
   listingId?: unknown;
@@ -16,6 +52,7 @@ type BookingRequestBody = {
   emergencyContactName?: unknown;
   emergencyContactPhone?: unknown;
   medicalNotes?: unknown;
+  participants?: unknown;
   traveler?: {
     name?: unknown;
     email?: unknown;
@@ -66,7 +103,9 @@ export async function POST(request: Request) {
         { status: 401 },
       );
     }
-    throw error;
+    const mapped = toApiErrorResponse(error);
+    if (mapped) return mapped;
+    return Response.json({ error: "BOOKING_FAILED" }, { status: 500 });
   }
 
   try {
@@ -93,6 +132,7 @@ export async function POST(request: Request) {
         typeof body.medicalNotes === "string"
           ? body.medicalNotes.trim().slice(0, 2000) || null
           : null,
+      participants: parseParticipants(body.participants, body.groupSize),
     });
 
     const razorpay = getRazorpayClient();
@@ -143,6 +183,9 @@ export async function POST(request: Request) {
       return Response.json({ error: error.code }, { status });
     }
 
-    return Response.json({ error: "BOOKING_FAILED" }, { status: 500 });
+    return (
+      toApiErrorResponse(error) ??
+      Response.json({ error: "BOOKING_FAILED" }, { status: 500 })
+    );
   }
 }

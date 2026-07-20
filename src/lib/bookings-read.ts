@@ -2,11 +2,13 @@ import "server-only";
 
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { withDbFallback } from "@/lib/db";
 import type { BookingSummary } from "@/types/booking";
 
 type BookingWithPayment = Prisma.BookingGetPayload<{
   include: {
     payment: true;
+    updateRead: true;
     listing: {
       select: {
         slug: true;
@@ -15,10 +17,25 @@ type BookingWithPayment = Prisma.BookingGetPayload<{
         place: { select: { name: true } };
       };
     };
+    slot: {
+      select: {
+        updates: {
+          select: { createdAt: true };
+          orderBy: { createdAt: "desc" };
+          take: 1;
+        };
+      };
+    };
   };
 }>;
 
 function mapBookingSummary(booking: BookingWithPayment): BookingSummary {
+  const latestUpdate = booking.slot.updates[0]?.createdAt ?? null;
+  const lastRead = booking.updateRead?.lastReadAt ?? null;
+  const hasUnreadUpdates = Boolean(
+    latestUpdate && (!lastRead || latestUpdate > lastRead),
+  );
+
   return {
     id: booking.id,
     bookingRef: booking.bookingRef,
@@ -33,6 +50,7 @@ function mapBookingSummary(booking: BookingWithPayment): BookingSummary {
     placeName: booking.listing.place.name,
     heroImageUrl: booking.listing.heroImageUrl,
     startTimeSnapshot: booking.startTimeSnapshot.toISOString(),
+    hasUnreadUpdates,
     payment: booking.payment
       ? {
           status: booking.payment.status,
@@ -46,43 +64,49 @@ function mapBookingSummary(booking: BookingWithPayment): BookingSummary {
   };
 }
 
-export async function getBookingByRef(bookingRef: string) {
-  const booking = await prisma.booking.findUnique({
-    where: { bookingRef },
-    include: {
-      payment: true,
-      listing: {
-        select: {
-          slug: true,
-          heroImageUrl: true,
-          category: { select: { slug: true } },
-          place: { select: { name: true } },
-        },
+const bookingInclude = {
+  payment: true,
+  updateRead: true,
+  listing: {
+    select: {
+      slug: true,
+      heroImageUrl: true,
+      category: { select: { slug: true } },
+      place: { select: { name: true } },
+    },
+  },
+  slot: {
+    select: {
+      updates: {
+        select: { createdAt: true },
+        orderBy: { createdAt: "desc" as const },
+        take: 1,
       },
     },
-  });
+  },
+} satisfies Prisma.BookingInclude;
 
-  if (!booking) return null;
-  return mapBookingSummary(booking);
+export async function getBookingByRef(bookingRef: string) {
+  return withDbFallback(async () => {
+    const booking = await prisma.booking.findUnique({
+      where: { bookingRef },
+      include: bookingInclude,
+    });
+
+    if (!booking) return null;
+    return mapBookingSummary(booking);
+  }, null);
 }
 
 export async function getTravelerBookings(userId: string) {
-  const bookings = await prisma.booking.findMany({
-    where: { userId },
-    include: {
-      payment: true,
-      listing: {
-        select: {
-          slug: true,
-          heroImageUrl: true,
-          category: { select: { slug: true } },
-          place: { select: { name: true } },
-        },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-    take: 12,
-  });
+  return withDbFallback(async () => {
+    const bookings = await prisma.booking.findMany({
+      where: { userId },
+      include: bookingInclude,
+      orderBy: { createdAt: "desc" },
+      take: 12,
+    });
 
-  return bookings.map(mapBookingSummary);
+    return bookings.map(mapBookingSummary);
+  }, []);
 }

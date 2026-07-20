@@ -143,6 +143,9 @@ function BookingFlowContent({
     emergencyContactPhone: "",
     medicalNotes: "",
   });
+  const [participants, setParticipants] = useState<
+    { name: string; gender: string; ageBand: string }[]
+  >([{ name: traveler?.name ?? "", gender: "PREFER_NOT_TO_SAY", ageBand: "" }]);
   const [submitting, setSubmitting] = useState(false);
   const [checkoutReady, setCheckoutReady] = useState(false);
   const [bookingRef, setBookingRef] = useState<string | null>(null);
@@ -182,8 +185,28 @@ function BookingFlowContent({
         name: current.name || traveler.name,
         email: current.email || traveler.email,
       }));
+      setParticipants((current) => {
+        if (current[0]?.name) return current;
+        return [
+          {
+            name: traveler.name || "",
+            gender: "PREFER_NOT_TO_SAY",
+            ageBand: "",
+          },
+        ];
+      });
     }
   }, [traveler]);
+
+  useEffect(() => {
+    setParticipants((current) => {
+      const next = [...current];
+      while (next.length < group) {
+        next.push({ name: "", gender: "PREFER_NOT_TO_SAY", ageBand: "" });
+      }
+      return next.slice(0, group);
+    });
+  }, [group]);
 
   useEffect(() => {
     if (searchParams.get("step") === "3") {
@@ -313,6 +336,11 @@ function BookingFlowContent({
           emergencyContactName: safety.emergencyContactName,
           emergencyContactPhone: safety.emergencyContactPhone,
           medicalNotes: safety.medicalNotes,
+          participants: participants.map((p, index) => ({
+            name: p.name.trim() || (index === 0 ? lead.name : `Guest ${index + 1}`),
+            gender: p.gender || safety.customerGender,
+            ageBand: p.ageBand || null,
+          })),
         }),
       });
 
@@ -650,6 +678,71 @@ function BookingFlowContent({
                 </div>
               </div>
               <div className="space-y-4">
+                <div>
+                  <p className="mb-2 block text-sm font-bold">
+                    Who&apos;s coming ({group})
+                  </p>
+                  <p className="mb-3 text-xs text-mist">
+                    You&apos;ll get trip updates on your Bhraman booking page.
+                  </p>
+                  <div className="space-y-3">
+                    {participants.map((p, index) => (
+                      <div
+                        key={index}
+                        className="grid gap-2 rounded-[12px] border border-line p-3 sm:grid-cols-3"
+                      >
+                        <input
+                          className="rounded-lg border border-line bg-paper px-3 py-2 text-sm"
+                          placeholder={
+                            index === 0 ? "Lead name" : `Guest ${index + 1} name`
+                          }
+                          value={p.name}
+                          onChange={(e) => {
+                            const next = [...participants];
+                            next[index] = { ...p, name: e.target.value };
+                            setParticipants(next);
+                          }}
+                        />
+                        <select
+                          className="rounded-lg border border-line bg-paper px-3 py-2 text-sm"
+                          value={p.gender}
+                          onChange={(e) => {
+                            const next = [...participants];
+                            next[index] = { ...p, gender: e.target.value };
+                            setParticipants(next);
+                            if (index === 0) {
+                              setSafety({
+                                ...safety,
+                                customerGender: e.target.value,
+                              });
+                            }
+                          }}
+                        >
+                          <option value="FEMALE">Female</option>
+                          <option value="MALE">Male</option>
+                          <option value="OTHER">Other</option>
+                          <option value="PREFER_NOT_TO_SAY">Prefer not</option>
+                        </select>
+                        <select
+                          className="rounded-lg border border-line bg-paper px-3 py-2 text-sm"
+                          value={p.ageBand}
+                          onChange={(e) => {
+                            const next = [...participants];
+                            next[index] = { ...p, ageBand: e.target.value };
+                            setParticipants(next);
+                          }}
+                        >
+                          <option value="">Age band</option>
+                          <option value="UNDER_18">Under 18</option>
+                          <option value="AGE_18_25">18–25</option>
+                          <option value="AGE_26_35">26–35</option>
+                          <option value="AGE_36_50">36–50</option>
+                          <option value="AGE_50_PLUS">50+</option>
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div>
                   <p
                     id="safety-gender-label"

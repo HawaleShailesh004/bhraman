@@ -20,7 +20,7 @@ const SECTIONS = [
   },
   {
     t: "Payments",
-    d: "Card, UPI, and netbanking details are processed by our payment provider. Bhraman stores booking and settlement status — not full card numbers.",
+    d: "Card, UPI, and netbanking details are processed by our payment provider. Bhraman stores booking and settlement status - not full card numbers.",
   },
   {
     t: "Operators & travelers",
@@ -41,10 +41,10 @@ export default function PrivacyPage() {
     <main className="overflow-x-clip bg-paper">
       <Navbar />
       <article className="page-shell section-y pt-28 sm:pt-32">
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+        <p className="text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
           Legal
         </p>
-        <h1 className="mt-3 font-display text-[clamp(1.8rem,4vw,2.8rem)] font-bold tracking-tight text-ink">
+        <h1 className="mt-3 font-display text-[clamp(1.8rem,4vw,2.8rem)] font-medium tracking-tight text-ink">
           Privacy
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-body">
@@ -55,14 +55,19 @@ export default function PrivacyPage() {
         <div className="mt-12 max-w-2xl space-y-10">
           {SECTIONS.map((s) => (
             <section key={s.t}>
-              <h2 className="font-display text-xl font-bold text-ink">{s.t}</h2>
+              <h2 className="font-display text-xl font-medium text-ink">
+                {s.t}
+              </h2>
               <p className="mt-2 text-sm leading-relaxed text-body">{s.d}</p>
             </section>
           ))}
         </div>
         <p className="mt-14 text-sm text-mist">
           Also see{" "}
-          <Link href="/terms" className="font-semibold text-amber-deep hover:underline">
+          <Link
+            href="/terms"
+            className="font-semibold text-amber-deep hover:underline"
+          >
             Terms of use
           </Link>
           .

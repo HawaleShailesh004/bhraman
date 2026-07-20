@@ -6,12 +6,14 @@ import {
   Gender,
   PaymentStatus,
   SlotStatus,
+  type AgeBand,
 } from "@prisma/client";
 import type { Prisma } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/email";
 import { fetchCapturedPaymentForOrder } from "@/lib/razorpay";
 import { prisma } from "@/lib/prisma";
 import { computeRefund, type CancellationPolicy } from "@/lib/refunds";
+import { recomputeSlotComposition } from "@/lib/batches";
 
 export class BookingError extends Error {
   constructor(public code: "SLOT_UNAVAILABLE" | "INVALID_GROUP_SIZE" | "BOOKING_NOT_FOUND") {
@@ -30,6 +32,12 @@ export type CreateBookingInput = {
   emergencyContactName?: string | null;
   emergencyContactPhone?: string | null;
   medicalNotes?: string | null;
+  participants?: {
+    name: string;
+    gender?: Gender | null;
+    ageBand?: AgeBand | null;
+    age?: number | null;
+  }[];
 };
 
 function getActiveSlotStatus(input: {
@@ -163,6 +171,28 @@ export async function createBooking(input: CreateBookingInput) {
       },
       select: { id: true },
     });
+
+    const participants =
+      input.participants && input.participants.length > 0
+        ? input.participants.slice(0, input.groupSize)
+        : [
+            {
+              name: "Traveler",
+              gender: input.customerGender ?? null,
+              ageBand: null as AgeBand | null,
+              age: null as number | null,
+            },
+          ];
+
+    while (participants.length < input.groupSize) {
+      participants.push({
+        name: `Guest ${participants.length + 1}`,
+        gender: null,
+        ageBand: null,
+        age: null,
+      });
+    }
+
     const booking = await tx.booking.create({
       data: {
         bookingRef: genRef(),
@@ -182,10 +212,18 @@ export async function createBooking(input: CreateBookingInput) {
         emergencyContactPhone: input.emergencyContactPhone ?? null,
         medicalNotes: input.medicalNotes ?? null,
         status: BookingStatus.PENDING,
+        participants: {
+          create: participants.map((p) => ({
+            name: p.name.trim().slice(0, 120) || "Traveler",
+            gender: p.gender ?? null,
+            ageBand: p.ageBand ?? null,
+            age: p.age ?? null,
+          })),
+        },
       },
     });
 
-    await refreshSlotStatus(tx, slot.id);
+    await recomputeSlotComposition(slot.id, tx);
 
     return booking;
   });
@@ -237,25 +275,7 @@ export async function confirmCapturedPayment(input: {
         data: { status: BookingStatus.CONFIRMED },
       });
 
-      // These counters describe lead travelers until participant manifests
-      // are introduced; groupSize must not be attributed to one gender.
-      if (existing.booking.customerGender === Gender.MALE) {
-        await tx.availabilitySlot.update({
-          where: { id: existing.booking.slotId },
-          data: { maleCount: { increment: 1 } },
-        });
-      } else if (existing.booking.customerGender === Gender.FEMALE) {
-        await tx.availabilitySlot.update({
-          where: { id: existing.booking.slotId },
-          data: { femaleCount: { increment: 1 } },
-        });
-      } else if (existing.booking.customerGender === Gender.OTHER) {
-        await tx.availabilitySlot.update({
-          where: { id: existing.booking.slotId },
-          data: { otherCount: { increment: 1 } },
-        });
-      }
-      await refreshSlotStatus(tx, existing.booking.slotId);
+      await recomputeSlotComposition(existing.booking.slotId, tx);
 
       return {
         confirmed: true as const,
@@ -345,16 +365,11 @@ export async function releaseExpiredPendingBookings(cutoffMinutes = 15) {
           return false;
         }
 
-        await tx.availabilitySlot.update({
-          where: { id: current.slotId },
-          data: { bookedSeats: { decrement: current.groupSize } },
-        });
-
         if (current.payment) {
           await tx.payment.delete({ where: { bookingId: current.id } });
         }
         await tx.booking.delete({ where: { id: current.id } });
-        await refreshSlotStatus(tx, current.slotId);
+        await recomputeSlotComposition(current.slotId, tx);
         return true;
       },
       { isolationLevel: "Serializable" },
@@ -401,11 +416,6 @@ export async function cancelBooking(
   );
 
   await prisma.$transaction(async (tx) => {
-    await tx.availabilitySlot.update({
-      where: { id: booking.slotId },
-      data: { bookedSeats: { decrement: booking.groupSize } },
-    });
-
     if (booking.payment) {
       await tx.payment.update({
         where: { bookingId: booking.id },
@@ -420,32 +430,6 @@ export async function cancelBooking(
       });
     }
 
-    if (
-      booking.payment?.status === PaymentStatus.CAPTURED &&
-      booking.customerGender === Gender.MALE
-    ) {
-      await tx.availabilitySlot.update({
-        where: { id: booking.slotId },
-        data: { maleCount: { decrement: 1 } },
-      });
-    } else if (
-      booking.payment?.status === PaymentStatus.CAPTURED &&
-      booking.customerGender === Gender.FEMALE
-    ) {
-      await tx.availabilitySlot.update({
-        where: { id: booking.slotId },
-        data: { femaleCount: { decrement: 1 } },
-      });
-    } else if (
-      booking.payment?.status === PaymentStatus.CAPTURED &&
-      booking.customerGender === Gender.OTHER
-    ) {
-      await tx.availabilitySlot.update({
-        where: { id: booking.slotId },
-        data: { otherCount: { decrement: 1 } },
-      });
-    }
-
     await tx.booking.update({
       where: { id: booking.id },
       data: {
@@ -455,7 +439,7 @@ export async function cancelBooking(
             : BookingStatus.CANCELLED,
       },
     });
-    await refreshSlotStatus(tx, booking.slotId);
+    await recomputeSlotComposition(booking.slotId, tx);
   }, { isolationLevel: "Serializable" });
 
   return { refundAmount };

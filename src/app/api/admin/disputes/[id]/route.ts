@@ -1,4 +1,5 @@
 import { requireSessionAdmin, UnauthorizedError } from "@/lib/auth";
+import { toApiErrorResponse } from "@/lib/api-errors";
 import { EscrowError, resolveEscrowDispute } from "@/lib/escrow";
 
 type ResolveBody = {
@@ -17,6 +18,8 @@ export async function PATCH(
     if (error instanceof UnauthorizedError) {
       return Response.json({ error: "UNAUTHORIZED" }, { status: 401 });
     }
+    const mapped = toApiErrorResponse(error);
+    if (mapped) return mapped;
     throw error;
   }
 
@@ -57,6 +60,9 @@ export async function PATCH(
     ) {
       return Response.json({ error: error.message }, { status: 503 });
     }
-    return Response.json({ error: "RESOLUTION_FAILED" }, { status: 500 });
+    return (
+      toApiErrorResponse(error) ??
+      Response.json({ error: "RESOLUTION_FAILED" }, { status: 500 })
+    );
   }
 }

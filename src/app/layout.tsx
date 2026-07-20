@@ -1,14 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import "@fontsource/archivo/400.css";
-import "@fontsource/archivo/500.css";
-import "@fontsource/archivo/600.css";
-import "@fontsource/archivo/700.css";
-import "@fontsource/archivo/800.css";
-import "@fontsource/archivo/900.css";
-import "@fontsource/fraunces/500-italic.css";
-import "@fontsource/fraunces/600.css";
 import { ToastProvider } from "@/components/ui/ToastProvider";
+import { SmoothScroll } from "@/components/layout/smooth-scroll";
 import { fontVariables } from "@/lib/fonts";
 import { isClerkEnabled } from "@/lib/auth";
 import "./globals.css";
@@ -25,18 +18,40 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const body = (
-    <body className={fontVariables}>
+    <body className={`${fontVariables} font-body antialiased`}>
+      <SmoothScroll />
       <ToastProvider>{children}</ToastProvider>
     </body>
   );
 
   return (
     <html lang="en">
+      <head>
+        {/* Satoshi - body UI (Fontshare / Indian Type Foundry) */}
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       {isClerkEnabled() ? (
         <ClerkProvider
           signInUrl="/sign-in"
           signUpUrl="/sign-up"
           afterSignOutUrl="/"
+          localization={{
+            signIn: {
+              start: {
+                title: "Sign in to Bhraman",
+                subtitle: "Verified Maharashtra trips - travelers & operators.",
+              },
+            },
+            signUp: {
+              start: {
+                title: "Join Bhraman",
+                subtitle: "Create your account to book or list adventures.",
+              },
+            },
+          }}
         >
           {body}
         </ClerkProvider>

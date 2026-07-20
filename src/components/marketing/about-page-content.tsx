@@ -8,10 +8,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { MarketingPageHero } from "@/components/marketing/marketing-page-hero";
-import {
-  MarketingCtaBand,
-  Reveal,
-} from "@/components/marketing/reveal";
+import { MarketingCtaBand, Reveal } from "@/components/marketing/reveal";
 import { softSpring } from "@/lib/motion";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -27,7 +24,7 @@ const PILLARS = [
   {
     icon: MapPinned,
     title: "Local, not generic",
-    text: "Maharashtra operators who know the ridge, the tide, and the chai stop — not a national template.",
+    text: "Maharashtra operators who know the ridge, the tide, and the chai stop - not a national template.",
   },
   {
     icon: LockKeyhole,
@@ -52,7 +49,7 @@ export function AboutPageContent() {
         eyebrow="About us"
         title="Maharashtra's wild,"
         titleLine2="made bookable."
-        sub="Scattered WhatsApp groups and stranger UPI shouldn't be how you book a ridge. We built Bhraman so adventure feels exciting — not risky in the wrong ways."
+        sub="Scattered WhatsApp groups and stranger UPI shouldn't be how you book a ridge. We built Bhraman so adventure feels exciting - not risky in the wrong ways."
         imageUrl={HERO_IMG}
         primaryCta={{ href: "/discover", label: "Browse adventures" }}
         secondaryCta={{ href: "/how-it-works", label: "How it works" }}
@@ -61,17 +58,17 @@ export function AboutPageContent() {
       <section className="section-y bg-paper">
         <div className="page-shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <Reveal>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+            <p className="text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
               The gap
             </p>
-            <h2 className="mt-3 max-w-[14ch] font-display text-[clamp(1.7rem,4vw,2.5rem)] font-bold tracking-tight text-ink">
+            <h2 className="mt-3 max-w-[14ch] font-display text-[clamp(1.7rem,4vw,2.5rem)] font-medium tracking-tight text-ink">
               Spectacular terrain. Broken booking.
             </h2>
           </Reveal>
           <div className="space-y-6 text-base leading-relaxed text-body sm:text-lg">
             <Reveal delay={0.05}>
               <p className="font-serif text-[1.35rem] italic leading-snug text-forest sm:text-[1.5rem]">
-                Fort trails, monsoon rivers, coastal camps — Maharashtra has the
+                Fort trails, monsoon rivers, coastal camps - Maharashtra has the
                 trips. Finding a trustworthy operator was the hard part.
               </p>
             </Reveal>
@@ -85,9 +82,10 @@ export function AboutPageContent() {
             </Reveal>
             <Reveal delay={0.15}>
               <p>
-                Every review comes from a completed booking. Every verified badge
-                means checks passed. Every cancellation policy is written in
-                plain language — because the mountains are wild enough already.
+                Every review comes from a completed booking. Every verified
+                badge means checks passed. Every cancellation policy is written
+                in plain language - because the mountains are wild enough
+                already.
               </p>
             </Reveal>
           </div>
@@ -97,10 +95,10 @@ export function AboutPageContent() {
       <section className="section-y bg-ink text-paper">
         <div className="page-shell">
           <Reveal className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber">
               What we stand for
             </p>
-            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight">
+            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight">
               Three lines we won&apos;t blur.
             </h2>
           </Reveal>
@@ -117,12 +115,12 @@ export function AboutPageContent() {
                     <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/8 text-amber">
                       <item.icon size={22} />
                     </span>
-                    <span className="font-display text-3xl font-black text-white/15 sm:mt-4 sm:block">
+                    <span className="font-display text-3xl font-medium text-white/15 sm:mt-4 sm:block">
                       0{i + 1}
                     </span>
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-display text-xl font-bold sm:text-2xl">
+                    <h3 className="font-display text-xl font-medium sm:text-2xl">
                       {item.title}
                     </h3>
                     <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#A8B7AD] sm:text-base">
@@ -139,10 +137,10 @@ export function AboutPageContent() {
       <section className="section-y bg-paper-2">
         <div className="page-shell">
           <Reveal className="mb-10 max-w-xl">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
               Built in the open
             </p>
-            <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.1rem)] font-bold tracking-tight text-ink">
+            <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.1rem)] font-medium tracking-tight text-ink">
               Signals you can read before you book.
             </h2>
           </Reveal>
@@ -150,7 +148,7 @@ export function AboutPageContent() {
             {SIGNALS.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.05}>
                 <div className="bg-white p-6 sm:p-7">
-                  <p className="font-display text-lg font-bold text-ink sm:text-xl">
+                  <p className="font-display text-lg font-medium text-ink sm:text-xl">
                     {s.value}
                   </p>
                   <p className="mt-1 text-xs text-mist">{s.label}</p>
@@ -172,7 +170,7 @@ export function AboutPageContent() {
       <MarketingCtaBand
         eyebrow="Join the trail"
         title="Whether you trek or lead the trek."
-        sub="Browse verified experiences — or list your own and reach weekend adventurers across Maharashtra."
+        sub="Browse verified experiences - or list your own and reach weekend adventurers across Maharashtra."
         primary={{ href: "/discover", label: "Start exploring" }}
         secondary={{ href: "/become-operator", label: "Become an operator" }}
       />

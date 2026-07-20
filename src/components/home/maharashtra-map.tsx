@@ -76,13 +76,15 @@ export function MaharashtraMapSection({ pins }: { pins: AdventureMapPin[] }) {
     <section id="destinations" className="section-y bg-paper-2">
       <div className="page-shell">
         <div className="mb-10 max-w-2xl">
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
             {COPY.map.eyebrow}
           </p>
-          <h2 className="font-display text-[clamp(1.45rem,3.2vw,2rem)] font-bold tracking-tight text-ink">
+          <h2 className="font-display text-[clamp(1.45rem,3.2vw,2rem)] font-medium tracking-tight text-ink">
             {COPY.map.title}
           </h2>
-          <p className="mt-2 text-sm text-body">{COPY.map.sub}</p>
+          <p className="mt-2 text-sm tracking-sub text-body" data-sub>
+            {COPY.map.sub}
+          </p>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[1.35fr_0.85fr] lg:gap-8">
@@ -149,7 +151,7 @@ export function MaharashtraMapSection({ pins }: { pins: AdventureMapPin[] }) {
                   <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-mist">
                     <MapPin size={13} /> {activePin.district}
                   </p>
-                  <h3 className="mt-2 font-display text-2xl font-bold text-ink">
+                  <h3 className="mt-2 font-display text-2xl font-medium text-ink">
                     {activePin.placeName}
                   </h3>
                   <p className="mt-2 text-sm text-body">

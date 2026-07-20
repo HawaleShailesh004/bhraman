@@ -1,27 +1,42 @@
 "use client";
 
-import { AlertTriangle } from "lucide-react";
+import { ServiceErrorPanel } from "@/components/ui/service-error-panel";
+
+function isUnavailable(error: Error) {
+  const message = error.message.toLowerCase();
+  return (
+    error.name === "DatabaseUnavailableError" ||
+    error.message === "DATABASE_UNAVAILABLE" ||
+    message.includes("can't reach database") ||
+    message.includes("database server")
+  );
+}
 
 export default function AdminError({
+  error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const unavailable = isUnavailable(error);
+
   return (
-    <div className="mx-auto max-w-lg rounded-lg border border-line bg-white p-8 text-center shadow-[var(--shadow-sm)]">
-      <AlertTriangle className="mx-auto text-clay" size={28} />
-      <h2 className="mt-3 font-display text-xl">Admin page failed to load</h2>
-      <p className="mt-2 text-sm text-mist">
-        Check your connection and try again. No escrow actions were taken.
-      </p>
-      <button
-        type="button"
-        onClick={reset}
-        className="mt-6 rounded-full bg-amber px-5 py-2.5 text-sm font-bold text-amber-text"
-      >
-        Try again
-      </button>
-    </div>
+    <ServiceErrorPanel
+      unavailable={unavailable}
+      title={
+        unavailable
+          ? "Admin tools temporarily offline"
+          : "Admin page failed to load"
+      }
+      description={
+        unavailable
+          ? "We can't reach the database right now. No escrow actions were taken."
+          : "Check your connection and try again. No escrow actions were taken."
+      }
+      reset={reset}
+      homeHref="/"
+      homeLabel="Go home"
+    />
   );
 }

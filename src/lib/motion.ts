@@ -1,8 +1,16 @@
 "use client";
 
-import { useReducedMotion, type Transition, type Variants } from "framer-motion";
+import {
+  useReducedMotion,
+  type Transition,
+  type Variants,
+} from "framer-motion";
 
-export const brandEase = [0.22, 0.61, 0.36, 1] as const;
+/** Landing scroll-reveal ease - cubic-bezier(0.22, 1, 0.36, 1) */
+export const brandEase = [0.22, 1, 0.36, 1] as const;
+
+export const revealDuration = 0.6;
+export const staggerGap = 0.07;
 
 export function useMotionSafe() {
   const prefersReduced = useReducedMotion();
@@ -11,12 +19,26 @@ export function useMotionSafe() {
 
 export function fadeUp(delay = 0): Variants {
   return {
-    hidden: { opacity: 0, y: 14 },
+    hidden: { opacity: 0, y: 28 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.4,
+        duration: revealDuration,
+        delay,
+        ease: brandEase,
+      },
+    },
+  };
+}
+
+export function fadeIn(delay = 0): Variants {
+  return {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        duration: revealDuration,
         delay,
         ease: brandEase,
       },
@@ -26,12 +48,12 @@ export function fadeUp(delay = 0): Variants {
 
 export function fadeScale(delay = 0): Variants {
   return {
-    hidden: { opacity: 0, scale: 0.97 },
+    hidden: { opacity: 0, scale: 1.05 },
     show: {
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 0.35,
+        duration: revealDuration,
         delay,
         ease: brandEase,
       },

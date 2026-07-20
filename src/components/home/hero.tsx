@@ -8,15 +8,13 @@ import {
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
-import { Sparkles, Search } from "lucide-react";
-import { TopoLines } from "@/components/ui/primitives";
 import { COPY } from "@/lib/marketing-copy";
+import { brandEase } from "@/lib/motion";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-};
-
+/**
+ * Full-viewport cinematic hero - type matched to bhraman_hero_redesign.html
+ * (Fraunces 500 display / italic 400 accent, Satoshi body + CTAs).
+ */
 export function Hero() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
@@ -25,26 +23,22 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // Multi-speed layers - video drifts fastest, topo mid, ridge slowest
-  const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const topoY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const ridgeY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "32%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
   const contentOpacity = useTransform(
     scrollYProgress,
     [0, 0.55, 0.85],
-    [1, 0.85, 0.15],
+    [1, 0.7, 0],
   );
 
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[86vh] items-center justify-center overflow-hidden pb-28 pt-28 sm:min-h-[88vh] sm:pb-32 sm:pt-24"
+      className="grain relative flex min-h-[100svh] min-h-[640px] items-end overflow-hidden pb-[72px] pt-28 sm:pb-[88px] sm:pt-32"
     >
-      {/* Layer 1 - video (deepest, fastest) */}
       <motion.div
-        className="absolute inset-0 will-change-transform"
-        style={reduce ? undefined : { y: videoY }}
+        className="absolute inset-[-10%_0] bg-deep will-change-transform"
+        style={reduce ? undefined : { y: mediaY }}
       >
         <video
           autoPlay
@@ -52,118 +46,83 @@ export function Hero() {
           muted
           playsInline
           aria-hidden
-          className="absolute inset-0 h-[120%] w-full object-cover"
-          poster="/images/hero-fallback.jpg"
+          className="absolute inset-0 h-[110%] w-full object-cover"
         >
           <source src="/videos/hero-bg.mp4" type="video/mp4" />
         </video>
         <div
           className="absolute inset-0"
           style={{
-            background:
-              "linear-gradient(180deg, rgba(26,46,34,0.78) 0%, rgba(19,35,26,0.58) 45%, rgba(14,27,19,0.94) 100%)",
-          }}
-          aria-hidden
-        />
-        <div
-          className="absolute inset-0 opacity-35"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 35%, rgba(224,138,43,0.2), transparent 55%)",
+            background: [
+              "linear-gradient(180deg, rgba(15,29,21,0.55) 0%, rgba(15,29,21,0.2) 28%, rgba(15,29,21,0.45) 62%, rgba(15,29,21,0.94) 100%)",
+              "linear-gradient(90deg, rgba(15,29,21,0.72) 0%, rgba(15,29,21,0.35) 42%, transparent 72%)",
+            ].join(", "),
           }}
           aria-hidden
         />
       </motion.div>
 
-      {/* Layer 2 - topo lines (mid speed) */}
       <motion.div
-        className="pointer-events-none absolute inset-0 will-change-transform"
-        style={reduce ? undefined : { y: topoY }}
-        aria-hidden
-      >
-        <TopoLines opacity={0.11} />
-      </motion.div>
-
-      {/* Layer 3 - ridge SVG (slowest foreground) */}
-      <motion.svg
-        className="absolute bottom-0 left-0 right-0 w-full will-change-transform"
-        viewBox="0 0 1440 180"
-        preserveAspectRatio="none"
-        aria-hidden
-        style={reduce ? undefined : { y: ridgeY }}
-      >
-        <path
-          d="M0 180 L0 110 L180 70 L360 120 L520 55 L700 125 L880 50 L1060 110 L1240 65 L1440 115 L1440 180 Z"
-          fill="#13231A"
-          opacity="0.55"
-        />
-        <path
-          d="M0 180 L0 145 L200 105 L420 150 L640 95 L860 155 L1080 105 L1300 150 L1440 120 L1440 180 Z"
-          fill="#0E1B13"
-          opacity="0.75"
-        />
-      </motion.svg>
-
-      <motion.div
-        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center sm:px-6"
+        className="page-shell relative z-10 w-full max-w-[1180px]"
         style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
       >
-        <motion.p
-          {...fadeUp}
-          transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
-          className="mb-5 text-[10px] font-bold uppercase tracking-[0.22em] text-amber"
-        >
-          {COPY.brandEyebrow}
-        </motion.p>
-
-        <motion.h1
-          {...fadeUp}
-          transition={{
-            duration: 0.6,
-            delay: 0.05,
-            ease: [0.22, 0.61, 0.36, 1],
-          }}
-          className="liquid-gradient-text font-display text-[clamp(2.4rem,7.5vw,4.5rem)] font-black leading-[1.02] tracking-[-0.03em]"
-        >
-          <span className="block">{COPY.hero.headlineLine1}</span>
-          <span className="block">{COPY.hero.headlineLine2}</span>
-        </motion.h1>
-
-        <motion.p
-          {...fadeUp}
-          transition={{
-            duration: 0.55,
-            delay: 0.1,
-            ease: [0.22, 0.61, 0.36, 1],
-          }}
-          className="mt-5 max-w-[34ch] text-base leading-relaxed text-[#D0D9D2] sm:max-w-[40ch] sm:text-lg"
-        >
-          {COPY.hero.subline}
-        </motion.p>
-
-        <motion.div
-          {...fadeUp}
-          transition={{
-            duration: 0.55,
-            delay: 0.16,
-            ease: [0.22, 0.61, 0.36, 1],
-          }}
-          className="mt-8 flex w-full max-w-md flex-col gap-2.5 sm:max-w-none sm:flex-row sm:justify-center sm:gap-3"
-        >
-          <Link
-            href="/plan"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-amber px-6 py-3 text-sm font-bold text-amber-text shadow-amber-glow transition-transform hover:-translate-y-px"
+        <div className="max-w-[14ch] text-left sm:max-w-none">
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: brandEase }}
+            className="mb-5 text-[13px] font-bold uppercase tracking-eyebrow text-amber"
           >
-            <Sparkles size={16} /> {COPY.hero.ctaPrimary}
-          </Link>
-          <Link
-            href="/discover"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-paper backdrop-blur transition-colors hover:bg-white/15"
+            {COPY.brandEyebrow}
+          </motion.p>
+
+          <motion.h1
+            initial={reduce ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.05, ease: brandEase }}
+            className="max-w-[14ch] font-display text-[clamp(48px,7.2vw,104px)] font-medium leading-[0.94] tracking-tight text-warm-white [text-shadow:0_2px_28px_rgba(15,29,21,0.55),0_1px_2px_rgba(15,29,21,0.4)]"
+            style={{ fontOpticalSizing: "auto" }}
           >
-            <Search size={16} /> {COPY.hero.ctaSecondary}
-          </Link>
-        </motion.div>
+            {COPY.hero.headlineLine1}
+            <br />
+            <em className="font-normal italic text-amber [text-shadow:0_2px_20px_rgba(15,29,21,0.45)]">
+              {COPY.hero.minusWord}
+            </em>{" "}
+            {COPY.hero.headlineRest}
+          </motion.h1>
+
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.12, ease: brandEase }}
+            className="mt-5 max-w-[46ch] font-body text-[clamp(13px,1.15vw,15px)] font-normal leading-[1.55] tracking-sub text-warm-white/80"
+            data-sub
+          >
+            {COPY.hero.subline}
+          </motion.p>
+
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.18, ease: brandEase }}
+            className="mt-[38px] flex flex-wrap items-center gap-[14px]"
+          >
+            <Link
+              href="/discover"
+              className="inline-flex items-center justify-center rounded-full bg-amber px-[30px] py-4 font-body text-base font-bold text-ink transition-transform duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] hover:scale-[1.02]"
+            >
+              {COPY.hero.ctaPrimary}
+            </Link>
+            <Link
+              href="/how-it-works"
+              className="inline-flex items-center justify-center rounded-full border-[1.5px] border-warm-white/40 bg-transparent px-7 py-[15px] font-body text-base font-medium text-warm-white transition-colors hover:border-warm-white hover:bg-warm-white/10"
+            >
+              {COPY.hero.ctaSecondary}
+            </Link>
+          </motion.div>
+        </div>
       </motion.div>
+
     </section>
   );
 }

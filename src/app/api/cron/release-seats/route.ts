@@ -1,4 +1,5 @@
 import { releaseExpiredPendingBookings } from "@/lib/booking";
+import { toApiErrorResponse } from "@/lib/api-errors";
 
 export async function GET(request: Request) {
   const secret = process.env.CRON_SECRET;
@@ -7,6 +8,13 @@ export async function GET(request: Request) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const result = await releaseExpiredPendingBookings(15);
-  return Response.json(result);
+  try {
+    const result = await releaseExpiredPendingBookings(15);
+    return Response.json(result);
+  } catch (error) {
+    return (
+      toApiErrorResponse(error) ??
+      Response.json({ error: "CRON_FAILED" }, { status: 500 })
+    );
+  }
 }

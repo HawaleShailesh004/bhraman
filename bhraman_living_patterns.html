@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhraman - Living Patterns</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap"
+    rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #14231B;
+      --forest: #2D5A3D;
+      --deep: #0F1D15;
+      --paper: #FAF8F3;
+      --amber: #E08A2B;
+      --sand: #EDE6D8;
+      --body: #3A4740;
+      --warm-white: #F5F1E8;
+      --clay: #C4553B;
+      --fd: 'Fraunces', serif;
+      --fb: 'Satoshi', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: var(--fb);
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    section {
+      padding: 0
+    }
+
+    .pattern-label {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 40px 6px
+    }
+
+    .pattern-label .n {
+      color: var(--amber);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase
+    }
+
+    .pattern-label h3 {
+      font-family: var(--fd);
+      font-weight: 500;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      margin-top: 6px;
+      color: var(--ink)
+    }
+
+    .pattern-label p {
+      color: var(--body);
+      font-size: 14.5px;
+      margin-top: 6px;
+      max-width: 60ch;
+      line-height: 1.5
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--sand);
+      max-width: 1100px;
+      margin: 44px auto 0
+    }
+
+    /* ============ 1. INTERACTIVE VIBE SELECTOR (participant, not reader) ============ */
+    .vibe {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 40px 60px
+    }
+
+    .vibe-stage {
+      background: var(--deep);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      min-height: 340px;
+      display: flex;
+      align-items: flex-end;
+      transition: background-image .6s
+    }
+
+    .vibe-img {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity .8s cubic-bezier(.2, .8, .2, 1);
+      background-size: cover;
+      background-position: center
+    }
+
+    .vibe-img.on {
+      opacity: 1
+    }
+
+    .vibe-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(90deg, rgba(15, 29, 21, 0.9) 0%, rgba(15, 29, 21, 0.4) 60%, transparent)
+    }
+
+    .vibe-inner {
+      position: relative;
+      z-index: 3;
+      padding: 40px;
+      width: 100%
+    }
+
+    .vibe-q {
+      color: rgba(245, 241, 232, 0.6);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px
+    }
+
+    .vibe-line {
+      font-family: var(--fd);
+      font-weight: 500;
+      font-size: clamp(26px, 3.8vw, 44px);
+      color: var(--warm-white);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      max-width: 18ch;
+      min-height: 1.1em;
+      transition: opacity .4s
+    }
+
+    .vibe-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 24px
+    }
+
+    .vibe-chip {
+      background: rgba(245, 241, 232, 0.1);
+      border: 1px solid rgba(245, 241, 232, 0.22);
+      color: var(--warm-white);
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 14.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .25s
+    }
+
+    .vibe-chip:hover {
+      background: rgba(245, 241, 232, 0.18)
+    }
+
+    .vibe-chip.active {
+      background: var(--amber);
+      color: var(--ink);
+      border-color: var(--amber)
+    }
+
+    .vibe-cta {
+      margin-top: 22px
+    }
+
+    .vibe-go {
+      background: var(--amber);
+      color: var(--ink);
+      border: none;
+      padding: 13px 26px;
+      border-radius: 999px;
+      font-family: var(--fb);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all .4s
+    }
+
+    .vibe-go.show {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    /* ============ 2. HORIZONTAL SCROLL STORY ============ */
+    .hstory-wrap {
+      background: var(--paper);
+      padding: 20px 0 60px
+    }
+
+    .hscroll {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 20px 40px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none
+    }
+
+    .hscroll::-webkit-scrollbar {
+      display: none
+    }
+
+    .hcard {
+      scroll-snap-align: center;
+      flex: 0 0 300px;
+      height: 400px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer
+    }
+
+    .hcard img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .8s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    .hcard:hover img {
+      transform: scale(1.06)
+    }
+
+    .hcard-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 45%, rgba(15, 29, 21, 0.9))
+    }
+
+    .hcard-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      z-index: 2
+    }
+
+    .hcard-time {
+      color: var(--amber);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase
+    }
+
+    .hcard-title {
+      font-family: var(--fd);
+      font-weight: 500;
+      font-size: 24px;
+      color: var(--warm-white);
+      margin-top: 6px;
+      line-height: 1.05
+    }
+
+    .hcard-desc {
+      color: rgba(245, 241, 232, 0.8);
+      font-size: 13.5px;
+      margin-top: 8px;
+      line-height: 1.45;
+      opacity: 0;
+      max-height: 0;
+      transition: all .4s
+    }
+
+    .hcard:hover .hcard-desc {
+      opacity: 1;
+      max-height: 80px
+    }
+
+    /* ============ 3. SPLIT-TEXT SCROLL REVEAL HEADLINE ============ */
+    .reveal-sec {
+      background: var(--deep);
+      padding: 100px 40px;
+      overflow: hidden
+    }
+
+    .reveal-inner {
+      max-width: 1000px;
+      margin: 0 auto
+    }
+
+    .reveal-k {
+      color: var(--amber);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 24px
+    }
+
+    .reveal-h {
+      font-family: var(--fd);
+      font-weight: 500;
+      font-size: clamp(32px, 5.5vw, 68px);
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      color: var(--warm-white)
+    }
+
+    .reveal-h .word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top
+    }
+
+    .reveal-h .word span {
+      display: inline-block;
+      transform: translateY(105%);
+      transition: transform .7s cubic-bezier(.3, .9, .3, 1)
+    }
+
+    .reveal-h.in .word span {
+      transform: translateY(0)
+    }
+
+    .reveal-h em {
+      font-style: italic;
+      color: var(--amber)
+    }
+
+    /* ============ 4. LIVE TICKER (pulse of the platform) ============ */
+    .ticker-sec {
+      background: var(--forest);
+      padding: 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(245, 241, 232, 0.12);
+      border-bottom: 1px solid rgba(245, 241, 232, 0.12)
+    }
+
+    .ticker {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: scroll-x 32s linear infinite
+    }
+
+    .ticker:hover {
+      animation-play-state: paused
+    }
+
+    .tick-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 30px;
+      color: var(--warm-white);
+      font-size: 14.5px;
+      font-weight: 500
+    }
+
+    .tick-item .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+      flex-shrink: 0
+    }
+
+    .tick-item b {
+      color: var(--warm-white);
+      font-weight: 700
+    }
+
+    .tick-item .sep {
+      color: rgba(245, 241, 232, 0.35)
+    }
+
+    @keyframes scroll-x {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    /* ============ 5. MAGNETIC + SPOTLIGHT CARD ============ */
+    .spot-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 40px 70px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px
+    }
+
+    .spot {
+      position: relative;
+      background: var(--deep);
+      border-radius: 20px;
+      padding: 40px;
+      overflow: hidden;
+      cursor: pointer;
+      min-height: 220px
+    }
+
+    .spot::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(224, 138, 43, 0.25), transparent 60%);
+      left: var(--mx, 50%);
+      top: var(--my, 50%);
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none
+    }
+
+    .spot:hover::before {
+      opacity: 1
+    }
+
+    .spot-k {
+      color: var(--amber);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      position: relative
+    }
+
+    .spot-h {
+      font-family: var(--fd);
+      font-weight: 500;
+      font-size: 28px;
+      color: var(--warm-white);
+      margin-top: 14px;
+      line-height: 1.05;
+      position: relative
+    }
+
+    .spot-p {
+      color: rgba(245, 241, 232, 0.72);
+      font-size: 14.5px;
+      margin-top: 12px;
+      line-height: 1.5;
+      position: relative;
+      max-width: 36ch
+    }
+
+    @media(max-width:820px) {
+      .spot-wrap {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .footer-note {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px;
+      color: var(--body);
+      font-size: 14px;
+      font-family: var(--fd);
+      font-style: italic;
+      border-top: 1px solid var(--sand)
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grain"></div>
+
+  <!-- 1 -->
+  <div class="pattern-label">
+    <div class="n">Pattern 01 - Participant, not reader</div>
+    <h3>The interactive vibe selector</h3>
+    <p>Instead of a static "AI planner" search box, the hero itself responds. Tap a vibe - the image, the headline, and
+      the whole mood shift live. The visitor is <em>doing</em>, not reading. This is the "turn observers into
+      participants" principle award sites use.</p>
+  </div>
+  <section class="vibe">
+    <div class="vibe-stage" id="vibeStage">
+      <div class="vibe-img" id="vibeImg"></div>
+      <div class="vibe-scrim"></div>
+      <div class="vibe-inner">
+        <div class="vibe-q">What's the weekend feeling like?</div>
+        <div class="vibe-line" id="vibeLine">Pick a vibe - we'll shape the trip.</div>
+        <div class="vibe-chips" id="vibeChips">
+          <div class="vibe-chip"
+            data-img="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1400&q=80"
+            data-line="First trek, scared of heights - scenic and safe it is.">First-timer, take it easy</div>
+          <div class="vibe-chip"
+            data-img="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1400&q=80"
+            data-line="Something hard. A summit that earns the view.">Adrenaline, push me</div>
+          <div class="vibe-chip"
+            data-img="https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&w=1400&q=80"
+            data-line="A girls' trip - women-led batches, verified safe.">Girls' trip</div>
+          <div class="vibe-chip"
+            data-img="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1400&q=80"
+            data-line="Camp by the water, bonfire, zero rush.">Chill by the lake</div>
+        </div>
+        <div class="vibe-cta"><button class="vibe-go" id="vibeGo">See 3 matching trips →</button></div>
+      </div>
+    </div>
+  </section>
+  <div class="divider"></div>
+
+  <!-- 2 -->
+  <div class="pattern-label">
+    <div class="n">Pattern 02 - Horizontal story</div>
+    <h3>The weekend, told sideways</h3>
+    <p>Break the vertical monotony. A horizontal scroll-snap rail that tells the Friday→Saturday→Sunday story as
+      cinematic cards. Hover reveals the detail. This fills your dead "Friday chaos" section with something alive and
+      swipeable - native to how young users already scroll Reels.</p>
+  </div>
+  <section class="hstory-wrap">
+    <div class="hscroll">
+      <div class="hcard"><img
+          src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="hcard-scrim"></div>
+        <div class="hcard-body">
+          <div class="hcard-time">Friday, 9 PM</div>
+          <div class="hcard-title">The group chat spirals</div>
+          <div class="hcard-desc">14 Instagram operators, 3 opinions, zero decisions. Paste it into Bhraman instead.
+          </div>
+        </div>
+      </div>
+      <div class="hcard"><img
+          src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="hcard-scrim"></div>
+        <div class="hcard-body">
+          <div class="hcard-time">Saturday, 5 AM</div>
+          <div class="hcard-title">Headlamps on the ridge</div>
+          <div class="hcard-desc">Verified operator, known meeting point, weather already checked. You just show up.
+          </div>
+        </div>
+      </div>
+      <div class="hcard"><img
+          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="hcard-scrim"></div>
+        <div class="hcard-body">
+          <div class="hcard-time">Saturday, 7 AM</div>
+          <div class="hcard-title">The summit earns the view</div>
+          <div class="hcard-desc">Six women on the batch, a woman leading it. Nobody had to make an awkward call to
+            check.</div>
+        </div>
+      </div>
+      <div class="hcard"><img
+          src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="hcard-scrim"></div>
+        <div class="hcard-body">
+          <div class="hcard-time">Sunday, 11 AM</div>
+          <div class="hcard-title">Chai, then home</div>
+          <div class="hcard-desc">Trip done, operator paid, your review counts because you actually went.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="divider"></div>
+
+  <!-- 3 -->
+  <div class="pattern-label">
+    <div class="n">Pattern 03 - Type as a movie title</div>
+    <h3>Words that rise into view</h3>
+    <p>Award galleries in 2026 treat big typography like movie title screens - words animate as you scroll. Each word
+      rises from behind an invisible line when the headline enters view. Restrained, editorial, and it makes text feel
+      authored. (Scroll it into view to replay.)</p>
+  </div>
+  <section class="reveal-sec">
+    <div class="reveal-inner">
+      <div class="reveal-k">Why Bhraman</div>
+      <div class="reveal-h" id="revealH"></div>
+    </div>
+  </section>
+  <div class="divider"></div>
+
+  <!-- 4 -->
+  <div class="pattern-label">
+    <div class="n">Pattern 04 - The living pulse</div>
+    <h3>A ticker that proves the platform breathes</h3>
+    <p>A slow marquee of real, live activity - bookings, seats filling, weather calls. It signals the site is
+      <em>alive</em> and others are trusting it right now (social proof + FOMO in one). Hover to pause. Feed this from
+      real booking events in production.</p>
+  </div>
+  <section class="ticker-sec">
+    <div class="ticker" id="ticker"></div>
+  </section>
+
+  <!-- 5 -->
+  <div class="pattern-label">
+    <div class="n">Pattern 05 - Cursor spotlight</div>
+    <h3>Cards that light up under your cursor</h3>
+    <p>A soft amber glow follows the cursor inside each card. Subtle, premium, and it makes the surface feel physical
+      and responsive - the page reacts to the person. Move your mouse across these.</p>
+  </div>
+  <div class="spot-wrap">
+    <div class="spot">
+      <div class="spot-k">Held in escrow</div>
+      <div class="spot-h">Your money waits until you're back.</div>
+      <div class="spot-p">Trek called off for weather? You're not chasing anyone - it was never released.</div>
+    </div>
+    <div class="spot">
+      <div class="spot-k">Know the room</div>
+      <div class="spot-h">See who's on the batch before you book.</div>
+      <div class="spot-p">Gender mix, women-led trips, real reviews from travelers who actually went.</div>
+    </div>
+  </div>
+
+  <div class="footer-note">These are live, running patterns - interact with each. In production your dev rebuilds them
+    in React / Framer Motion / GSAP. The principle behind all five: the page responds to the person, so it feels alive
+    instead of static.</div>
+
+  <script>
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1. vibe selector
+    const chips = document.querySelectorAll('.vibe-chip');
+    const vibeImg = document.getElementById('vibeImg');
+    const vibeLine = document.getElementById('vibeLine');
+    const vibeGo = document.getElementById('vibeGo');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        vibeLine.style.opacity = '0';
+        setTimeout(() => {
+          vibeImg.style.backgroundImage = `url(${chip.dataset.img})`;
+          vibeImg.classList.add('on');
+          vibeLine.textContent = chip.dataset.line;
+          vibeLine.style.opacity = '1';
+          vibeGo.classList.add('show');
+        }, 200);
+      });
+    });
+
+    // 3. split text reveal
+    const revealH = document.getElementById('revealH');
+    const phrase = "Know who's leading. Know if it's a go. <em>Pay only when it's real.</em>";
+    // build words preserving <em>
+    const tmp = document.createElement('div'); tmp.innerHTML = phrase;
+    function wrapWords(node, target) {
+      node.childNodes.forEach(n => {
+        if (n.nodeType === 3) {
+          n.textContent.split(/(\s+)/).forEach(tok => {
+            if (tok.trim() === '') { target.appendChild(document.createTextNode(' ')); return; }
+            const w = document.createElement('span'); w.className = 'word';
+            const inner = document.createElement('span'); inner.textContent = tok;
+            w.appendChild(inner); target.appendChild(w);
+          });
+        } else if (n.nodeType === 1) {
+          const em = document.createElement('em');
+          wrapWords(n, em); target.appendChild(em);
+        }
+      });
+    }
+    wrapWords(tmp, revealH);
+    // stagger delays
+    revealH.querySelectorAll('.word span').forEach((s, i) => { s.style.transitionDelay = (i * 0.06) + 's'; });
+    const revObs = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { if (reduce) { revealH.querySelectorAll('.word span').forEach(s => s.style.transform = 'none'); } else revealH.classList.add('in'); } else { revealH.classList.remove('in'); } });
+    }, { threshold: 0.4 });
+    revObs.observe(revealH);
+
+    // 4. ticker
+    const events = [
+      ['Priya booked', 'Kalsubai Night Trek', '2 min ago'],
+      ['3 seats left', 'Sudhagad Fort Plateau', 'Sat 25 Jul'],
+      ['Weather: Go', 'Devkund Waterfall Trek', 'today'],
+      ['6 women on batch', 'Harishchandragad', 'Sun 19 Jul'],
+      ['Rahul booked', 'Kundalika Rafting', '8 min ago'],
+      ['Filling fast', 'Kalavantin Durg', 'Sat 25 Jul'],
+      ['New verified operator', 'Sahyadri Trails', 'Pune'],
+      ['Weather: Go', 'Andharban Forest', 'tomorrow'],
+    ];
+    const ticker = document.getElementById('ticker');
+    function buildTicker() {
+      let html = '';
+      for (let r = 0; r < 2; r++) {
+        events.forEach(ev => {
+          html += `<span class="tick-item"><span class="dot"></span><b>${ev[0]}</b> · ${ev[1]} <span class="sep">·</span> ${ev[2]}</span>`;
+        });
+      }
+      ticker.innerHTML = html;
+    }
+    buildTicker();
+    if (reduce) ticker.style.animation = 'none';
+
+    // 5. spotlight cards
+    document.querySelectorAll('.spot').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  </script>
+</body>
+
+</html>

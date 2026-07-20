@@ -28,7 +28,7 @@ export function listingGradient(categorySlug: string) {
 
 export function listingImageStyle(
   categorySlug: string,
-  heroImageUrl?: string | null
+  heroImageUrl?: string | null,
 ): CSSProperties {
   if (heroImageUrl) {
     return {
@@ -72,23 +72,21 @@ export const CATEGORY_BLURBS: Record<string, string> = {
   fort: "History underfoot",
 };
 
-/** Fallback cover art when a category has no listing photo yet */
+/** Maharashtra place photos (Wikimedia) - fallback when a category has no listing hero yet */
 export const CATEGORY_COVERS: Record<string, string> = {
   trekking:
-    "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=900&q=80",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Kalsubai_summit.jpg/1280px-Kalsubai_summit.jpg",
   rafting:
-    "https://images.unsplash.com/photo-1530870110042-98b2cb11041f?auto=format&fit=crop&w=900&q=80",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/River_Kundalika_By_Anis_Shaikh_12.jpg/1280px-River_Kundalika_By_Anis_Shaikh_12.jpg",
   camping:
-    "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=900&q=80",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Bhandardara_Lake.jpg/1280px-Bhandardara_Lake.jpg",
   paragliding:
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kamshet.jpg/1280px-Kamshet.jpg",
   rappelling:
-    "https://images.unsplash.com/photo-1522163181143-5316a0a4d3d2?auto=format&fit=crop&w=900&q=80",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Devkund_waterfalls.jpg/1280px-Devkund_waterfalls.jpg",
   caving:
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/KARLA%27S_CAVES.JPG/1280px-KARLA%27S_CAVES.JPG",
   kayaking:
-    "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80",
-  fort:
-    "https://images.unsplash.com/photo-1582510003544-4d00b07f74c7?auto=format&fit=crop&w=900&q=80",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Devbag_Backwaters.jpg/1280px-Devbag_Backwaters.jpg",
+  fort: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Raigad_fort_towers.jpg/1280px-Raigad_fort_towers.jpg",
 };
-

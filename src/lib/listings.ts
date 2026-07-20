@@ -603,3 +603,33 @@ export async function getAdventureMapPins(): Promise<AdventureMapPin[]> {
     return pinsFromListings(listings);
   }, fallback);
 }
+
+/** Lightweight rows for home category dock covers + live counts */
+export async function getCategoryCoverSources(): Promise<
+  { categorySlug: string; heroImageUrl: string | null }[]
+> {
+  const fromCatalog = () =>
+    getCatalogAllListings().map((listing) => ({
+      categorySlug: listing.category.slug,
+      heroImageUrl: listing.heroImageUrl,
+    }));
+
+  return withCatalogFallback(async () => {
+    if (!(await dbHasPublishedListings())) return fromCatalog();
+
+    const rows = await prisma.listing.findMany({
+      where: { status: "PUBLISHED" },
+      select: {
+        heroImageUrl: true,
+        category: { select: { slug: true } },
+      },
+      orderBy: { operator: { ratingAvg: "desc" } },
+      take: 200,
+    });
+
+    return rows.map((row) => ({
+      categorySlug: row.category.slug,
+      heroImageUrl: row.heroImageUrl,
+    }));
+  }, fromCatalog);
+}

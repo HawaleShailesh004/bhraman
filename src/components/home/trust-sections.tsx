@@ -13,13 +13,15 @@ export function KnowTheRoomSection() {
     <section className="page-shell section-y">
       <div className="grid items-center gap-5 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
         <div>
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
             Traveler signals
           </p>
-          <h2 className="max-w-[18ch] font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight text-ink">
+          <h2 className="max-w-[18ch] font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight text-ink">
             {COPY.safety.header}
           </h2>
-          <p className="mt-3 max-w-md text-sm text-body">{COPY.safety.sub}</p>
+          <p className="mt-3 max-w-md text-sm tracking-sub text-body" data-sub>
+            {COPY.safety.sub}
+          </p>
           <div className="mt-5 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EAF1EC] px-3 py-1.5 text-xs font-semibold text-forest">
               <UsersRound size={13} /> 4 women on this batch
@@ -40,10 +42,10 @@ export function KnowTheRoomSection() {
           transition={{ duration: 0.4, ease: brandEase }}
           className="rounded-[22px] border border-line bg-white p-5 shadow-[var(--shadow-md)] sm:p-6"
         >
-          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-mist">
+          <p className="text-[10px] font-bold uppercase tracking-eyebrow text-mist">
             Batch
           </p>
-          <p className="mt-2 font-display text-xl font-bold text-ink">
+          <p className="mt-2 font-display text-xl font-medium text-ink">
             Kalsubai sunrise
           </p>
           <p className="mt-1 text-sm text-body">Sat · 4:30 AM</p>
@@ -79,10 +81,10 @@ export function TrustFaqSection() {
   return (
     <section className="bg-paper-2 section-y">
       <div className="page-shell mx-auto flex max-w-2xl flex-col items-center text-center">
-        <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+        <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
           {COPY.faq.eyebrow}
         </p>
-        <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight text-ink">
+        <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight text-ink">
           {COPY.faq.title}
         </h2>
 
@@ -100,7 +102,7 @@ export function TrustFaqSection() {
                   onClick={() => setOpen(isOpen ? -1 : index)}
                   className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left sm:px-5"
                 >
-                  <span className="font-display text-base font-bold text-ink">
+                  <span className="font-display text-base font-medium text-ink">
                     {item.q}
                   </span>
                   <motion.span

@@ -4,38 +4,56 @@
 
 :root {
   --paper: #faf8f3;
-  --paper-2: #f2eee4;
-  --ink: #1a2e22;
+  --paper-2: #ede6d8;
+  /* sand - secondary section bg */
+  --ink: #14231b;
+  /* primary headlines + body on paper */
+  --deep: #0f1d15;
+  /* near-black sections */
   --forest: #2d5a3d;
   --green: #4c8055;
   --amber: #e08a2b;
+  /* CTAs ONLY */
   --amber-deep: #c9741c;
   --clay: #c4553b;
-  --mist: #5c6b62;
+  --sand: #ede6d8;
+  --mist: #3a4740;
+  /* was washed #5c6b62 / #7c8a80 - high contrast */
   --line: #e2dcce;
-  --body: #3d4a42;
+  --body: #3a4740;
+  --warm-white: #f5f1e8;
+  /* text on dark - not pure #fff */
 
   /* Senior UI inline-style aliases */
   --color-paper: #faf8f3;
-  --color-paper-2: #f2eee4;
-  --color-ink: #1a2e22;
+  --color-paper-2: #ede6d8;
+  --color-ink: #14231b;
+  --color-deep: #0f1d15;
   --color-forest: #2d5a3d;
   --color-green: #4c8055;
   --color-amber: #e08a2b;
   --color-amber-deep: #c9741c;
   --color-clay: #c4553b;
-  --color-mist: #5c6b62;
+  --color-sand: #ede6d8;
+  --color-mist: #3a4740;
   --color-line: #e2dcce;
-  --color-body: #3d4a42;
+  --color-body: #3a4740;
+  --color-warm-white: #f5f1e8;
 
-  --shadow-sm: 0 1px 2px rgba(26, 46, 34, 0.04), 0 1px 2px rgba(26, 46, 34, 0.03);
-  --shadow-md: 0 2px 8px rgba(26, 46, 34, 0.06), 0 1px 3px rgba(26, 46, 34, 0.04);
-  --shadow-lg: 0 12px 32px rgba(26, 46, 34, 0.08), 0 2px 8px rgba(26, 46, 34, 0.04);
+  --shadow-sm: 0 1px 2px rgba(20, 35, 27, 0.05), 0 1px 2px rgba(20, 35, 27, 0.03);
+  --shadow-md: 0 4px 14px rgba(20, 35, 27, 0.07), 0 1px 3px rgba(20, 35, 27, 0.04);
+  --shadow-lg: 0 16px 40px rgba(20, 35, 27, 0.1), 0 4px 12px rgba(20, 35, 27, 0.05);
 
-  --radius-card: 18px;
+  --radius-card: 16px;
+  --radius-btn: 12px;
   --space-section: 6.5rem;
 
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --font-body: "Satoshi", system-ui, sans-serif;
+  /* Slightly open tracking sitewide — subs more open than display */
+  --tracking-display: -0.01em;
+  --tracking-sub: 0.02em;
+  --tracking-body: 0.012em;
 }
 
 html {
@@ -77,26 +95,71 @@ html {
 @layer base {
   body {
     @apply bg-paper text-ink font-body antialiased;
-    font-variation-settings: "wdth" 100;
+    font-family: var(--font-body);
+    font-weight: 300;
     line-height: 1.55;
     color: var(--body);
+    letter-spacing: var(--tracking-body);
+    font-variant-numeric: tabular-nums;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-display font-extrabold tracking-tight text-ink;
-    line-height: 1.04;
+    @apply font-display text-ink;
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.05;
+  }
+
+  p,
+  li {
+    letter-spacing: var(--tracking-body);
+  }
+
+  .sec-sub,
+  .lead,
+  [data-sub],
+  h1+p,
+  h2+p,
+  h3+p,
+  .sec-title+p {
+    letter-spacing: var(--tracking-sub);
   }
 
   .font-display {
-    font-family: "Archivo", var(--font-archivo), system-ui, sans-serif;
-    font-stretch: expanded;
+    font-family: var(--font-display), "Fraunces", Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
   }
 
   .font-body {
-    font-variation-settings: "wdth" 100;
+    font-family: var(--font-body);
+    font-weight: 300;
+    letter-spacing: var(--tracking-body);
+  }
+
+  .font-serif {
+    font-family: var(--font-display), "Fraunces", Georgia, serif;
+  }
+
+  /* Film grain on dark / hero surfaces */
+  .grain::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    opacity: 0.045;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   :where(a, button, input, select, textarea):focus-visible {
@@ -111,12 +174,16 @@ html {
   }
 
   .sec-title {
-    @apply font-display font-extrabold mb-2 tracking-tight;
+    @apply font-display mb-2 text-ink;
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    line-height: 0.96;
     font-size: clamp(28px, 4vw, 40px);
   }
 
   .sec-sub {
-    @apply text-mist text-base max-w-[560px] mb-9;
+    @apply mb-9 max-w-[560px] text-base text-body;
+    letter-spacing: var(--tracking-sub);
   }
 
   .btn {
@@ -334,11 +401,11 @@ html {
   }
 
   .brand-name {
-    @apply font-display text-[22px] font-black tracking-[-0.01em];
+    @apply font-display text-[22px] font-black tracking-tight;
   }
 
   .mast-title {
-    @apply max-w-[14ch] font-display font-black leading-[0.96] tracking-[-0.03em];
+    @apply max-w-[14ch] font-display font-black leading-[0.96] tracking-tighter;
     font-size: clamp(40px, 7vw, 76px);
   }
 
@@ -359,7 +426,7 @@ html {
   }
 
   .mast-meta b {
-    @apply block font-display text-[26px] font-extrabold tracking-[-0.01em] text-paper;
+    @apply block font-display text-[26px] font-extrabold tracking-tight text-paper;
   }
 
   /* design-system.html - listing card */
@@ -650,7 +717,7 @@ html {
   }
 
   .weather .w-temp {
-    @apply font-display text-[38px] font-extrabold tracking-[-0.02em] text-ink;
+    @apply font-display text-[38px] font-extrabold tracking-tight text-ink;
   }
 
   /* components-core.html - booking panel */
@@ -785,7 +852,7 @@ html {
   }
 
   .stat .big {
-    @apply font-display text-[28px] font-extrabold tracking-[-0.02em];
+    @apply font-display text-[28px] font-extrabold tracking-tight;
   }
 
   .stat .delta {
@@ -970,6 +1037,7 @@ html {
     opacity: 0;
     transform: translateY(18px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -981,6 +1049,7 @@ html {
     opacity: 0;
     transform: scale(0.97);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -997,24 +1066,24 @@ html {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
 
 .liquid-gradient-text {
-  background-image: linear-gradient(
-    115deg,
-    #faf8f3 0%,
-    #f0d9a8 22%,
-    #e08a2b 42%,
-    #faf8f3 58%,
-    #c9d2cb 78%,
-    #e08a2b 100%
-  );
+  background-image: linear-gradient(115deg,
+      #faf8f3 0%,
+      #f0d9a8 22%,
+      #e08a2b 42%,
+      #faf8f3 58%,
+      #c9d2cb 78%,
+      #e08a2b 100%);
   background-size: 220% 220%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1031,6 +1100,7 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

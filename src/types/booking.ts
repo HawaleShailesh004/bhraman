@@ -29,6 +29,7 @@ export type BookingSummary = {
   placeName: string;
   heroImageUrl: string | null;
   startTimeSnapshot: string;
+  hasUnreadUpdates?: boolean;
   payment: {
     status: PaymentStatus;
     amount: number;

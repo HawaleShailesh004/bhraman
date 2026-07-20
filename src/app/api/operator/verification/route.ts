@@ -1,5 +1,6 @@
 import { PosHStatus, VerificationStatus } from "@prisma/client";
-import { getSessionOperator } from "@/lib/auth";
+import { toApiErrorResponse } from "@/lib/api-errors";
+import { loadOperatorSession } from "@/app/api/operator/helpers";
 import { prisma } from "@/lib/prisma";
 
 type VerificationBody = {
@@ -22,10 +23,9 @@ function optionalText(value: unknown, maxLength: number) {
 }
 
 export async function PATCH(request: Request) {
-  const session = await getSessionOperator();
-  if (!session) {
-    return Response.json({ error: "UNAUTHORIZED" }, { status: 401 });
-  }
+  const auth = await loadOperatorSession();
+  if ("response" in auth) return auth.response;
+  const { session } = auth;
 
   const body = (await request.json()) as VerificationBody;
   if (
@@ -93,6 +93,8 @@ export async function PATCH(request: Request) {
 
     return Response.json(operator);
   } catch (error) {
+    const mapped = toApiErrorResponse(error);
+    if (mapped) return mapped;
     if (error instanceof Error && error.message === "INVALID_PAYLOAD") {
       return Response.json({ error: "INVALID_PAYLOAD" }, { status: 400 });
     }

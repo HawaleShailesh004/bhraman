@@ -33,6 +33,8 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
   }, []);
 
   const solid = scrolled || !onDark;
+  const lightText = onDark;
+  const useDeepSolid = onDark && solid;
 
   return (
     <>
@@ -46,19 +48,26 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
         transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
       >
         <div
-          className="max-w-6xl mx-auto flex items-center gap-5 rounded-full pl-5 pr-2.5 py-2.5 border transition-colors duration-300"
+          className="mx-auto flex max-w-6xl items-center gap-5 rounded-full border py-2.5 pl-5 pr-2.5 transition-colors duration-300"
           style={{
-            background: solid ? "rgba(250,248,243,0.85)" : "rgba(26,46,34,0.28)",
-            borderColor: solid ? "var(--color-line)" : "rgba(255,255,255,0.18)",
+            background: useDeepSolid
+              ? "rgba(15,29,21,0.94)"
+              : onDark
+                ? "rgba(15,29,21,0.28)"
+                : "rgba(250,248,243,0.9)",
+            borderColor: useDeepSolid || onDark
+              ? "rgba(255,255,255,0.12)"
+              : "var(--color-line)",
             backdropFilter: "blur(14px)",
             boxShadow: solid ? "var(--shadow-md)" : "none",
           }}
         >
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <Logo size={28} dark={!solid} />
+          <Link href="/" className="flex shrink-0 items-center gap-2">
+            <Logo size={28} dark={lightText} />
             <span
-              className="font-display text-[17px] font-bold tracking-tight"
-              style={{ color: solid ? "#1A2E22" : "#FAF8F3" }}
+              className={`font-display text-[20px] font-semibold tracking-tight ${
+                lightText ? "text-warm-white" : "text-ink"
+              }`}
             >
               Bhraman
             </span>
@@ -74,8 +83,11 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
                     ? "page"
                     : undefined
                 }
-                className="text-[13px] font-medium transition-opacity hover:opacity-100 opacity-75"
-                style={{ color: solid ? "#1A2E22" : "#FAF8F3" }}
+                className={`text-[14.5px] font-medium transition-colors hover:opacity-100 ${
+                  lightText
+                    ? "text-warm-white/[0.82] hover:text-warm-white"
+                    : "text-ink/75 hover:text-ink"
+                }`}
               >
                 {l.label}
               </Link>
@@ -86,21 +98,24 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
 
           <button
             type="button"
-            className="hidden sm:grid place-items-center w-10 h-10 rounded-full border bg-white/90 transition-transform hover:scale-105"
+            className="hidden h-10 w-10 place-items-center rounded-full border bg-white/90 transition-transform hover:scale-105 sm:grid"
             style={{ borderColor: "var(--color-line)" }}
             aria-label="Saved"
           >
             <Heart size={17} className="text-ink" />
           </button>
-          <AuthNav solid={solid} />
+          <AuthNav solid={!onDark} />
 
           <button
             type="button"
-            className="md:hidden grid place-items-center w-10 h-10 rounded-full"
+            className="grid h-10 w-10 place-items-center rounded-full md:hidden"
             onClick={() => setOpen(true)}
             aria-label="Menu"
           >
-            <Menu size={22} style={{ color: solid ? "#1A2E22" : "#FAF8F3" }} />
+            <Menu
+              size={22}
+              className={lightText ? "text-warm-white" : "text-ink"}
+            />
           </button>
         </div>
       </motion.header>

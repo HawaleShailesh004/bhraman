@@ -1,5 +1,7 @@
 import { Difficulty, ListingStatus } from "@prisma/client";
-import { ForbiddenError, getSessionOperator } from "@/lib/auth";
+import { ForbiddenError } from "@/lib/auth";
+import { toApiErrorResponse } from "@/lib/api-errors";
+import { loadOperatorSession } from "@/app/api/operator/helpers";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/slugify";
 
@@ -25,10 +27,9 @@ type CreateListingBody = {
 };
 
 export async function POST(request: Request) {
-  const session = await getSessionOperator();
-  if (!session) {
-    return Response.json({ error: "UNAUTHORIZED" }, { status: 401 });
-  }
+  const auth = await loadOperatorSession();
+  if ("response" in auth) return auth.response;
+  const { session } = auth;
 
   const body = (await request.json()) as CreateListingBody;
 
@@ -50,15 +51,15 @@ export async function POST(request: Request) {
     return Response.json({ error: "INVALID_DIFFICULTY" }, { status: 400 });
   }
 
-  const baseSlug = slugify(body.title);
-  let slug = baseSlug;
-  let suffix = 1;
-  while (await prisma.listing.findUnique({ where: { slug } })) {
-    slug = `${baseSlug}-${suffix}`;
-    suffix += 1;
-  }
-
   try {
+    const baseSlug = slugify(body.title);
+    let slug = baseSlug;
+    let suffix = 1;
+    while (await prisma.listing.findUnique({ where: { slug } })) {
+      slug = `${baseSlug}-${suffix}`;
+      suffix += 1;
+    }
+
     const listing = await prisma.listing.create({
       data: {
         slug,
@@ -84,9 +85,11 @@ export async function POST(request: Request) {
 
     return Response.json({ id: listing.id, slug: listing.slug });
   } catch (error) {
-    if (error instanceof ForbiddenError) {
-      return Response.json({ error: "FORBIDDEN" }, { status: 403 });
-    }
-    return Response.json({ error: "CREATE_FAILED" }, { status: 500 });
+    return (
+      toApiErrorResponse(error) ??
+      (error instanceof ForbiddenError
+        ? Response.json({ error: "FORBIDDEN" }, { status: 403 })
+        : Response.json({ error: "CREATE_FAILED" }, { status: 500 }))
+    );
   }
 }

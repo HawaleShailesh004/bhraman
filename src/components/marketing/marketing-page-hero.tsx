@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { brandEase } from "@/lib/motion";
 
 /**
- * Full-bleed marketing hero — brand-forward, one composition, no cards.
+ * Full-bleed marketing hero - brand-forward, one composition, no cards.
  */
 export function MarketingPageHero({
   eyebrow,
@@ -55,7 +55,7 @@ export function MarketingPageHero({
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: brandEase }}
-          className="mb-4 text-[10px] font-bold uppercase tracking-[0.22em] text-amber"
+          className="mb-4 text-[10px] font-bold uppercase tracking-eyebrow text-amber"
         >
           {eyebrow}
         </motion.p>
@@ -63,7 +63,7 @@ export function MarketingPageHero({
           initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.04, ease: brandEase }}
-          className="mb-3 font-display text-[clamp(2.4rem,8vw,4.5rem)] font-black leading-[0.92] tracking-tight text-paper"
+          className="mb-3 font-display text-[clamp(2.4rem,8vw,4.5rem)] font-medium leading-[0.92] tracking-tight text-paper"
         >
           Bhraman
         </motion.p>
@@ -71,7 +71,7 @@ export function MarketingPageHero({
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.08, ease: brandEase }}
-          className="max-w-[18ch] font-display text-[clamp(1.65rem,4.5vw,2.75rem)] font-bold leading-[1.1] tracking-tight text-paper"
+          className="max-w-[18ch] font-display text-[clamp(1.65rem,4.5vw,2.75rem)] font-medium leading-[1.1] tracking-tight text-paper"
         >
           {title}
           {titleLine2 ? (
@@ -85,7 +85,8 @@ export function MarketingPageHero({
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.14, ease: brandEase }}
-          className="mt-5 max-w-lg text-base leading-relaxed text-[#C9D2CB] sm:text-lg"
+          className="mt-5 max-w-lg text-base leading-relaxed tracking-sub text-[#C9D2CB] sm:text-lg"
+          data-sub
         >
           {sub}
         </motion.p>

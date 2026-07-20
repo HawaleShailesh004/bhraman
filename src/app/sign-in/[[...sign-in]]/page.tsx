@@ -21,10 +21,10 @@ export default function TravelerSignInPage({ searchParams }: SignInPageProps) {
       <div className="mx-auto max-w-md">
         <Link href="/" className="mb-8 inline-flex items-center gap-2">
           <Logo size={30} />
-          <span className="font-display text-lg font-bold">Bhraman</span>
+          <span className="font-display text-lg font-medium">Bhraman</span>
         </Link>
         <div className="mb-6">
-          <h1 className="font-display text-2xl font-extrabold tracking-tight">
+          <h1 className="font-display text-2xl font-medium tracking-tight">
             Sign in to book
           </h1>
           <p className="mt-2 text-sm text-mist">

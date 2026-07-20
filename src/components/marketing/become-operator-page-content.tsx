@@ -11,10 +11,7 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { MarketingPageHero } from "@/components/marketing/marketing-page-hero";
-import {
-  MarketingCtaBand,
-  Reveal,
-} from "@/components/marketing/reveal";
+import { MarketingCtaBand, Reveal } from "@/components/marketing/reveal";
 import { softSpring } from "@/lib/motion";
 
 const HERO_IMG =
@@ -29,12 +26,12 @@ const BENEFITS = [
   {
     icon: Wallet,
     title: "Clear weekly payouts",
-    text: "Settlements after trips run. Transparent commission — no surprise deductions.",
+    text: "Settlements after trips run. Transparent commission - no surprise deductions.",
   },
   {
     icon: Users2,
     title: "Reputation that compounds",
-    text: "Verified badge and reviews from completed bookings — trust travelers can check.",
+    text: "Verified badge and reviews from completed bookings - trust travelers can check.",
   },
   {
     icon: LayoutDashboard,
@@ -79,10 +76,10 @@ export function BecomeOperatorPageContent() {
       <section className="section-y bg-paper">
         <div className="page-shell">
           <Reveal className="mb-10 max-w-xl sm:mb-14">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
               Why partner
             </p>
-            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight text-ink">
+            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight text-ink">
               Built for operators who run real trips.
             </h2>
           </Reveal>
@@ -99,7 +96,7 @@ export function BecomeOperatorPageContent() {
                     <b.icon size={20} />
                   </span>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-ink">
+                    <h3 className="font-display text-lg font-medium text-ink">
                       {b.title}
                     </h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-body">
@@ -116,10 +113,10 @@ export function BecomeOperatorPageContent() {
       <section className="section-y bg-ink text-paper">
         <div className="page-shell grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
           <Reveal>
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber">
               What you get
             </p>
-            <h2 className="font-display text-[clamp(1.6rem,4vw,2.3rem)] font-bold tracking-tight">
+            <h2 className="font-display text-[clamp(1.6rem,4vw,2.3rem)] font-medium tracking-tight">
               Tools to list. Badge to earn trust.
             </h2>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-[#A8B7AD]">
@@ -154,7 +151,7 @@ export function BecomeOperatorPageContent() {
                 <p className="inline-flex items-center gap-1.5 rounded-full bg-amber px-3 py-1 text-[10px] font-bold text-amber-text">
                   <ShieldCheck size={12} /> Verified on Bhraman
                 </p>
-                <p className="mt-2 font-display text-xl font-bold">
+                <p className="mt-2 font-display text-xl font-medium">
                   Your name. Your routes. Our marketplace.
                 </p>
               </div>
@@ -166,10 +163,10 @@ export function BecomeOperatorPageContent() {
       <section className="section-y bg-paper-2">
         <div className="page-shell mx-auto max-w-2xl">
           <Reveal className="mb-10 text-center">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
               Onboarding
             </p>
-            <h2 className="font-display text-[clamp(1.6rem,4vw,2.3rem)] font-bold tracking-tight text-ink">
+            <h2 className="font-display text-[clamp(1.6rem,4vw,2.3rem)] font-medium tracking-tight text-ink">
               Live in three moves.
             </h2>
           </Reveal>
@@ -177,11 +174,11 @@ export function BecomeOperatorPageContent() {
             {ONBOARD.map((s, i) => (
               <Reveal key={s.n} delay={i * 0.06}>
                 <div className="flex gap-4 border-b border-line py-6 sm:gap-6 sm:py-7">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-amber font-display text-sm font-black text-amber-text">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-amber font-display text-sm font-medium text-amber-text">
                     {s.n}
                   </span>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-ink">
+                    <h3 className="font-display text-lg font-medium text-ink">
                       {s.title}
                     </h3>
                     <p className="mt-1 text-sm leading-relaxed text-body">
@@ -206,7 +203,7 @@ export function BecomeOperatorPageContent() {
       <MarketingCtaBand
         eyebrow="Questions"
         title="See how travelers find you."
-        sub="Understand the booking flow — then open your dashboard and list your first trip."
+        sub="Understand the booking flow - then open your dashboard and list your first trip."
         primary={{ href: "/how-it-works", label: "How it works" }}
         secondary={{ href: "/operators", label: "Operator directory" }}
       />

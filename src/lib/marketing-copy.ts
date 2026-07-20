@@ -1,31 +1,33 @@
 /** Locked marketing voice: confident, specific, calm - minimal outside hero. */
 
 export const COPY = {
-  brandEyebrow: "Maharashtra adventures",
+  brandEyebrow: "Maharashtra adventure, verified",
 
   hero: {
     badge: "Verified operators · payment held until you're back",
     headlineLine1: "The Sahyadris,",
+    minusWord: "minus",
+    headlineRest: "the guesswork.",
     headlineLine2: "minus the guesswork.",
-    /** @deprecated use headlineLine1/2 */
+    /** @deprecated use headlineLine1 / minusWord / headlineRest */
     headline: "The Sahyadris, minus the guesswork.",
     subline:
-      "Tell us the vibe. Get real trips back - verified operators, honest weather, and your money held safe until you're home.",
-    ctaPrimary: "Plan my weekend",
-    ctaSecondary: "Browse adventures",
+      "Verified operators, honest weather, payment held until you're back. Tell us the vibe — get three real trips.",
+    ctaPrimary: "Find this weekend's trips",
+    ctaSecondary: "How it works",
   },
 
   escrow: {
     primary:
-      "You pay us. We hold it until the trip runs. Then the operator gets paid.",
-    short: "Pay now. Released after your trip.",
+      "Your money's held safe until the trip actually happens. Trek called off? You're not chasing anyone - the payment was never released.",
+    short: "Held until the trip happens.",
     nearReserve: "Held until you're back",
     reassurance: "No stranger UPI. We hold it.",
   },
 
   safety: {
     header: "Know the room before you book.",
-    sub: "Gender mix, women-led operators, real reviews - on the page.",
+    sub: "See how many women are on each batch, which operators have women leading treks, and reviews from travelers who actually went.",
     softHeader: "Built to be checked.",
   },
 
@@ -39,7 +41,7 @@ export const COPY = {
       },
       {
         title: "Honest weather",
-        text: "We say go or no-go. Even if it costs a booking.",
+        text: "We'll tell you when a trek's a genuine go - even when it costs us the booking.",
       },
       {
         title: "Money held",
@@ -51,7 +53,7 @@ export const COPY = {
   ai: {
     eyebrow: "AI planner",
     title: "Tell us the vibe.",
-    sub: "Get bookable trips - not a PDF.",
+    sub: "First trek, girls' trip, something hard. Get three real, bookable plans back.",
     cta: "Try the AI planner",
     dockGreeting: "Hey, how may I help you?",
     dockHint: "Pick a vibe - or open the planner.",

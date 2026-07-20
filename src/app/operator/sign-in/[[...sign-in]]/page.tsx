@@ -35,13 +35,13 @@ export default async function OperatorSignInPage({
       <div className="mx-auto max-w-md">
         <Link href="/" className="mb-8 inline-flex items-center gap-2">
           <Logo size={30} />
-          <span className="font-display text-lg font-bold">Bhraman</span>
+          <span className="font-display text-lg font-medium">Bhraman</span>
         </Link>
         <div className="mb-6">
           <span className="text-xs font-bold uppercase tracking-[0.12em] text-amber-deep">
             Operator portal
           </span>
-          <h1 className="mt-2 font-display text-2xl font-extrabold tracking-tight">
+          <h1 className="mt-2 font-display text-2xl font-medium tracking-tight">
             Sign in to your dashboard
           </h1>
           <p className="mt-2 text-sm text-mist">

@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { confirmCapturedPayment } from "@/lib/booking";
+import { toApiErrorResponse } from "@/lib/api-errors";
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -19,29 +20,34 @@ export async function POST(request: Request) {
     return new Response("invalid signature", { status: 400 });
   }
 
-  const event = JSON.parse(body) as {
-    event?: string;
-    payload?: {
-      payment?: {
-        entity?: {
-          id: string;
-          order_id: string;
+  try {
+    const event = JSON.parse(body) as {
+      event?: string;
+      payload?: {
+        payment?: {
+          entity?: {
+            id: string;
+            order_id: string;
+          };
         };
       };
     };
-  };
 
-  if (event.event === "payment.captured") {
-    const paymentEntity = event.payload?.payment?.entity;
-    if (!paymentEntity) {
-      return new Response("ok", { status: 200 });
+    if (event.event === "payment.captured") {
+      const payment = event.payload?.payment?.entity;
+      if (payment?.id && payment.order_id) {
+        await confirmCapturedPayment({
+          razorpayOrderId: payment.order_id,
+          razorpayPaymentId: payment.id,
+        });
+      }
     }
 
-    await confirmCapturedPayment({
-      razorpayOrderId: paymentEntity.order_id,
-      razorpayPaymentId: paymentEntity.id,
-    });
+    return new Response("ok");
+  } catch (error) {
+    const mapped = toApiErrorResponse(error);
+    if (mapped) return mapped;
+    console.error("[razorpay webhook]", error);
+    return new Response("webhook failed", { status: 500 });
   }
-
-  return new Response("ok", { status: 200 });
 }

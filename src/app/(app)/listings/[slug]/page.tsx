@@ -13,6 +13,7 @@ import {
   UpcomingBatchTrustUi,
   WeatherSignalUi,
 } from "@/components/listing/detail-parts-ui";
+import { KnowTheRoomListing } from "@/components/listing/know-the-room-listing";
 import { ListingGalleryStrip } from "@/components/listing/listing-media-gallery";
 import { formatInr } from "@/lib/format";
 import { getListingDetail } from "@/lib/listings";
@@ -115,6 +116,12 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
             <Eyebrow>Details</Eyebrow>
             <h2 className="mb-6 font-display text-2xl">What to expect</h2>
             <InclusionsUi listing={listing} />
+          </div>
+
+          <div>
+            <Eyebrow>Traveler signals</Eyebrow>
+            <h2 className="mb-6 font-display text-2xl">Know the room</h2>
+            <KnowTheRoomListing listing={listing} />
           </div>
 
           <div>

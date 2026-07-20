@@ -26,6 +26,7 @@ export function AvailabilityForm({ listings }: { listings: ListingOption[] }) {
   const [weekdays, setWeekdays] = useState<number[]>([0, 6]);
   const [startTime, setStartTime] = useState("06:00");
   const [capacity, setCapacity] = useState(12);
+  const [minSeatsToConfirm, setMinSeatsToConfirm] = useState("");
   const [fromDate, setFromDate] = useState(() => {
     const date = new Date();
     date.setDate(date.getDate() + 1);
@@ -70,6 +71,9 @@ export function AvailabilityForm({ listings }: { listings: ListingOption[] }) {
           capacity,
           fromDate,
           toDate,
+          minSeatsToConfirm: minSeatsToConfirm
+            ? Number.parseInt(minSeatsToConfirm, 10)
+            : undefined,
         }),
       });
 
@@ -165,6 +169,20 @@ export function AvailabilityForm({ listings }: { listings: ListingOption[] }) {
             value={capacity}
             onChange={(event) => setCapacity(Number(event.target.value))}
             className="inp w-full"
+          />
+        </div>
+        <div>
+          <label className="mb-2 block text-sm font-bold">
+            Min seats to confirm
+          </label>
+          <input
+            type="number"
+            min={1}
+            max={capacity}
+            value={minSeatsToConfirm}
+            onChange={(event) => setMinSeatsToConfirm(event.target.value)}
+            className="inp w-full"
+            placeholder="Optional"
           />
         </div>
         <div>

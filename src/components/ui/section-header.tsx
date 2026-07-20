@@ -45,12 +45,12 @@ export function SectionHeader({
     >
       <div>
         <p
-          className={`mb-2 text-[10px] font-bold uppercase tracking-[0.2em] ${EYEBROW[tone]}`}
+          className={`mb-2 text-[10px] font-bold uppercase tracking-eyebrow ${EYEBROW[tone]}`}
         >
           {eyebrow}
         </p>
         <h2
-          className={`font-display text-[clamp(1.45rem,3.2vw,2.2rem)] font-bold tracking-tight ${TITLE[tone]}`}
+          className={`font-display text-[clamp(1.45rem,3.2vw,2.2rem)] font-medium tracking-tight ${TITLE[tone]}`}
         >
           {title}
         </h2>

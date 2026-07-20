@@ -28,11 +28,11 @@ export function AuthNav({ solid }: { solid: boolean }) {
       <SignedOut>
         <Link
           href={signInHref}
-          className="hidden sm:inline-flex items-center rounded-full border px-4 py-2 text-xs font-semibold transition-colors"
+          className="hidden sm:inline-flex items-center rounded-full px-5 py-[9px] text-sm font-bold transition-colors"
           style={{
-            borderColor: solid ? "var(--color-line)" : "rgba(255,255,255,0.25)",
-            color: solid ? "#1A2E22" : "#FAF8F3",
-            background: solid ? "white" : "transparent",
+            border: solid ? "1px solid var(--color-line)" : "none",
+            color: solid ? "#14231B" : "#14231B",
+            background: solid ? "white" : "#F5F1E8",
           }}
         >
           Sign in

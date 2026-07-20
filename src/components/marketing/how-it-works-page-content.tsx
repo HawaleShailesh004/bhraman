@@ -12,10 +12,7 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { MarketingPageHero } from "@/components/marketing/marketing-page-hero";
-import {
-  MarketingCtaBand,
-  Reveal,
-} from "@/components/marketing/reveal";
+import { MarketingCtaBand, Reveal } from "@/components/marketing/reveal";
 import { brandEase, softSpring } from "@/lib/motion";
 
 const HERO_IMG =
@@ -26,7 +23,7 @@ const STEPS = [
     icon: Search,
     n: "01",
     title: "Discover",
-    text: "Browse verified experiences across Maharashtra. Filter by activity, difficulty, date, and region — every listing is a real operator trip.",
+    text: "Browse verified experiences across Maharashtra. Filter by activity, difficulty, date, and region - every listing is a real operator trip.",
     href: "/discover",
     link: "Open discover",
     image:
@@ -36,7 +33,7 @@ const STEPS = [
     icon: Sparkles,
     n: "02",
     title: "Plan with AI",
-    text: "Describe the vibe in plain words. The planner returns bookable matches — not a PDF — with why each trip fits.",
+    text: "Describe the vibe in plain words. The planner returns bookable matches - not a PDF - with why each trip fits.",
     href: "/plan",
     link: "Try the planner",
     image:
@@ -56,7 +53,7 @@ const STEPS = [
     icon: Mountain,
     n: "04",
     title: "Show up & go",
-    text: "Meet your verified operator on the ground. They run the trip. You explore — with clear meeting points and support if plans change.",
+    text: "Meet your verified operator on the ground. They run the trip. You explore - with clear meeting points and support if plans change.",
     href: "/operators",
     link: "Meet operators",
     image:
@@ -68,7 +65,7 @@ const TRUST = [
   {
     icon: ShieldCheck,
     title: "Verified operators",
-    text: "Business details checked. Badge means the checks passed — not a marketing sticker.",
+    text: "Business details checked. Badge means the checks passed - not a marketing sticker.",
   },
   {
     icon: LockKeyhole,
@@ -78,7 +75,7 @@ const TRUST = [
   {
     icon: CloudSun,
     title: "Honest conditions",
-    text: "Live weather and go / no-go signals on the listing — even when it costs a booking.",
+    text: "Live weather and go / no-go signals on the listing - even when it costs a booking.",
   },
 ] as const;
 
@@ -100,10 +97,10 @@ export function HowItWorksPageContent() {
       <section className="section-y bg-paper">
         <div className="page-shell">
           <Reveal className="mb-12 max-w-xl sm:mb-16">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
               The path
             </p>
-            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight text-ink">
+            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight text-ink">
               Four steps. One booking.
             </h2>
           </Reveal>
@@ -126,7 +123,7 @@ export function HowItWorksPageContent() {
                         className="aspect-[4/3] w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent" />
-                      <span className="absolute bottom-4 left-4 font-display text-4xl font-black text-paper/90 sm:text-5xl">
+                      <span className="absolute bottom-4 left-4 font-display text-4xl font-medium text-paper/90 sm:text-5xl">
                         {step.n}
                       </span>
                     </div>
@@ -134,7 +131,7 @@ export function HowItWorksPageContent() {
                       <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#EAF1EC] text-forest">
                         <step.icon size={22} />
                       </span>
-                      <h3 className="font-display text-[clamp(1.4rem,3vw,2rem)] font-bold text-ink">
+                      <h3 className="font-display text-[clamp(1.4rem,3vw,2rem)] font-medium text-ink">
                         {step.title}
                       </h3>
                       <p className="mt-3 max-w-md text-sm leading-relaxed text-body sm:text-base">
@@ -158,10 +155,10 @@ export function HowItWorksPageContent() {
       <section className="section-y bg-paper-2">
         <div className="page-shell">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-deep">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
               Why it feels safe
             </p>
-            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-bold tracking-tight text-ink">
+            <h2 className="font-display text-[clamp(1.6rem,4vw,2.4rem)] font-medium tracking-tight text-ink">
               Trust built into the flow.
             </h2>
           </Reveal>
@@ -177,7 +174,7 @@ export function HowItWorksPageContent() {
                   <span className="grid h-11 w-11 place-items-center rounded-xl bg-[#EAF1EC] text-forest">
                     <item.icon size={20} />
                   </span>
-                  <h3 className="mt-4 font-display text-lg font-bold text-ink">
+                  <h3 className="mt-4 font-display text-lg font-medium text-ink">
                     {item.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-body">
@@ -204,16 +201,16 @@ export function HowItWorksPageContent() {
                 className="pointer-events-none absolute -right-20 top-0 h-64 w-64 rounded-full bg-amber/15 blur-3xl"
                 aria-hidden
               />
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber">
+              <p className="text-[10px] font-bold uppercase tracking-eyebrow text-amber">
                 Your money
               </p>
-              <h2 className="mt-3 max-w-xl font-display text-[clamp(1.5rem,3.5vw,2.2rem)] font-bold tracking-tight">
+              <h2 className="mt-3 max-w-xl font-display text-[clamp(1.5rem,3.5vw,2.2rem)] font-medium tracking-tight">
                 You pay Bhraman. We hold it. Operator paid after you&apos;re
                 back.
               </h2>
               <p className="mt-3 max-w-lg text-sm leading-relaxed text-[#A8B7AD]">
                 No stranger UPI. If weather cancels the trip, you get a full
-                refund — automatically. That&apos;s the whole escrow story in
+                refund - automatically. That&apos;s the whole escrow story in
                 plain language.
               </p>
               <Link

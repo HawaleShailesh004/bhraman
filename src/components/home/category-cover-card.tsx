@@ -66,7 +66,7 @@ export function CategoryCoverCard({
           aria-hidden
         />
         <div className="absolute inset-x-0 bottom-0 p-5">
-          <h3 className="font-display text-2xl font-bold tracking-tight text-paper">
+          <h3 className="font-display text-2xl font-medium tracking-tight text-paper">
             {name}
           </h3>
           <p className="mt-1.5 text-sm text-white/80">{blurb}</p>

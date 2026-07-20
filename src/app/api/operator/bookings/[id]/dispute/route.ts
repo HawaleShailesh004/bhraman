@@ -1,19 +1,16 @@
 import { DisputeActor } from "@prisma/client";
-import {
-  assertOwnsBooking,
-  ForbiddenError,
-  getSessionOperator,
-} from "@/lib/auth";
+import { assertOwnsBooking } from "@/lib/auth";
+import { toApiErrorResponse } from "@/lib/api-errors";
+import { loadOperatorSession } from "@/app/api/operator/helpers";
 import { EscrowError, openEscrowDispute } from "@/lib/escrow";
 
 export async function POST(
   request: Request,
   { params }: { params: { id: string } },
 ) {
-  const session = await getSessionOperator();
-  if (!session) {
-    return Response.json({ error: "UNAUTHORIZED" }, { status: 401 });
-  }
+  const auth = await loadOperatorSession();
+  if ("response" in auth) return auth.response;
+  const { session } = auth;
 
   const body = (await request.json()) as { reason?: unknown };
   if (typeof body.reason !== "string") {
@@ -30,12 +27,11 @@ export async function POST(
       }),
     );
   } catch (error) {
-    if (error instanceof ForbiddenError) {
-      return Response.json({ error: "FORBIDDEN" }, { status: 403 });
-    }
+    const mapped = toApiErrorResponse(error);
+    if (mapped) return mapped;
     if (error instanceof EscrowError) {
       return Response.json({ error: error.code }, { status: 409 });
     }
-    throw error;
+    return Response.json({ error: "DISPUTE_FAILED" }, { status: 500 });
   }
 }

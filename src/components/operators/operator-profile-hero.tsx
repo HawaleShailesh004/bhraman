@@ -59,7 +59,7 @@ export function OperatorProfileHero({
             <div className="mb-2 flex flex-wrap items-center gap-2">
               <VerificationStatusPill status={verificationStatus} />
             </div>
-            <h1 className="break-words font-display text-[clamp(1.75rem,7vw,3.6rem)] font-black leading-tight text-paper">
+            <h1 className="break-words font-display text-[clamp(1.75rem,7vw,3.6rem)] font-medium leading-tight text-paper">
               {businessName}
             </h1>
             <p className="mt-2 flex items-center gap-1.5 text-sm text-white/80">

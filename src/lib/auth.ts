@@ -4,6 +4,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { UserRole } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { PRIMARY_OPERATOR_EMAIL } from "@/lib/operator-emails";
+import { withDb, rethrowAsUnavailable, rethrowAuthDbFailure } from "@/lib/db";
 
 export class ForbiddenError extends Error {
   constructor(message = "FORBIDDEN") {
@@ -36,28 +37,40 @@ import type {
 export type { AdminSession, TravelerSession, OperatorSession };
 
 async function getDemoTraveler(): Promise<TravelerSession | null> {
-  const user = await prisma.user.findUnique({
-    where: { email: DEFAULT_TRAVELER_EMAIL },
-  });
-  if (!user) return null;
-  return { userId: user.id, email: user.email, name: user.name };
+  try {
+    const user = await withDb(() =>
+      prisma.user.findUnique({
+        where: { email: DEFAULT_TRAVELER_EMAIL },
+      }),
+    );
+    if (!user) return null;
+    return { userId: user.id, email: user.email, name: user.name };
+  } catch (error) {
+    rethrowAuthDbFailure(error);
+  }
 }
 
 async function getDemoOperator(): Promise<OperatorSession | null> {
-  const email = process.env.OPERATOR_DEMO_EMAIL ?? DEFAULT_OPERATOR_EMAIL;
-  const user = await prisma.user.findUnique({
-    where: { email },
-    include: { operator: true },
-  });
-  if (!user?.operator) return null;
-  return {
-    userId: user.id,
-    operatorId: user.operator.id,
-    businessName: user.operator.businessName,
-    email: user.email,
-    logoUrl: user.operator.logoUrl,
-    verificationStatus: user.operator.verificationStatus,
-  };
+  try {
+    const email = process.env.OPERATOR_DEMO_EMAIL ?? DEFAULT_OPERATOR_EMAIL;
+    const user = await withDb(() =>
+      prisma.user.findUnique({
+        where: { email },
+        include: { operator: true },
+      }),
+    );
+    if (!user?.operator) return null;
+    return {
+      userId: user.id,
+      operatorId: user.operator.id,
+      businessName: user.operator.businessName,
+      email: user.email,
+      logoUrl: user.operator.logoUrl,
+      verificationStatus: user.operator.verificationStatus,
+    };
+  } catch (error) {
+    rethrowAuthDbFailure(error);
+  }
 }
 
 async function syncUserFromClerk() {
@@ -79,34 +92,40 @@ async function syncUserFromClerk() {
     email.split("@")[0] ||
     "Traveler";
 
-  const existingByClerk = await prisma.user.findUnique({
-    where: { clerkId: userId },
-    include: { operator: true },
-  });
-  if (existingByClerk) return existingByClerk;
+  try {
+    return await withDb(async () => {
+      const existingByClerk = await prisma.user.findUnique({
+        where: { clerkId: userId },
+        include: { operator: true },
+      });
+      if (existingByClerk) return existingByClerk;
 
-  const existingByEmail = await prisma.user.findUnique({
-    where: { email },
-    include: { operator: true },
-  });
+      const existingByEmail = await prisma.user.findUnique({
+        where: { email },
+        include: { operator: true },
+      });
 
-  if (existingByEmail) {
-    return prisma.user.update({
-      where: { id: existingByEmail.id },
-      data: { clerkId: userId, name: existingByEmail.name || name },
-      include: { operator: true },
+      if (existingByEmail) {
+        return prisma.user.update({
+          where: { id: existingByEmail.id },
+          data: { clerkId: userId, name: existingByEmail.name || name },
+          include: { operator: true },
+        });
+      }
+
+      return prisma.user.create({
+        data: {
+          clerkId: userId,
+          email,
+          name,
+          role: UserRole.TRAVELER,
+        },
+        include: { operator: true },
+      });
     });
+  } catch (error) {
+    rethrowAuthDbFailure(error);
   }
-
-  return prisma.user.create({
-    data: {
-      clerkId: userId,
-      email,
-      name,
-      role: UserRole.TRAVELER,
-    },
-    include: { operator: true },
-  });
 }
 
 export async function getSessionTraveler(): Promise<TravelerSession | null> {
@@ -174,36 +193,57 @@ export async function requireSessionAdmin() {
 }
 
 export async function assertOwnsListing(userId: string, listingId: string) {
-  const listing = await prisma.listing.findUnique({
-    where: { id: listingId },
-    select: { operator: { select: { userId: true } } },
-  });
+  try {
+    const listing = await withDb(() =>
+      prisma.listing.findUnique({
+        where: { id: listingId },
+        select: { operator: { select: { userId: true } } },
+      }),
+    );
 
-  if (!listing || listing.operator.userId !== userId) {
-    throw new ForbiddenError();
+    if (!listing || listing.operator.userId !== userId) {
+      throw new ForbiddenError();
+    }
+  } catch (error) {
+    if (error instanceof ForbiddenError) throw error;
+    rethrowAsUnavailable(error);
   }
 }
 
 export async function assertOwnsBooking(userId: string, bookingId: string) {
-  const booking = await prisma.booking.findUnique({
-    where: { id: bookingId },
-    select: {
-      listing: { select: { operator: { select: { userId: true } } } },
-    },
-  });
+  try {
+    const booking = await withDb(() =>
+      prisma.booking.findUnique({
+        where: { id: bookingId },
+        select: {
+          listing: { select: { operator: { select: { userId: true } } } },
+        },
+      }),
+    );
 
-  if (!booking || booking.listing.operator.userId !== userId) {
-    throw new ForbiddenError();
+    if (!booking || booking.listing.operator.userId !== userId) {
+      throw new ForbiddenError();
+    }
+  } catch (error) {
+    if (error instanceof ForbiddenError) throw error;
+    rethrowAsUnavailable(error);
   }
 }
 
 export async function assertOwnsBookingRef(userId: string, bookingRef: string) {
-  const booking = await prisma.booking.findUnique({
-    where: { bookingRef },
-    select: { userId: true },
-  });
+  try {
+    const booking = await withDb(() =>
+      prisma.booking.findUnique({
+        where: { bookingRef },
+        select: { userId: true },
+      }),
+    );
 
-  if (!booking || booking.userId !== userId) {
-    throw new ForbiddenError();
+    if (!booking || booking.userId !== userId) {
+      throw new ForbiddenError();
+    }
+  } catch (error) {
+    if (error instanceof ForbiddenError) throw error;
+    rethrowAsUnavailable(error);
   }
 }

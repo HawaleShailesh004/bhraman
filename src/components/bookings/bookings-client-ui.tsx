@@ -112,6 +112,11 @@ export function BookingsClientUi({ bookings }: { bookings: BookingSummary[] }) {
                 <div className="mb-2 flex items-start justify-between gap-3">
                   <h3 className="font-display text-base font-bold leading-snug">
                     {booking.listingTitleSnapshot}
+                    {booking.hasUnreadUpdates ? (
+                      <span className="ml-2 inline-flex rounded-full bg-amber px-2 py-0.5 text-[10px] font-bold text-amber-text">
+                        Updates
+                      </span>
+                    ) : null}
                   </h3>
                   <span
                     className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${TONES[booking.status] ?? TONES.PENDING}`}

@@ -2,12 +2,12 @@
 
 import type { ListingCardData } from "@/types/listing";
 import { ListingCardUi } from "@/components/discovery/listing-card-ui";
-import { CarouselNavButton } from "@/components/ui/carousel-nav-button";
+import { FloatingCarouselRail } from "@/components/ui/floating-carousel-rail";
 import { SectionHeader } from "@/components/ui/section-header";
+import { Reveal } from "@/components/motion/scroll-reveal";
 import { COPY } from "@/lib/marketing-copy";
 import { useHorizontalScroll } from "@/hooks/use-horizontal-scroll";
 
-/** Match discover grid card width (~3 cols in page-shell) + gap-5 */
 const CARD_WIDTH = 336;
 const CARD_GAP = 20;
 const CARD_STEP = CARD_WIDTH + CARD_GAP;
@@ -21,45 +21,33 @@ export function TrendingCarousel({ listings }: { listings: ListingCardData[] }) 
   if (!listings.length) return null;
 
   return (
-    <section className="section-y overflow-x-hidden bg-paper">
-      <div className="page-shell min-w-0">
+    <section className="section-y bg-paper">
+      <Reveal kind="up" className="page-shell min-w-0">
         <SectionHeader
           eyebrow={COPY.trending.eyebrow}
           title={COPY.trending.title}
           href="/discover"
           linkLabel="View all"
         />
+      </Reveal>
 
-        <div className="flex min-w-0 items-center gap-3">
-          <CarouselNavButton
-            side="left"
-            disabled={!canLeft}
-            onClick={() => scrollByDir(-1)}
-            className="hidden md:grid"
-          />
-
-          <div
-            ref={ref}
-            className="flex min-w-0 flex-1 snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2 pt-1 scrollbar-hide"
-          >
-            {listings.map((listing, i) => (
-              <div
-                key={listing.id}
-                className="w-[min(88vw,336px)] shrink-0 snap-start"
-              >
-                <ListingCardUi listing={listing} index={i} />
-              </div>
-            ))}
-          </div>
-
-          <CarouselNavButton
-            side="right"
-            disabled={!canRight}
-            onClick={() => scrollByDir(1)}
-            className="hidden md:grid"
-          />
-        </div>
-      </div>
+      <Reveal kind="up" delay={0.08}>
+        <FloatingCarouselRail
+          scrollRef={ref}
+          canLeft={canLeft}
+          canRight={canRight}
+          onScroll={scrollByDir}
+        >
+          {listings.map((listing, i) => (
+            <div
+              key={listing.id}
+              className="w-[min(88vw,336px)] shrink-0 snap-start"
+            >
+              <ListingCardUi listing={listing} index={i} />
+            </div>
+          ))}
+        </FloatingCarouselRail>
+      </Reveal>
     </section>
   );
 }
