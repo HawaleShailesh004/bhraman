@@ -153,10 +153,11 @@ export function AdventureMapCanvas({
       syncMarkers(map);
     });
     mapRef.current = map;
+    const markers = markersRef.current;
 
     return () => {
-      markersRef.current.forEach((marker) => marker.remove());
-      markersRef.current.clear();
+      markers.forEach((marker) => marker.remove());
+      markers.clear();
       map.remove();
       mapRef.current = null;
     };

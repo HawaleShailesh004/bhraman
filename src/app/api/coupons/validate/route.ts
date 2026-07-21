@@ -10,10 +10,12 @@ export async function POST(request: Request) {
     groupSize?: unknown;
   };
 
+  const { code, listingId, groupSize } = body;
+
   if (
-    typeof body.code !== "string" ||
-    typeof body.listingId !== "string" ||
-    typeof body.groupSize !== "number"
+    typeof code !== "string" ||
+    typeof listingId !== "string" ||
+    typeof groupSize !== "number"
   ) {
     return Response.json({ error: "Invalid payload." }, { status: 400 });
   }
@@ -21,7 +23,7 @@ export async function POST(request: Request) {
   try {
     const listing = await withDb(() =>
       prisma.listing.findUnique({
-        where: { id: body.listingId as string },
+        where: { id: listingId },
         select: { id: true, operatorId: true, basePrice: true },
       }),
     );
@@ -29,10 +31,10 @@ export async function POST(request: Request) {
       return Response.json({ error: "Listing not found." }, { status: 404 });
     }
 
-    const subtotalInr = listing.basePrice * body.groupSize;
+    const subtotalInr = listing.basePrice * groupSize;
     const result = await withDb(() =>
       validateCoupon({
-        code: body.code,
+        code,
         listingId: listing.id,
         operatorId: listing.operatorId,
         subtotalInr,

@@ -37,33 +37,42 @@ export async function POST(request: Request) {
     listingIds?: unknown;
   };
 
+  const {
+    code,
+    label,
+    discountType,
+    discountValue,
+    minBookingInr,
+    maxUses,
+    validUntil,
+    listingIds,
+  } = body;
+
   if (
-    typeof body.code !== "string" ||
-    typeof body.discountType !== "string" ||
+    typeof code !== "string" ||
+    typeof discountType !== "string" ||
     !Object.values(CouponDiscountType).includes(
-      body.discountType as CouponDiscountType,
+      discountType as CouponDiscountType,
     ) ||
-    typeof body.discountValue !== "number"
+    typeof discountValue !== "number"
   ) {
     return Response.json({ error: "Invalid coupon payload." }, { status: 400 });
   }
 
+  const parsedDiscountType = discountType as CouponDiscountType;
+
   try {
     const coupon = await withDb(() =>
       createOperatorCoupon(auth.session.operatorId, {
-        code: body.code,
-        label: typeof body.label === "string" ? body.label : null,
-        discountType: body.discountType as CouponDiscountType,
-        discountValue: body.discountValue,
-        minBookingInr:
-          typeof body.minBookingInr === "number" ? body.minBookingInr : 0,
-        maxUses: typeof body.maxUses === "number" ? body.maxUses : null,
-        validUntil:
-          typeof body.validUntil === "string"
-            ? new Date(body.validUntil)
-            : null,
-        listingIds: Array.isArray(body.listingIds)
-          ? body.listingIds.filter((id): id is string => typeof id === "string")
+        code,
+        label: typeof label === "string" ? label : null,
+        discountType: parsedDiscountType,
+        discountValue,
+        minBookingInr: typeof minBookingInr === "number" ? minBookingInr : 0,
+        maxUses: typeof maxUses === "number" ? maxUses : null,
+        validUntil: typeof validUntil === "string" ? new Date(validUntil) : null,
+        listingIds: Array.isArray(listingIds)
+          ? listingIds.filter((id): id is string => typeof id === "string")
           : [],
       }),
     );
@@ -87,14 +96,14 @@ export async function PATCH(request: Request) {
     active?: unknown;
   };
 
-  if (typeof body.id !== "string" || typeof body.active !== "boolean") {
+  const { id, active } = body;
+
+  if (typeof id !== "string" || typeof active !== "boolean") {
     return Response.json({ error: "Invalid payload." }, { status: 400 });
   }
 
   try {
-    await withDb(() =>
-      setCouponActive(auth.session.operatorId, body.id as string, body.active),
-    );
+    await withDb(() => setCouponActive(auth.session.operatorId, id, active));
     return Response.json({ ok: true });
   } catch (error) {
     return toApiErrorResponseOrInternal(error);
