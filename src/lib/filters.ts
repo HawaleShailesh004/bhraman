@@ -23,6 +23,7 @@ export function parseListingFilters(
     categories: category ? [category] : undefined,
     difficulty: difficulty ? [difficulty] : undefined,
     city: getParam(searchParams, "city")?.replace(/\s+region$/i, ""),
+    q: getParam(searchParams, "q")?.trim() || undefined,
     minPrice: minPrice ? Number(minPrice) : undefined,
     maxPrice: maxPrice ? Number(maxPrice) : undefined,
     date: getParam(searchParams, "date"),

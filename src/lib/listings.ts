@@ -16,6 +16,10 @@ import type {
   OperatorDirectoryCardData,
   PublicOperatorProfileData,
 } from "@/types/listing";
+import {
+  buildPlaceWhere,
+  listingMatchesPlannerLocation,
+} from "@/lib/planner-location";
 
 const cardSelect = {
   id: true,
@@ -30,7 +34,7 @@ const cardSelect = {
   heroImageUrl: true,
   galleryUrls: true,
   category: { select: { slug: true, name: true, icon: true } },
-  place: { select: { name: true, city: true, district: true } },
+  place: { select: { slug: true, name: true, city: true, district: true } },
   operator: {
     select: {
       slug: true,
@@ -46,6 +50,8 @@ const cardSelect = {
       ratingCount: true,
       completedTrips: true,
       avgResponseMins: true,
+      experienceScore: true,
+      safetyScore: true,
     },
   },
 } satisfies Prisma.ListingSelect;
@@ -73,7 +79,7 @@ function buildWhere(filters: ListingFilters): Prisma.ListingWhereInput {
       durationHours: { lte: filters.maxDurationHours },
     }),
     ...(filters.city && {
-      place: { city: { contains: filters.city, mode: "insensitive" as const } },
+      place: buildPlaceWhere(filters.city),
     }),
     ...(date && {
       slots: {
@@ -107,6 +113,8 @@ function mapCard(
       ratingCount: operator.ratingCount,
       completedTrips: operator.completedTrips,
       avgResponseMins: operator.avgResponseMins,
+      experienceScore: operator.experienceScore,
+      safetyScore: operator.safetyScore,
     },
     ratingAvg: operator.ratingAvg,
     ratingCount: operator.ratingCount,
@@ -164,6 +172,24 @@ export async function getListingCards(filters: ListingFilters = {}) {
       pageSize,
     };
   }, () => getCatalogListings(filters));
+}
+
+/** All published listings for Discover client-side search/filter. */
+export async function getAllDiscoverListings(): Promise<ListingCardData[]> {
+  return withCatalogFallback(async () => {
+    if (!(await dbHasPublishedListings())) {
+      return getCatalogAllListings();
+    }
+
+    const listings = await prisma.listing.findMany({
+      where: { status: "PUBLISHED" },
+      select: cardSelect,
+      orderBy: { operator: { ratingAvg: "desc" } },
+      take: 200,
+    });
+
+    return listings.map(mapCard);
+  }, () => getCatalogAllListings());
 }
 
 export async function getListingDetail(slug: string): Promise<ListingDetailData | null> {
@@ -237,6 +263,8 @@ export async function getListingDetail(slug: string): Promise<ListingDetailData 
       ratingCount: listing.operator.ratingCount,
       completedTrips: listing.operator.completedTrips,
       avgResponseMins: listing.operator.avgResponseMins,
+      experienceScore: listing.operator.experienceScore,
+      safetyScore: listing.operator.safetyScore,
     },
     ratingAvg: listing.operator.ratingAvg,
     ratingCount: listing.operator.ratingCount,
@@ -464,76 +492,87 @@ export async function getCategories() {
   }, () => getCatalogCategories());
 }
 
-export async function searchPlannerListings(filters: ListingFilters) {
-  return withCatalogFallback(async () => {
-    if (!(await dbHasPublishedListings())) {
-      return getCatalogAllListings()
-      .filter((listing) => {
-        if (filters.categories?.length && !filters.categories.includes(listing.category.slug)) {
-          return false;
-        }
-        if (filters.difficulty?.length && !filters.difficulty.includes(listing.difficulty)) {
-          return false;
-        }
-        if (
-          filters.maxPrice !== undefined &&
-          listing.basePrice > filters.maxPrice
-        ) {
-          return false;
-        }
-        if (
-          filters.maxDurationHours !== undefined &&
-          listing.durationHours > filters.maxDurationHours
-        ) {
-          return false;
-        }
-        if (filters.city) {
-          const haystack =
-            `${listing.place.city} ${listing.place.district} ${listing.place.name}`.toLowerCase();
-          if (!haystack.includes(filters.city.toLowerCase())) return false;
-        }
-        return true;
-      })
-      .sort((a, b) => b.ratingAvg - a.ratingAvg)
-      .slice(0, 6);
+type PlannerSearchOptions = {
+  preferFemaleGuides?: boolean;
+};
+
+function filterPlannerListing(
+  listing: ListingCardData,
+  filters: ListingFilters,
+) {
+  if (filters.categories?.length && !filters.categories.includes(listing.category.slug)) {
+    return false;
+  }
+  if (filters.difficulty?.length && !filters.difficulty.includes(listing.difficulty)) {
+    return false;
+  }
+  if (filters.maxPrice !== undefined && listing.basePrice > filters.maxPrice) {
+    return false;
+  }
+  if (
+    filters.maxDurationHours !== undefined &&
+    listing.durationHours > filters.maxDurationHours
+  ) {
+    return false;
+  }
+  if (filters.city && !listingMatchesPlannerLocation(listing, filters.city)) {
+    return false;
+  }
+  return true;
+}
+
+function rankPlannerListings(
+  listings: ListingCardData[],
+  options?: PlannerSearchOptions,
+) {
+  return [...listings].sort((a, b) => {
+    if (options?.preferFemaleGuides) {
+      const aFemale = a.operator.femaleGuideCount > 0 ? 1 : 0;
+      const bFemale = b.operator.femaleGuideCount > 0 ? 1 : 0;
+      if (bFemale !== aFemale) return bFemale - aFemale;
     }
+    return b.ratingAvg - a.ratingAvg;
+  });
+}
 
-    const rows = await prisma.listing.findMany({
-      where: buildWhere(filters),
-      select: cardSelect,
-      orderBy: { operator: { ratingAvg: "desc" } },
-      take: 6,
-    });
+export async function searchPlannerListings(
+  filters: ListingFilters,
+  options?: PlannerSearchOptions,
+) {
+  async function queryRows(activeFilters: ListingFilters) {
+    return withCatalogFallback(async () => {
+      if (!(await dbHasPublishedListings())) {
+        return getCatalogAllListings().filter((listing) =>
+          filterPlannerListing(listing, activeFilters),
+        );
+      }
 
-    return rows.map(mapCard);
-  }, () =>
-    getCatalogAllListings()
-      .filter((listing) => {
-        if (filters.categories?.length && !filters.categories.includes(listing.category.slug)) {
-          return false;
-        }
-        if (filters.difficulty?.length && !filters.difficulty.includes(listing.difficulty)) {
-          return false;
-        }
-        if (filters.maxPrice !== undefined && listing.basePrice > filters.maxPrice) {
-          return false;
-        }
-        if (
-          filters.maxDurationHours !== undefined &&
-          listing.durationHours > filters.maxDurationHours
-        ) {
-          return false;
-        }
-        if (filters.city) {
-          const haystack =
-            `${listing.place.city} ${listing.place.district} ${listing.place.name}`.toLowerCase();
-          if (!haystack.includes(filters.city.toLowerCase())) return false;
-        }
-        return true;
-      })
-      .sort((a, b) => b.ratingAvg - a.ratingAvg)
-      .slice(0, 6)
-  );
+      const rows = await prisma.listing.findMany({
+        where: buildWhere(activeFilters),
+        select: cardSelect,
+        orderBy: { operator: { ratingAvg: "desc" } },
+        take: 12,
+      });
+
+      return rows.map(mapCard);
+    }, () =>
+      getCatalogAllListings().filter((listing) =>
+        filterPlannerListing(listing, activeFilters),
+      ),
+    );
+  }
+
+  let rows = await queryRows(filters);
+  if (rows.length === 0 && filters.date) {
+    const { date: _date, ...withoutDate } = filters;
+    rows = await queryRows(withoutDate);
+  }
+  if (rows.length === 0 && filters.categories?.length) {
+    const { categories: _categories, ...withoutCategories } = filters;
+    rows = await queryRows(withoutCategories);
+  }
+
+  return rankPlannerListings(rows, options).slice(0, 6);
 }
 
 function pinsFromListings(

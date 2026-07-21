@@ -87,21 +87,58 @@ const CATEGORIES = [
 
 const DEFAULT_POLICY = {
   weatherRefundPct: 100,
-  cutoffHours: 48,
+  cutoffHours: 24,
   beforeCutoffPct: 100,
   afterCutoffPct: 50,
   noShowPct: 0,
 };
 
-function generateSlots(durationHours: number, capacity: number) {
+const OPERATOR_SCORES: Record<string, { experience: number; safety: number }> = {
+  "Western Ghats Outdoors": { experience: 92, safety: 88 },
+  "Konkan Wave Adventures": { experience: 89, safety: 91 },
+  "Maval Adventure Co.": { experience: 85, safety: 86 },
+  "Sahyadri Trails": { experience: 88, safety: 84 },
+  "Deccan Ascents": { experience: 82, safety: 83 },
+  "Tamhini Trekkers": { experience: 86, safety: 85 },
+};
+
+function seedGenderMix(
+  capacity: number,
+  slotIndex: number,
+  categorySlug: string,
+) {
+  if (slotIndex % 3 !== 0) {
+    return { bookedSeats: 0, maleCount: 0, femaleCount: 0, otherCount: 0 };
+  }
+  const booked = Math.max(
+    4,
+    Math.min(capacity, 4 + (slotIndex % 5) + Math.floor(capacity / 4)),
+  );
+  const womenRatio =
+    categorySlug === "rafting" || categorySlug === "kayaking" ? 0.48 : 0.38;
+  const femaleCount = Math.max(1, Math.round(booked * womenRatio));
+  const maleCount = Math.max(0, booked - femaleCount - (slotIndex % 2));
+  const otherCount = Math.max(0, booked - femaleCount - maleCount);
+  return { bookedSeats: booked, maleCount, femaleCount, otherCount };
+}
+
+function generateSlots(
+  durationHours: number,
+  capacity: number,
+  categorySlug: string,
+) {
   const slots: {
     startTime: Date;
     endTime: Date;
     capacity: number;
     bookedSeats: number;
+    maleCount: number;
+    femaleCount: number;
+    otherCount: number;
     status: SlotStatus;
   }[] = [];
   const now = new Date();
+  let slotIndex = 0;
   for (let i = 1; i <= 70; i++) {
     const d = new Date(now);
     d.setDate(now.getDate() + i);
@@ -110,12 +147,19 @@ function generateSlots(durationHours: number, capacity: number) {
       const start = new Date(d);
       start.setHours(6, 0, 0, 0);
       const end = new Date(start.getTime() + durationHours * 3.6e6);
+      const mix = seedGenderMix(capacity, slotIndex, categorySlug);
+      slotIndex += 1;
       slots.push({
         startTime: start,
         endTime: end,
         capacity,
-        bookedSeats: 0,
-        status: SlotStatus.OPEN,
+        ...mix,
+        status:
+          mix.bookedSeats >= capacity
+            ? SlotStatus.FULL
+            : mix.bookedSeats / capacity >= 0.7
+              ? SlotStatus.FILLING_FAST
+              : SlotStatus.OPEN,
       });
     }
   }
@@ -159,6 +203,10 @@ async function main() {
       : await prisma.user.create({
           data: { email, name: op.businessName, role: UserRole.OPERATOR },
         });
+    const scores = OPERATOR_SCORES[op.businessName] ?? {
+      experience: 80,
+      safety: 80,
+    };
     const operator = await prisma.operator.upsert({
       where: { userId: user.id },
       update: {
@@ -169,6 +217,12 @@ async function main() {
         yearsOperating: Math.max(0, new Date().getFullYear() - op.yearStarted),
         verificationStatus: "VERIFIED",
         verifiedAt: new Date(),
+        experienceScore: scores.experience,
+        safetyScore: scores.safety,
+        insuranceStatus: true,
+        insuranceProvider: "ICICI Lombard Adventure Cover",
+        femaleGuideCount: op.businessName.includes("Konkan") ? 3 : 2,
+        totalGuideCount: 6,
       },
       create: {
         userId: user.id,
@@ -183,6 +237,12 @@ async function main() {
         avgResponseMins: Math.floor(Math.random() * 30) + 8,
         ratingAvg: +(4.5 + Math.random() * 0.4).toFixed(1),
         ratingCount: Math.floor(Math.random() * 400) + 80,
+        experienceScore: scores.experience,
+        safetyScore: scores.safety,
+        insuranceStatus: true,
+        insuranceProvider: "ICICI Lombard Adventure Cover",
+        femaleGuideCount: op.businessName.includes("Konkan") ? 3 : 2,
+        totalGuideCount: 6,
       },
     });
     operatorByName[op.businessName] = operator.id;
@@ -263,7 +323,9 @@ async function main() {
               description: s.description ?? null,
             })),
           },
-          slots: { create: generateSlots(l.durationHours, l.maxGroupSize) },
+          slots: {
+            create: generateSlots(l.durationHours, l.maxGroupSize, l.categorySlug),
+          },
         },
       });
       console.log(`  ✓ ${listing.title}`);
@@ -326,6 +388,28 @@ async function main() {
     listings: await prisma.listing.count(),
     slots: await prisma.availabilitySlot.count(),
   };
+
+  console.log("→ demo coupons");
+  const konkan = await prisma.operator.findFirst({
+    where: { slug: "konkan-wave-adventures" },
+  });
+  if (konkan) {
+    await prisma.couponCode.upsert({
+      where: {
+        operatorId_code: { operatorId: konkan.id, code: "KOLAD10" },
+      },
+      update: { active: true },
+      create: {
+        operatorId: konkan.id,
+        code: "KOLAD10",
+        label: "Instagram promo",
+        discountType: "PERCENT",
+        discountValue: 10,
+        maxUses: 500,
+      },
+    });
+  }
+
   console.log("✅ Seed complete:", counts);
 }
 

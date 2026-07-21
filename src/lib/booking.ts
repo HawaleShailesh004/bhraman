@@ -14,6 +14,10 @@ import { fetchCapturedPaymentForOrder } from "@/lib/razorpay";
 import { prisma } from "@/lib/prisma";
 import { computeRefund, type CancellationPolicy } from "@/lib/refunds";
 import { recomputeSlotComposition } from "@/lib/batches";
+import {
+  incrementCouponUsage,
+  validateCoupon,
+} from "@/lib/coupons";
 
 export class BookingError extends Error {
   constructor(public code: "SLOT_UNAVAILABLE" | "INVALID_GROUP_SIZE" | "BOOKING_NOT_FOUND") {
@@ -32,6 +36,7 @@ export type CreateBookingInput = {
   emergencyContactName?: string | null;
   emergencyContactPhone?: string | null;
   medicalNotes?: string | null;
+  couponCode?: string | null;
   participants?: {
     name: string;
     gender?: Gender | null;
@@ -163,6 +168,25 @@ export async function createBooking(input: CreateBookingInput) {
     }
 
     const pricePerHead = slot.priceOverride ?? slot.listing.basePrice;
+    const subtotalInr = pricePerHead * input.groupSize;
+
+    let discountInr = 0;
+    let couponCodeId: string | null = null;
+    if (input.couponCode?.trim()) {
+      const couponResult = await validateCoupon({
+        code: input.couponCode,
+        listingId: input.listingId,
+        operatorId: slotRecord.listing.operatorId,
+        subtotalInr,
+      });
+      if (!couponResult.ok) {
+        throw new Error(couponResult.message);
+      }
+      discountInr = couponResult.discountInr;
+      couponCodeId = couponResult.couponId;
+    }
+
+    const totalAmount = Math.max(0, subtotalInr - discountInr);
     const priorCompletedBooking = await tx.booking.findFirst({
       where: {
         userId: input.userId,
@@ -201,7 +225,9 @@ export async function createBooking(input: CreateBookingInput) {
         slotId: input.slotId,
         groupSize: input.groupSize,
         pricePerHead,
-        totalAmount: pricePerHead * input.groupSize,
+        totalAmount,
+        couponCodeId,
+        discountInr,
         listingTitleSnapshot: slot.listing.title,
         startTimeSnapshot: slot.startTime,
         customerEmail: input.customerEmail ?? null,
@@ -222,6 +248,10 @@ export async function createBooking(input: CreateBookingInput) {
         },
       },
     });
+
+    if (couponCodeId) {
+      await incrementCouponUsage(tx, couponCodeId);
+    }
 
     await recomputeSlotComposition(slot.id, tx);
 

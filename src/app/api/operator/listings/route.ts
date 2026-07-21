@@ -7,7 +7,7 @@ import { slugify } from "@/lib/slugify";
 
 const DEFAULT_POLICY = {
   weatherRefundPct: 100,
-  cutoffHours: 48,
+  cutoffHours: 24,
   beforeCutoffPct: 100,
   afterCutoffPct: 50,
   noShowPct: 0,

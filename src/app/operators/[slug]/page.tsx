@@ -147,11 +147,9 @@ export default async function OperatorProfilePage({
           {operator.listings.length > 0 ? (
             <div className="mt-5 grid gap-4 sm:mt-7 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
               {operator.listings.map((listing, index) => (
-                <ListingCardUi
-                  key={listing.id}
-                  listing={listing}
-                  index={index}
-                />
+                <div key={listing.id} className="h-full">
+                  <ListingCardUi listing={listing} index={index} />
+                </div>
               ))}
             </div>
           ) : (

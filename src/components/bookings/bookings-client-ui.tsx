@@ -65,7 +65,7 @@ export function BookingsClientUi({ bookings }: { bookings: BookingSummary[] }) {
         </p>
       </div>
 
-      <div className="mb-8 flex gap-2">
+      <div className="mb-8 flex flex-wrap items-center gap-2">
         {TABS.map((t) => (
           <button
             key={t}
@@ -80,6 +80,12 @@ export function BookingsClientUi({ bookings }: { bookings: BookingSummary[] }) {
             {t}
           </button>
         ))}
+        <Link
+          href="/bookings/updates"
+          className="rounded-full border border-line bg-white px-3.5 py-1.5 text-xs font-medium hover:border-mist"
+        >
+          Updates
+        </Link>
       </div>
 
       {rows.length === 0 ? (

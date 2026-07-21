@@ -11,22 +11,33 @@ import {
   FilterSortBar,
   SearchBarUi,
 } from "@/components/discovery/search-filters-ui";
+import {
+  ComparePlacesStrip,
+  type ComparePlaceRow,
+} from "@/components/compare/compare-places-strip";
 import { Button } from "@/components/ui/primitives";
 import {
   PaginationControls,
   useClientPagination,
 } from "@/components/ui/pagination";
+import { matchesListingCity, matchesListingQuery } from "@/lib/listing-search";
 
 type SortOption = "recommended" | "price-low" | "price-high";
 
 export function DiscoverClient({
   listings,
   categories,
+  comparePlaces,
   initialCategory = "all",
+  initialQuery = "",
+  initialCity = "",
 }: {
   listings: ListingCardData[];
   categories: { slug: string; name: string; icon: string | null }[];
+  comparePlaces: ComparePlaceRow[];
   initialCategory?: string;
+  initialQuery?: string;
+  initialCity?: string;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,9 +46,28 @@ export function DiscoverClient({
     (searchParams.get("sort") as SortOption) || "recommended",
   );
 
+  const query = searchParams.get("q") ?? initialQuery;
+  const cityFilter = searchParams.get("city") ?? initialCity;
+
+  const comparePlaceSlugs = useMemo(
+    () => new Set(comparePlaces.map((p) => p.placeSlug)),
+    [comparePlaces],
+  );
+
+  const operatorCountByPlace = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const place of comparePlaces) {
+      map.set(place.placeSlug, place.operatorCount);
+    }
+    return map;
+  }, [comparePlaces]);
+
   const results = useMemo(() => {
     let r = listings.filter(
       (l) => category === "all" || l.category.slug === category,
+    );
+    r = r.filter(
+      (l) => matchesListingQuery(l, query) && matchesListingCity(l, cityFilter),
     );
     if (sort === "price-low")
       r = [...r].sort((a, b) => a.basePrice - b.basePrice);
@@ -46,9 +76,13 @@ export function DiscoverClient({
     if (sort === "recommended")
       r = [...r].sort((a, b) => b.ratingAvg - a.ratingAvg);
     return r;
-  }, [listings, category, sort]);
+  }, [listings, category, sort, query, cityFilter]);
 
-  const pagination = useClientPagination(results, 10, `${category}-${sort}`);
+  const pagination = useClientPagination(
+    results,
+    10,
+    `${category}-${sort}-${query}-${cityFilter}`,
+  );
 
   function onCategoryChange(slug: string) {
     setCategory(slug);
@@ -73,6 +107,9 @@ export function DiscoverClient({
       <div className="mb-8">
         <SearchBarUi />
       </div>
+
+      <ComparePlacesStrip places={comparePlaces} />
+
       <div className="mb-8">
         <FilterChips
           categories={categories}
@@ -91,7 +128,9 @@ export function DiscoverClient({
             No adventures match yet
           </h3>
           <p className="mb-6 text-sm leading-relaxed text-mist">
-            Try a different category - or let the AI planner suggest something.
+            {query
+              ? `Nothing matched "${query}". Try Kolad, Kalsubai, or rafting.`
+              : "Try a different category - or let the AI planner suggest something."}
           </p>
           <Button href="/plan">Plan with AI</Button>
         </div>
@@ -102,18 +141,31 @@ export function DiscoverClient({
             className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5"
           >
             <AnimatePresence mode="popLayout">
-              {pagination.pageItems.map((l, i) => (
-                <motion.div
-                  key={l.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ListingCardUi listing={l} index={i} />
-                </motion.div>
-              ))}
+              {pagination.pageItems.map((l, i) => {
+                const placeSlug = l.place.slug;
+                const operatorCount =
+                  placeSlug && comparePlaceSlugs.has(placeSlug)
+                    ? operatorCountByPlace.get(placeSlug)
+                    : undefined;
+                return (
+                  <motion.div
+                    key={l.id}
+                    layout
+                    className="h-full"
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ListingCardUi
+                      listing={l}
+                      index={i}
+                      compareOperatorCount={operatorCount}
+                      comparePlaceSlug={placeSlug}
+                    />
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           </motion.div>
           <PaginationControls

@@ -24,6 +24,7 @@ export type SortOption = "recommended" | "price-low" | "price-high";
 export function SearchBarUi() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get("q") ?? "");
   const [city, setCity] = useState(searchParams.get("city") ?? "All Maharashtra");
   const [groupSize, setGroupSize] = useState(searchParams.get("group") ?? "2 people");
   const [date, setDate] = useState(searchParams.get("date") ?? "");
@@ -31,6 +32,9 @@ export function SearchBarUi() {
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const params = new URLSearchParams(searchParams.toString());
+    const trimmed = query.trim();
+    if (trimmed) params.set("q", trimmed);
+    else params.delete("q");
     if (city && city !== "All Maharashtra") params.set("city", city);
     else params.delete("city");
     params.set("group", groupSize);
@@ -41,10 +45,20 @@ export function SearchBarUi() {
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="flex flex-col items-stretch rounded-[20px] border border-line/80 bg-white p-1.5 shadow-[var(--shadow-sm)] sm:flex-row"
-    >
+    <form onSubmit={onSubmit} className="space-y-3">
+      <div className="flex items-center gap-2 rounded-[20px] border border-line/80 bg-white px-4 py-3 shadow-[var(--shadow-sm)]">
+        <Search size={18} className="shrink-0 text-mist" strokeWidth={2.2} />
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search treks, rafting, Kolad, operator names…"
+          className="w-full border-none bg-transparent text-sm font-medium text-ink outline-none placeholder:font-normal placeholder:text-mist"
+          aria-label="Search adventures"
+        />
+      </div>
+
+      <div className="flex flex-col items-stretch rounded-[20px] border border-line/80 bg-white p-1.5 shadow-[var(--shadow-sm)] sm:flex-row">
       <div className="flex-1 px-4 py-2.5 sm:border-r sm:border-line/80">
         <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-mist">
           Where
@@ -100,6 +114,7 @@ export function SearchBarUi() {
       >
         <Search size={18} className="text-[#3A2406]" strokeWidth={2.4} />
       </button>
+      </div>
     </form>
   );
 }

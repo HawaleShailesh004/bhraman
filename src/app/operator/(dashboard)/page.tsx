@@ -1,4 +1,3 @@
-import { CreateListingForm } from "@/components/operator/CreateListingForm";
 import {
   OperatorBookingsTableUi,
   OperatorListingManagerUi,
@@ -10,11 +9,9 @@ import {
   OperatorPageHeader,
 } from "@/components/operator/operator-shell";
 import {
-  getOperatorCategories,
   getOperatorDashboard,
   getOperatorListings,
   getOperatorPayouts,
-  getOperatorPlaces,
 } from "@/lib/operator";
 import { getSessionOperator } from "@/lib/auth";
 
@@ -24,12 +21,10 @@ export default async function OperatorOverviewPage() {
   const session = await getSessionOperator();
   if (!session) return null;
 
-  const [dashboard, listings, payouts, places, categories] = await Promise.all([
+  const [dashboard, listings, payouts] = await Promise.all([
     getOperatorDashboard(session.operatorId),
     getOperatorListings(session.operatorId),
     getOperatorPayouts(session.operatorId),
-    getOperatorPlaces(),
-    getOperatorCategories(),
   ]);
 
   const primaryPayout = payouts[0];
@@ -64,11 +59,6 @@ export default async function OperatorOverviewPage() {
         <h3 className="mb-3 font-display text-base">Your listings</h3>
         <OperatorListingManagerUi listings={listings.slice(0, 4)} />
       </div>
-
-      <section className="mt-8">
-        <h2 className="mb-4 font-display text-xl">Quick create listing</h2>
-        <CreateListingForm places={places} categories={categories} />
-      </section>
     </>
   );
 }

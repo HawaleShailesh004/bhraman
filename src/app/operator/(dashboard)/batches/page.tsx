@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { formatGenderMixCounts } from "@/lib/gender-mix";
 import { OperatorPageHeader } from "@/components/operator/operator-shell";
 import { getSessionOperator } from "@/lib/auth";
 import { getOperatorBatches } from "@/lib/batches";
@@ -71,7 +72,12 @@ export default async function OperatorBatchesPage() {
                     {b.bookedSeats}/{b.capacity}
                   </td>
                   <td className="px-4 py-3 text-xs text-mist">
-                    {b.femaleCount}F · {b.maleCount}M · {b.otherCount}O
+                    {formatGenderMixCounts({
+                      female: b.femaleCount,
+                      male: b.maleCount,
+                      other: b.otherCount,
+                      booked: b.bookedSeats,
+                    })}
                   </td>
                   <td className="px-4 py-3">
                     <span className="rounded-full bg-paper-2 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide">

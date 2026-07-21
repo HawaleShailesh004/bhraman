@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   UsersRound,
   Bus,
+  Ticket,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { OperatorAvatar } from "@/components/ui/operator-avatar";
@@ -22,6 +23,7 @@ const NAV = [
   { icon: CalendarDays, label: "Bookings", href: "/operator/bookings" },
   { icon: Bus, label: "Batches", href: "/operator/batches" },
   { icon: Mountain, label: "My listings", href: "/operator/listings" },
+  { icon: Ticket, label: "Coupons", href: "/operator/coupons" },
   { icon: CalendarClock, label: "Availability", href: "/operator/availability" },
   { icon: UsersRound, label: "Customers", href: "/operator/customers" },
   { icon: UsersRound, label: "Team & fleet", href: "/operator/team" },

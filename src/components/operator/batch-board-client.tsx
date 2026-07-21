@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { SlotStatus, TripUpdateType } from "@prisma/client";
+import { formatGenderMixCounts } from "@/lib/gender-mix";
 import type {
   OperatorBatchDetail,
   OperatorGuideRow,
@@ -15,6 +16,7 @@ const STATUSES: SlotStatus[] = [
   "FILLING_FAST",
   "CONFIRMED",
   "FULL",
+  "LIVE",
   "CANCELLED",
   "COMPLETED",
 ];
@@ -141,6 +143,64 @@ export function BatchBoardClient({
     }
   }
 
+  async function togglePin(updateId: string, pinned: boolean) {
+    setBusy(true);
+    try {
+      await fetch(`/api/operator/slots/${batch.id}/updates`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ updateId, pinned: !pinned }),
+      });
+      await refresh();
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function setLiveStatus(next: SlotStatus) {
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/operator/slots/${batch.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: next }),
+      });
+      if (!res.ok) throw new Error("Could not update batch status");
+      setStatus(next);
+      await refresh();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Status update failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function toggleCheckIn(
+    bookingId: string,
+    participantId: string,
+    checkedIn: boolean,
+  ) {
+    setBusy(true);
+    try {
+      await fetch(`/api/operator/bookings/${bookingId}/participants`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          participants: [
+            {
+              id: participantId,
+              checkInAt: checkedIn ? null : new Date().toISOString(),
+            },
+          ],
+        }),
+      });
+      await refresh();
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function runImport(commit: boolean) {
     setBusy(true);
     setError(null);
@@ -178,10 +238,38 @@ export function BatchBoardClient({
         <Stat label="Booked" value={`${batch.bookedSeats}/${batch.capacity}`} />
         <Stat
           label="Mix"
-          value={`${batch.femaleCount}F · ${batch.maleCount}M · ${batch.otherCount}O`}
+          value={formatGenderMixCounts({
+            female: batch.femaleCount,
+            male: batch.maleCount,
+            other: batch.otherCount,
+            booked: batch.bookedSeats,
+          })}
         />
         <Stat label="Status" value={batch.status.replaceAll("_", " ")} />
         <Stat label="Bookings" value={String(batch.bookings.length)} />
+      </section>
+
+      <section className="flex flex-wrap gap-2">
+        {batch.status !== "LIVE" && batch.status !== "COMPLETED" ? (
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => void setLiveStatus("LIVE")}
+            className="rounded-full bg-forest px-4 py-2 text-sm font-bold text-paper"
+          >
+            Start trip (LIVE)
+          </button>
+        ) : null}
+        {batch.status === "LIVE" ? (
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => void setLiveStatus("COMPLETED")}
+            className="rounded-full bg-ink px-4 py-2 text-sm font-bold text-paper"
+          >
+            End trip
+          </button>
+        ) : null}
       </section>
 
       <section className="rounded-[16px] border border-line bg-white p-5">
@@ -333,17 +421,30 @@ export function BatchBoardClient({
                   </span>
                 </div>
                 {b.participants.length > 0 ? (
-                  <ul className="mt-2 flex flex-wrap gap-2">
+                  <ul className="mt-2 space-y-2">
                     {b.participants.map((p) => (
                       <li
                         key={p.id}
-                        className="rounded-full bg-paper-2 px-2.5 py-1 text-xs text-ink"
+                        className="flex flex-wrap items-center justify-between gap-2 rounded-[10px] bg-paper-2 px-2.5 py-1.5 text-xs text-ink"
                       >
-                        {p.name}
-                        {p.gender ? ` · ${p.gender.charAt(0)}` : ""}
-                        {p.ageBand
-                          ? ` · ${p.ageBand.replace("AGE_", "").replaceAll("_", "-")}`
-                          : ""}
+                        <span>
+                          {p.name}
+                          {p.gender ? ` · ${p.gender.charAt(0)}` : ""}
+                          {p.ageBand
+                            ? ` · ${p.ageBand.replace("AGE_", "").replaceAll("_", "-")}`
+                            : ""}
+                          {p.checkInAt ? " · checked in" : ""}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() =>
+                            void toggleCheckIn(b.id, p.id, Boolean(p.checkInAt))
+                          }
+                          className="font-bold text-forest hover:underline"
+                        >
+                          {p.checkInAt ? "Undo check-in" : "Check in"}
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -481,13 +582,22 @@ export function BatchBoardClient({
                     {new Date(u.createdAt).toLocaleString("en-IN")}
                   </p>
                 </div>
-                <button
-                  type="button"
-                  className="text-xs font-bold text-clay"
-                  onClick={() => deleteUpdate(u.id)}
-                >
-                  Delete
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    className="text-xs font-bold text-forest"
+                    onClick={() => void togglePin(u.id, u.pinned)}
+                  >
+                    {u.pinned ? "Unpin" : "Pin"}
+                  </button>
+                  <button
+                    type="button"
+                    className="text-xs font-bold text-clay"
+                    onClick={() => deleteUpdate(u.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </li>
           ))}

@@ -4,6 +4,7 @@ export type ListingFilters = {
   categories?: string[];
   difficulty?: Difficulty[];
   city?: string;
+  q?: string;
   minPrice?: number;
   maxPrice?: number;
   date?: string;
@@ -33,6 +34,7 @@ export type ListingCardData = {
     name: string;
     city: string;
     district: string;
+    slug?: string;
   };
   operator: {
     slug: string;
@@ -49,6 +51,8 @@ export type ListingCardData = {
     ratingCount: number;
     completedTrips: number;
     avgResponseMins: number;
+    experienceScore: number;
+    safetyScore: number;
   };
   ratingAvg: number;
   ratingCount: number;

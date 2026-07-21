@@ -15,14 +15,14 @@ const VIBES = [
     label: "First-timer, take it easy",
     line: "First trek, scared of heights - scenic and safe it is.",
     img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/AndharBan_valley.jpg/1280px-AndharBan_valley.jpg",
-    href: "/plan?q=first%20trek%20easy%20this%20weekend",
+    href: "/plan?q=first%20trek%20easy%20scared%20of%20heights",
   },
   {
     id: "hard",
     label: "Adrenaline, push me",
     line: "Something hard. A summit that earns the view.",
     img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Kalsubai_summit.jpg/1280px-Kalsubai_summit.jpg",
-    href: "/plan?q=challenging%20sahyadri%20trek",
+    href: "/plan?q=challenging%20trek%20under%203000",
   },
   {
     id: "girls",
@@ -36,7 +36,7 @@ const VIBES = [
     label: "Chill by the lake",
     line: "Camp by the water, bonfire, zero rush.",
     img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Bhandardara_Lake.jpg/1280px-Bhandardara_Lake.jpg",
-    href: "/plan?q=lake%20camping%20chill%20weekend",
+    href: "/plan?q=lake%20camping%20near%20pune",
   },
 ] as const;
 

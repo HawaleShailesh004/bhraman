@@ -22,10 +22,10 @@ import { PlannerThinking } from "@/components/planner/planner-thinking";
 type Phase = "idle" | "thinking" | "reasoning" | "results";
 
 const SUGGESTIONS = [
-  "Pune, intermediate, free Saturday, ₹4000, want a waterfall",
-  "Easy weekend camping near Lonavala for a group of 6",
-  "Adrenaline rush - something extreme under ₹3000",
   "First-time trek, scared of heights, scenic and safe",
+  "Lake camping near Pune for a chill weekend",
+  "Adrenaline rush - something extreme under ₹3000",
+  "Challenging Sahyadri trek under ₹3000",
 ];
 
 export function PlannerClientUi() {

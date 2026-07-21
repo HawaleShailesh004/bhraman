@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Bus,
@@ -16,6 +16,7 @@ import { BookingDisputeForm } from "@/components/bookings/dispute-form";
 import { formatInr } from "@/lib/format";
 import type { BookingSummary } from "@/types/booking";
 import type { TripHubData } from "@/types/trip";
+import { formatGenderMix } from "@/lib/gender-mix";
 
 export function TripHubClient({
   booking,
@@ -32,15 +33,70 @@ export function TripHubClient({
   tone: "ok" | "warn" | "info";
   startDate: string;
 }) {
+  const [liveTrip, setLiveTrip] = useState(trip);
+  const [cancelBusy, setCancelBusy] = useState(false);
+  const [cancelMsg, setCancelMsg] = useState<string | null>(null);
+
   useEffect(() => {
-    if (trip?.hasUnreadUpdates) {
+    setLiveTrip(trip);
+  }, [trip]);
+
+  useEffect(() => {
+    const refresh = async () => {
+      const response = await fetch(`/api/bookings/${booking.bookingRef}/trip`, {
+        cache: "no-store",
+      });
+      if (response.ok) {
+        setLiveTrip((await response.json()) as TripHubData);
+      }
+    };
+    const id = window.setInterval(() => void refresh(), 45_000);
+    return () => window.clearInterval(id);
+  }, [booking.bookingRef]);
+
+  useEffect(() => {
+    if (liveTrip?.hasUnreadUpdates) {
       void fetch(`/api/bookings/${booking.bookingRef}/trip`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "mark_read" }),
       });
     }
-  }, [trip?.hasUnreadUpdates, booking.bookingRef]);
+  }, [liveTrip?.hasUnreadUpdates, booking.bookingRef]);
+
+  async function cancelBooking() {
+    setCancelBusy(true);
+    setCancelMsg(null);
+    try {
+      const estimate = await fetch(`/api/bookings/${booking.bookingRef}/cancel`);
+      const estimateData = (await estimate.json()) as { refundEstimate?: number };
+      if (!window.confirm(
+        `Cancel this booking? Estimated refund: ₹${estimateData.refundEstimate ?? 0}.`,
+      )) {
+        return;
+      }
+      const response = await fetch(`/api/bookings/${booking.bookingRef}/cancel`, {
+        method: "POST",
+      });
+      const data = (await response.json()) as {
+        ok?: boolean;
+        refundAmount?: number;
+        error?: string;
+      };
+      if (!response.ok) throw new Error(data.error ?? "Cancel failed");
+      setCancelMsg(
+        data.refundAmount
+          ? `Cancelled. Refund of ₹${data.refundAmount} initiated.`
+          : "Booking cancelled.",
+      );
+    } catch (error) {
+      setCancelMsg(error instanceof Error ? error.message : "Could not cancel");
+    } finally {
+      setCancelBusy(false);
+    }
+  }
+
+  const hub = liveTrip ?? trip;
 
   return (
     <div className="space-y-5">
@@ -50,6 +106,9 @@ export function TripHubClient({
             Booking {booking.bookingRef}
           </h2>
           <Badge tone={tone}>{statusLabel}</Badge>
+          {hub?.slotStatus === "LIVE" ? (
+            <Badge tone="warn">LIVE</Badge>
+          ) : null}
         </CardHeader>
         <CardBody className="space-y-4">
           <div>
@@ -57,7 +116,7 @@ export function TripHubClient({
               {booking.listingTitleSnapshot}
             </p>
             <p className="mt-1 text-sm text-mist">
-              {trip?.placeName ?? booking.placeName}
+              {hub?.placeName ?? booking.placeName}
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -71,11 +130,11 @@ export function TripHubClient({
               label="Your group"
               value={`${booking.groupSize} traveler${booking.groupSize === 1 ? "" : "s"}`}
             />
-            {trip?.meetingPoint ? (
+            {hub?.meetingPoint ? (
               <Meta
                 icon={<MapPin size={16} />}
                 label="Meeting point"
-                value={trip.meetingPoint}
+                value={hub.meetingPoint}
               />
             ) : null}
             <Meta
@@ -84,16 +143,16 @@ export function TripHubClient({
               value={formatInr(booking.totalAmount)}
             />
           </div>
-          {trip?.pickupNote ? (
+          {hub?.pickupNote ? (
             <p className="rounded-[12px] bg-paper-2 px-3 py-2 text-sm text-body">
               <span className="font-bold">Pickup: </span>
-              {trip.pickupNote}
+              {hub.pickupNote}
             </p>
           ) : null}
-          {trip?.weatherNote ? (
+          {hub?.weatherNote ? (
             <p className="rounded-[12px] bg-paper-2 px-3 py-2 text-sm text-body">
               <span className="font-bold">Weather: </span>
-              {trip.weatherNote}
+              {hub.weatherNote}
             </p>
           ) : null}
           {escrowCopy ? (
@@ -102,7 +161,7 @@ export function TripHubClient({
         </CardBody>
       </Card>
 
-      {trip ? (
+      {hub ? (
         <>
           <Card>
             <CardHeader>
@@ -117,15 +176,15 @@ export function TripHubClient({
                   <p className="text-xs font-bold uppercase tracking-wide text-mist">
                     Trip lead
                   </p>
-                  {trip.guide ? (
+                  {hub.guide ? (
                     <>
                       <p className="mt-1 font-medium text-ink">
-                        {trip.guide.name}
+                        {hub.guide.name}
                       </p>
-                      <p className="text-sm text-mist">{trip.guide.role}</p>
-                      {trip.guide.phone ? (
+                      <p className="text-sm text-mist">{hub.guide.role}</p>
+                      {hub.guide.phone ? (
                         <p className="mt-1 text-sm text-forest">
-                          {trip.guide.phone}
+                          {hub.guide.phone}
                         </p>
                       ) : null}
                     </>
@@ -142,12 +201,12 @@ export function TripHubClient({
                   <p className="text-xs font-bold uppercase tracking-wide text-mist">
                     Vehicle
                   </p>
-                  {trip.vehicle ? (
+                  {hub.vehicle ? (
                     <>
                       <p className="mt-1 font-medium text-ink">
-                        {trip.vehicle.type}
+                        {hub.vehicle.type}
                       </p>
-                      <p className="text-sm text-mist">{trip.vehicle.plate}</p>
+                      <p className="text-sm text-mist">{hub.vehicle.plate}</p>
                     </>
                   ) : (
                     <p className="mt-1 text-sm text-mist">
@@ -167,16 +226,20 @@ export function TripHubClient({
             </CardHeader>
             <CardBody className="space-y-3">
               <p className="text-sm text-body">
-                {trip.bookedSeats}/{trip.capacity} seats · {trip.femaleCount}{" "}
-                women · {trip.maleCount} men
-                {trip.otherCount ? ` · ${trip.otherCount} other` : ""}
-                {trip.minSeatsToConfirm
-                  ? ` · confirm at ${trip.minSeatsToConfirm}`
+                {hub.bookedSeats}/{hub.capacity} seats ·{" "}
+                {formatGenderMix({
+                  female: hub.femaleCount,
+                  male: hub.maleCount,
+                  other: hub.otherCount,
+                  booked: hub.bookedSeats,
+                }).label}
+                {hub.minSeatsToConfirm
+                  ? ` · confirm at ${hub.minSeatsToConfirm}`
                   : ""}
               </p>
-              {trip.coTravelers && trip.coTravelers.length > 0 ? (
+              {hub.coTravelers && hub.coTravelers.length > 0 ? (
                 <ul className="flex flex-wrap gap-2">
-                  {trip.coTravelers.map((c, i) => (
+                  {hub.coTravelers.map((c, i) => (
                     <li
                       key={`${c.firstName}-${i}`}
                       className="rounded-full bg-paper-2 px-3 py-1.5 text-xs font-medium text-ink"
@@ -204,14 +267,14 @@ export function TripHubClient({
               </h2>
             </CardHeader>
             <CardBody>
-              {trip.updates.length === 0 ? (
+              {hub.updates.length === 0 ? (
                 <p className="text-sm text-mist">
                   No updates yet. Check back here for timing, pickup, and weather
                   notes from your operator.
                 </p>
               ) : (
                 <ul className="space-y-3">
-                  {trip.updates.map((u) => (
+                  {hub.updates.map((u) => (
                     <li
                       key={u.id}
                       className="rounded-[12px] border border-line px-4 py-3"
@@ -234,7 +297,7 @@ export function TripHubClient({
             </CardBody>
           </Card>
 
-          {(trip.thingsToCarry.length > 0 || trip.inclusions.length > 0) && (
+          {(hub.thingsToCarry.length > 0 || hub.inclusions.length > 0) && (
             <Card>
               <CardHeader>
                 <h2 className="font-display text-lg font-medium tracking-tight">
@@ -242,25 +305,25 @@ export function TripHubClient({
                 </h2>
               </CardHeader>
               <CardBody className="grid gap-4 sm:grid-cols-2">
-                {trip.inclusions.length > 0 ? (
+                {hub.inclusions.length > 0 ? (
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wide text-mist">
                       Included
                     </p>
                     <ul className="mt-2 list-disc space-y-1 pl-4 text-sm text-body">
-                      {trip.inclusions.map((item) => (
+                      {hub.inclusions.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
                   </div>
                 ) : null}
-                {trip.thingsToCarry.length > 0 ? (
+                {hub.thingsToCarry.length > 0 ? (
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wide text-mist">
                       Carry
                     </p>
                     <ul className="mt-2 list-disc space-y-1 pl-4 text-sm text-body">
-                      {trip.thingsToCarry.map((item) => (
+                      {hub.thingsToCarry.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
@@ -285,12 +348,31 @@ export function TripHubClient({
           All bookings
         </Link>
         <Link
+          href="/bookings/updates"
+          className="rounded-full border border-line px-5 py-2.5 text-sm font-bold"
+        >
+          Updates feed
+        </Link>
+        {(booking.status === "CONFIRMED" || booking.status === "PENDING") ? (
+          <button
+            type="button"
+            disabled={cancelBusy}
+            onClick={() => void cancelBooking()}
+            className="rounded-full border border-clay/40 px-5 py-2.5 text-sm font-bold text-clay disabled:opacity-60"
+          >
+            Cancel booking
+          </button>
+        ) : null}
+        <Link
           href={`/listings/${booking.listingSlug}`}
           className="rounded-full bg-amber px-5 py-2.5 text-sm font-bold text-amber-text"
         >
           View listing
         </Link>
       </div>
+      {cancelMsg ? (
+        <p className="text-sm text-body">{cancelMsg}</p>
+      ) : null}
     </div>
   );
 }

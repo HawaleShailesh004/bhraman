@@ -67,7 +67,8 @@ export const searchListingsTool: Tool = {
       },
       nearCity: {
         type: "string",
-        description: "City or region the traveler starts from",
+        description:
+          "City or region the traveler starts from or wants to stay near (e.g. Pune, Lonavala, Kolad, Sahyadri)",
       },
       maxDurationHours: { type: "number" },
       preferredDate: {
@@ -114,7 +115,7 @@ function extractCategories(message: string): ListingFilters["categories"] {
     { slug: "rafting", terms: ["rafting", "river"] },
     { slug: "camping", terms: ["camp", "camping"] },
     { slug: "paragliding", terms: ["paragliding", "glide"] },
-    { slug: "rappelling", terms: ["rappel", "rappelling", "waterfall"] },
+    { slug: "rappelling", terms: ["rappel", "rappelling", "waterfall", "abseil"] },
     { slug: "caving", terms: ["cave", "caving"] },
     { slug: "kayaking", terms: ["kayak", "kayaking"] },
   ];
@@ -137,9 +138,24 @@ function extractCity(message: string) {
     "igatpuri",
     "kamshet",
     "karjat",
+    "sahyadri",
+    "bhandardara",
   ];
   const lower = message.toLowerCase();
-  return cities.find((city) => lower.includes(city));
+  const direct = cities.find((city) => lower.includes(city));
+  if (direct) return direct;
+  if (lower.includes("western ghats")) return "sahyadri";
+  return undefined;
+}
+
+export function prefersFemaleGuides(message: string) {
+  const lower = message.toLowerCase();
+  return (
+    lower.includes("girl") ||
+    lower.includes("woman") ||
+    lower.includes("female") ||
+    lower.includes("women-led")
+  );
 }
 
 function extractPreferredDate(message: string) {
@@ -170,7 +186,10 @@ export function fallbackPlannerFilters(message: string): PlannerSearchInput {
   };
 }
 
-export async function runSearchListings(input: PlannerSearchInput): Promise<ListingCardData[]> {
+export async function runSearchListings(
+  input: PlannerSearchInput,
+  options?: { preferFemaleGuides?: boolean; sourceMessage?: string },
+): Promise<ListingCardData[]> {
   const filters: ListingFilters = {
     categories: input.categories,
     maxPrice: input.maxPrice,
@@ -181,7 +200,11 @@ export async function runSearchListings(input: PlannerSearchInput): Promise<List
     sort: "rating",
   };
 
-  return searchPlannerListings(filters);
+  return searchPlannerListings(filters, {
+    preferFemaleGuides:
+      options?.preferFemaleGuides ??
+      (options?.sourceMessage ? prefersFemaleGuides(options.sourceMessage) : false),
+  });
 }
 
 export function plannerToolResultRows(rows: ListingCardData[]) {

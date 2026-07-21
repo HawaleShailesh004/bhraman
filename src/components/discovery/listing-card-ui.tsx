@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, Clock, Users, BadgeCheck, Images } from "lucide-react";
 import type { ListingCardData } from "@/types/listing";
@@ -8,6 +9,7 @@ import { formatInr } from "@/lib/format";
 import { listingImageStyle } from "@/lib/ui-present";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { DifficultyMeter, StarRating } from "@/components/ui/primitives";
+import { TrustScoreRow } from "@/components/ui/trust-badges";
 import { TiltShell } from "@/components/ui/tilt-shell";
 import { brandEase, softSpring } from "@/lib/motion";
 
@@ -24,11 +26,16 @@ function photoCount(listing: ListingCardData): number {
 export function ListingCardUi({
   listing,
   index = 0,
+  comparePlaceSlug,
+  compareOperatorCount,
 }: {
   listing: ListingCardData;
   index?: number;
+  comparePlaceSlug?: string;
+  compareOperatorCount?: number;
 }) {
   const reduce = useReducedMotion();
+  const router = useRouter();
   const photos = photoCount(listing);
   const peekUrl = listing.galleryUrls?.find(
     (u) => u && u !== listing.heroImageUrl,
@@ -56,14 +63,14 @@ export function ListingCardUi({
             }
       }
       whileTap={reduce ? undefined : { scale: 0.985, transition: softSpring }}
-      className="[perspective:1100px]"
+      className="h-full [perspective:1100px]"
     >
       <TiltShell
         enabled={!reduce}
-        className="group rounded-[var(--radius-card)]"
+        className="group h-full rounded-[var(--radius-card)]"
       >
-        <Link href={`/listings/${listing.slug}`} className="block">
-          <div className="overflow-hidden rounded-[var(--radius-card)] border border-line/80 bg-white shadow-[var(--shadow-sm)] transition-shadow duration-300 group-hover:shadow-[var(--shadow-md)]">
+        <Link href={`/listings/${listing.slug}`} className="block h-full">
+          <div className="flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line/80 bg-white shadow-[var(--shadow-sm)] transition-shadow duration-300 group-hover:shadow-[var(--shadow-md)]">
             <div className="relative h-44 overflow-hidden">
               {peekStyle ? (
                 <div
@@ -98,7 +105,7 @@ export function ListingCardUi({
               ) : null}
             </div>
 
-            <div className="space-y-3 p-4 sm:p-5">
+            <div className="flex flex-1 flex-col space-y-3 p-4 sm:p-5">
               <p className="flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.08em] text-mist">
                 <MapPin size={11} />
                 {listing.place.city}, {listing.place.district}
@@ -125,9 +132,26 @@ export function ListingCardUi({
                     {listing.operator.businessName}
                   </span>
                 </p>
+                <TrustScoreRow
+                  experienceScore={listing.operator.experienceScore}
+                  safetyScore={listing.operator.safetyScore}
+                />
+                {comparePlaceSlug && compareOperatorCount && compareOperatorCount >= 2 ? (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      router.push(`/compare/${comparePlaceSlug}`);
+                    }}
+                    className="inline-block text-left text-[11px] font-bold text-forest hover:underline"
+                  >
+                    Compare {compareOperatorCount} operators at {listing.place.city}
+                  </button>
+                ) : null}
               </div>
 
-              <div className="flex items-end justify-between border-t border-line/70 pt-3">
+              <div className="mt-auto flex items-end justify-between border-t border-line/70 pt-3">
                 <div className="text-sm">
                   <span className="text-[11px] text-mist">from </span>
                   <span className="font-display text-lg font-bold tracking-tight">

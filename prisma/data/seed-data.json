@@ -604,6 +604,101 @@
             "noShowPct": 0
           },
           "operatorName": "Konkan Wave Adventures"
+        },
+        {
+          "title": "Kolad Rafting Express — Sahyadri Trails",
+          "categorySlug": "rafting",
+          "difficulty": "MODERATE",
+          "durationHours": 3.5,
+          "basePrice": 999,
+          "minGroupSize": 2,
+          "maxGroupSize": 8,
+          "summary": "Budget-friendly morning raft run on the Kundalika with Pune pickup option.",
+          "description": "Same river, leaner format: quick safety briefing, 12 km descent, and dispersal by 10 AM. Ideal for first-timers from Pune who want a half-day trip.",
+          "inclusions": [
+            "Rafting session",
+            "Life jacket and helmet",
+            "Certified river guide"
+          ],
+          "exclusions": ["Transport", "Photos", "Meals"],
+          "thingsToCarry": ["Quick-dry clothes", "Secure footwear", "Change of clothes"],
+          "meetingPoint": "Kolad base camp, near Kundalika bridge",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "6:30 AM",
+              "title": "Check-in",
+              "description": "Registration and gear."
+            },
+            {
+              "order": 2,
+              "timeLabel": "7:00 AM",
+              "title": "Launch",
+              "description": "Raft descent on Kundalika."
+            },
+            {
+              "order": 3,
+              "timeLabel": "9:30 AM",
+              "title": "Take-out",
+              "description": "Change and dispersal."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 40,
+            "noShowPct": 0
+          },
+          "operatorName": "Sahyadri Trails"
+        },
+        {
+          "title": "Kundalika Rafting — Tamhini Weekend Batch",
+          "categorySlug": "rafting",
+          "difficulty": "MODERATE",
+          "durationHours": 5,
+          "basePrice": 1350,
+          "minGroupSize": 2,
+          "maxGroupSize": 10,
+          "summary": "Rafting plus riverside breakfast with a women-forward guide team.",
+          "description": "Morning raft run followed by hot breakfast at camp. Strong safety briefing culture and optional Pune–Kolad shared transport add-on.",
+          "inclusions": [
+            "Rafting",
+            "Breakfast",
+            "Safety gear",
+            "Women-led guide team"
+          ],
+          "exclusions": ["Transport unless add-on selected", "Photos"],
+          "thingsToCarry": ["Swimwear layer", "Sunscreen", "Towel"],
+          "meetingPoint": "Tamhini-side Kolad camp, Raigad",
+          "itinerary": [
+            {
+              "order": 1,
+              "timeLabel": "6:45 AM",
+              "title": "Arrival",
+              "description": "Gear and briefing."
+            },
+            {
+              "order": 2,
+              "timeLabel": "7:15 AM",
+              "title": "Raft launch",
+              "description": "Grade II–III rapids."
+            },
+            {
+              "order": 3,
+              "timeLabel": "10:00 AM",
+              "title": "Breakfast",
+              "description": "Hot breakfast at camp."
+            }
+          ],
+          "cancellationPolicy": {
+            "weatherRefundPct": 100,
+            "cutoffHours": 24,
+            "beforeCutoffPct": 100,
+            "afterCutoffPct": 50,
+            "noShowPct": 0
+          },
+          "operatorName": "Tamhini Trekkers"
         }
       ]
     },

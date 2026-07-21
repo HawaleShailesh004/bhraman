@@ -16,6 +16,7 @@ import {
 import { KnowTheRoomListing } from "@/components/listing/know-the-room-listing";
 import { ListingGalleryStrip } from "@/components/listing/listing-media-gallery";
 import { formatInr } from "@/lib/format";
+import { ComparePlaceBanner } from "@/components/compare/compare-place-banner";
 import { getListingDetail } from "@/lib/listings";
 import { getWeatherSignal } from "@/lib/weather";
 
@@ -95,6 +96,12 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
             <p className="break-words font-serif text-base italic leading-relaxed text-ink-muted sm:text-lg">
               {listing.summary}
             </p>
+            <div className="mt-4">
+              <ComparePlaceBanner
+                placeSlug={listing.place.slug}
+                placeName={listing.place.name}
+              />
+            </div>
             <p className="mt-4 break-words whitespace-pre-line leading-relaxed text-body-muted">
               {listing.description}
             </p>

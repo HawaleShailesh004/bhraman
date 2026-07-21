@@ -53,6 +53,7 @@ type BookingRequestBody = {
   emergencyContactPhone?: unknown;
   medicalNotes?: unknown;
   participants?: unknown;
+  couponCode?: unknown;
   traveler?: {
     name?: unknown;
     email?: unknown;
@@ -133,6 +134,8 @@ export async function POST(request: Request) {
           ? body.medicalNotes.trim().slice(0, 2000) || null
           : null,
       participants: parseParticipants(body.participants, body.groupSize),
+      couponCode:
+        typeof body.couponCode === "string" ? body.couponCode : null,
     });
 
     const razorpay = getRazorpayClient();
@@ -181,6 +184,9 @@ export async function POST(request: Request) {
           ? 409
           : 400;
       return Response.json({ error: error.code }, { status });
+    }
+    if (error instanceof Error && error.message) {
+      return Response.json({ error: error.message }, { status: 400 });
     }
 
     return (

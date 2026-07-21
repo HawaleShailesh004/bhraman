@@ -60,16 +60,16 @@ export const COPY = {
     loading: "Reading the vibe…",
     starters: [
       {
-        label: "First trek this weekend",
-        href: "/plan?q=first%20trek%20easy%20this%20weekend",
+        label: "First trek, scared of heights",
+        href: "/plan?q=first%20trek%20easy%20scared%20of%20heights",
       },
       {
         label: "Girls' trip, woman-led",
         href: "/plan?q=girls%20trip%20woman%20led%20operator",
       },
       {
-        label: "Something hard in the Sahyadris",
-        href: "/plan?q=challenging%20sahyadri%20trek",
+        label: "Challenging trek under ₹3000",
+        href: "/plan?q=challenging%20trek%20under%203000",
       },
     ],
   },
@@ -88,6 +88,10 @@ export const COPY = {
     eyebrow: "FAQ",
     title: "Straight answers.",
     items: [
+      {
+        q: "Can I cancel?",
+        a: "Cancel free before 24 hours of departure. After that, partial refund per listing policy. Weather cancels = full refund.",
+      },
       {
         q: "Weather cancels my trek?",
         a: "Full refund. Automatically.",

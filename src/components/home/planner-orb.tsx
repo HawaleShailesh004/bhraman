@@ -23,7 +23,7 @@ const PROMPTS = [
     href: "/plan?q=challenging%20trek%20under%203000",
   },
   {
-    label: "Chill camp near Pune",
+    label: "Lake camping near Pune",
     href: "/plan?q=lake%20camping%20near%20pune",
   },
 ] as const;

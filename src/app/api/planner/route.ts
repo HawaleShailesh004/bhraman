@@ -7,11 +7,13 @@ import {
   plannerModel,
   plannerToolResultRows,
   PLANNER_SYSTEM,
+  prefersFemaleGuides,
   runSearchListings,
   searchListingsTool,
   toAnthropicMessages,
   type PlannerHistoryMessage,
 } from "@/lib/anthropic";
+import type { ListingCardData } from "@/types/listing";
 
 type PlannerRequestBody = {
   userMessage?: unknown;
@@ -43,12 +45,17 @@ function getTextContent(message: Anthropic.Message) {
     .join("");
 }
 
-function getToolUse(message: Anthropic.Message) {
-  return (
-    message.content.find(
-      (block): block is ToolUseBlock => block.type === "tool_use" && block.name === "searchListings"
-    ) ?? null
+function getToolUses(message: Anthropic.Message) {
+  return message.content.filter(
+    (block): block is ToolUseBlock =>
+      block.type === "tool_use" && block.name === "searchListings",
   );
+}
+
+function mergeListings(rows: ListingCardData[]) {
+  const byId = new Map<string, ListingCardData>();
+  for (const row of rows) byId.set(row.id, row);
+  return Array.from(byId.values()).slice(0, 6);
 }
 
 export async function POST(request: Request) {
@@ -61,11 +68,16 @@ export async function POST(request: Request) {
     return Response.json({ error: "Message is required." }, { status: 400 });
   }
 
+  const searchOptions = {
+    sourceMessage: userMessage,
+    preferFemaleGuides: prefersFemaleGuides(userMessage),
+  };
+
   const anthropic = getAnthropicClient();
 
   if (!anthropic) {
     const filters = fallbackPlannerFilters(userMessage);
-    const listings = await runSearchListings(filters);
+    const listings = await runSearchListings(filters, searchOptions);
     const explanation = buildFallbackPlannerExplanation(userMessage, listings);
     return Response.json({ explanation, listings });
   }
@@ -82,48 +94,66 @@ export async function POST(request: Request) {
     });
   } catch {
     const filters = fallbackPlannerFilters(userMessage);
-    const listings = await runSearchListings(filters);
+    const listings = await runSearchListings(filters, searchOptions);
     const explanation = buildFallbackPlannerExplanation(userMessage, listings);
     return Response.json({ explanation, listings });
   }
 
-  const toolUse = getToolUse(firstPass);
-  let listings = [] as Awaited<ReturnType<typeof runSearchListings>>;
+  const toolUses = getToolUses(firstPass);
+  let listings = [] as ListingCardData[];
   let explanation = getTextContent(firstPass);
 
-  if (toolUse) {
-    listings = await runSearchListings((toolUse.input ?? {}) as Parameters<typeof runSearchListings>[0]);
+  if (toolUses.length > 0) {
+    const batches = await Promise.all(
+      toolUses.map((toolUse) =>
+        runSearchListings(
+          (toolUse.input ?? {}) as Parameters<typeof runSearchListings>[0],
+          searchOptions,
+        ),
+      ),
+    );
+    listings = mergeListings(batches.flat());
 
-    const secondPass = await anthropic.messages.create({
-      model: plannerModel,
-      max_tokens: 1024,
-      system: PLANNER_SYSTEM,
-      tools: [searchListingsTool],
-      messages: [
-        ...toAnthropicMessages(history, userMessage),
-        { role: "assistant", content: firstPass.content },
-        {
-          role: "user",
-          content: [
-            {
-              type: "tool_result",
+    try {
+      const secondPass = await anthropic.messages.create({
+        model: plannerModel,
+        max_tokens: 1024,
+        system: PLANNER_SYSTEM,
+        tools: [searchListingsTool],
+        messages: [
+          ...toAnthropicMessages(history, userMessage),
+          { role: "assistant", content: firstPass.content },
+          {
+            role: "user",
+            content: toolUses.map((toolUse, index) => ({
+              type: "tool_result" as const,
               tool_use_id: toolUse.id,
-              content: JSON.stringify(plannerToolResultRows(listings)),
-            },
-          ],
-        },
-      ],
-    });
+              content: JSON.stringify(plannerToolResultRows(batches[index] ?? [])),
+            })),
+          },
+        ],
+      });
 
-    explanation = getTextContent(secondPass);
+      explanation = getTextContent(secondPass);
+    } catch {
+      explanation = buildFallbackPlannerExplanation(userMessage, listings);
+    }
   }
 
-  if (!toolUse) {
+  if (toolUses.length === 0) {
     const filters = fallbackPlannerFilters(userMessage);
-    listings = await runSearchListings(filters);
+    listings = await runSearchListings(filters, searchOptions);
     if (!explanation) {
       explanation = buildFallbackPlannerExplanation(userMessage, listings);
     }
+  }
+
+  if (listings.length === 0) {
+    listings = await runSearchListings(
+      fallbackPlannerFilters(userMessage),
+      searchOptions,
+    );
+    explanation = buildFallbackPlannerExplanation(userMessage, listings);
   }
 
   return Response.json({ explanation, listings });

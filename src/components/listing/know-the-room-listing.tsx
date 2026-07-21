@@ -5,6 +5,7 @@ import { useReducedMotion } from "framer-motion";
 import type { ListingDetailData } from "@/types/listing";
 import type { AvailabilitySlotData } from "@/types/listing";
 import { COPY } from "@/lib/marketing-copy";
+import { formatGenderMix } from "@/lib/gender-mix";
 
 /** Demo face pool - women first for ring styling */
 const FACE_POOL = [
@@ -136,9 +137,13 @@ export function KnowTheRoomListing({
   const women = slot?.femaleCount ?? 0;
   const men = slot?.maleCount ?? 0;
   const other = slot?.otherCount ?? 0;
-  const totalBooked = women + men + other;
-  const capacityHint = listing.maxGroupSize;
-  const denom = totalBooked > 0 ? totalBooked : capacityHint;
+  const totalBooked = slot?.bookedSeats ?? women + men + other;
+  const genderMix = formatGenderMix({
+    female: women,
+    male: men,
+    other,
+    booked: totalBooked,
+  });
   const femaleGuides = listing.operator.femaleGuideCount;
   const totalGuides = listing.operator.totalGuideCount;
   const womanLed = totalGuides > 0 && femaleGuides > 0;
@@ -184,7 +189,9 @@ export function KnowTheRoomListing({
         {totalBooked > 0 ? (
           <>
             This batch is{" "}
-            <em className="not-italic text-[#E8A0C0]">{women} women</em>
+            <em className="not-italic text-[#E8A0C0]">
+              {genderMix.privacyMode ? genderMix.shortLabel : genderMix.label}
+            </em>
             {womanLed ? ", woman-led." : "."}
           </>
         ) : womanLed ? (
@@ -227,10 +234,12 @@ export function KnowTheRoomListing({
       <div className="mt-6 flex flex-wrap gap-8">
         <div>
           <p className="font-display text-[32px] font-medium tabular-nums leading-none text-warm-white">
-            {totalBooked > 0 ? (
+            {totalBooked > 0 && !genderMix.privacyMode && genderMix.womenPct !== null ? (
               <>
-                <em className="not-italic text-[#E8A0C0]">{women}</em>/{denom}
+                <em className="not-italic text-[#E8A0C0]">{genderMix.womenPct}%</em>
               </>
+            ) : totalBooked > 0 ? (
+              <em className="not-italic text-[#E8A0C0]">—</em>
             ) : (
               <em className="not-italic text-[#E8A0C0]">-</em>
             )}

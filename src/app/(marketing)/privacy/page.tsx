@@ -12,11 +12,15 @@ export const metadata: Metadata = {
 const SECTIONS = [
   {
     t: "What we collect",
-    d: "Account details (name, email), booking information, payment references handled by our payment partner, and basic usage data needed to run Discover, Plan, and operator dashboards.",
+    d: "Account details (name, email), booking information, payment references handled by our payment partner, trip safety data (gender, emergency contact, optional medical notes), coupon usage metadata, and basic usage data needed to run Discover, Plan, and operator dashboards.",
   },
   {
     t: "How we use it",
-    d: "To create bookings, hold and release payments, show relevant trips, verify operators, prevent fraud, and improve the product. We do not sell your personal data.",
+    d: "To create bookings, hold and release payments, show relevant trips, verify operators, prevent fraud, apply operator coupon codes, and improve the product. We do not sell your personal data.",
+  },
+  {
+    t: "Cookies & analytics",
+    d: "We use essential cookies for sign-in and checkout. If we add analytics, we will use aggregated, non-sensitive metrics only and update this page.",
   },
   {
     t: "Payments",
@@ -24,15 +28,15 @@ const SECTIONS = [
   },
   {
     t: "Operators & travelers",
-    d: "Operators see traveler details needed to run a booked trip (name, contact, group size). Travelers see public operator profile information and listing content.",
+    d: "Operators see traveler details needed to run a booked trip (name, contact, group size, safety notes). Travelers see public operator profile information, trust scores, and listing content.",
   },
   {
     t: "Retention & control",
     d: "We keep booking records as required for payouts, disputes, and legal obligations. You can request account updates or deletion by contacting us; some records may be retained where required.",
   },
   {
-    t: "Contact",
-    d: "Questions about privacy: privacy@bhraman.in (or your configured support email).",
+    t: "Grievance contact",
+    d: "Questions about privacy: privacy@bhraman.in. For Maharashtra marketplace grievances, email with your booking reference and we respond within 7 business days.",
   },
 ] as const;
 

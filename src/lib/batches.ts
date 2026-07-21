@@ -80,7 +80,7 @@ export async function recomputeSlotComposition(
   });
 
   let status = slot.status;
-  if (status !== "CANCELLED" && status !== "COMPLETED") {
+  if (status !== "CANCELLED" && status !== "COMPLETED" && status !== "LIVE") {
     if (bookedSeats >= slot.capacity) status = "FULL";
     else if (
       slot.minSeatsToConfirm &&

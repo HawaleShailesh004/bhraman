@@ -31,8 +31,14 @@ enum SlotStatus {
   FILLING_FAST
   CONFIRMED
   FULL
+  LIVE
   CANCELLED
   COMPLETED
+}
+
+enum CouponDiscountType {
+  PERCENT
+  FIXED_INR
 }
 
 enum BookingStatus {
@@ -160,6 +166,8 @@ model Operator {
   avgResponseMins    Int                @default(30)
   ratingAvg          Float              @default(0)
   ratingCount        Int                @default(0)
+  experienceScore    Int                @default(0)
+  safetyScore        Int                @default(0)
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
 
@@ -169,6 +177,7 @@ model Operator {
   guides    Guide[]
   vehicles  Vehicle[]
   tripUpdates TripUpdate[]
+  couponCodes CouponCode[]
 }
 
 model Category {
@@ -338,6 +347,8 @@ model Booking {
   emergencyContactPhone String?
   medicalNotes          String?       @db.Text
   source                BookingSource @default(PLATFORM)
+  couponCodeId          String?
+  discountInr           Int           @default(0)
   status                BookingStatus @default(PENDING)
   createdAt             DateTime      @default(now())
   updatedAt             DateTime      @updatedAt
@@ -349,6 +360,7 @@ model Booking {
   review       Review?
   participants BookingParticipant[]
   updateRead   BookingUpdateRead?
+  couponCode   CouponCode?          @relation(fields: [couponCodeId], references: [id], onDelete: SetNull)
 
   @@index([userId])
   @@index([listingId])
@@ -356,6 +368,31 @@ model Booking {
   @@index([status])
   @@index([customerEmail])
   @@index([customerPhone])
+  @@index([couponCodeId])
+}
+
+model CouponCode {
+  id            String             @id @default(cuid())
+  operatorId    String
+  code          String
+  label         String?
+  discountType  CouponDiscountType
+  discountValue Int
+  minBookingInr Int                @default(0)
+  maxUses       Int?
+  usedCount     Int                @default(0)
+  validFrom     DateTime?
+  validUntil    DateTime?
+  listingIds    String[]           @default([])
+  active        Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  operator Operator  @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@unique([operatorId, code])
+  @@index([operatorId])
 }
 
 model BookingParticipant {

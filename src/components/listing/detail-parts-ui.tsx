@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatGenderMix } from "@/lib/gender-mix";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -23,6 +24,7 @@ import { softSpring, springTap } from "@/lib/motion";
 import { listingImageStyle } from "@/lib/ui-present";
 import { OperatorAvatar } from "@/components/ui/operator-avatar";
 import { Button, StarRating } from "@/components/ui/primitives";
+import { TrustScoreRow } from "@/components/ui/trust-badges";
 import { EscrowReserveNote } from "@/components/home/proof-and-operators";
 import type { ReviewData } from "@/types/listing";
 import type { AvailabilitySlotData } from "@/types/listing";
@@ -108,9 +110,12 @@ export function UpcomingBatchTrustUi({
                 <span>
                   {slot.femaleCount + slot.maleCount + slot.otherCount === 0
                     ? "Be the first to book this departure"
-                    : `Lead travelers: ${slot.femaleCount} women · ${slot.maleCount} men${
-                        slot.otherCount > 0 ? ` · ${slot.otherCount} other` : ""
-                      }`}
+                    : `Lead travelers: ${formatGenderMix({
+                        female: slot.femaleCount,
+                        male: slot.maleCount,
+                        other: slot.otherCount,
+                        booked: slot.bookedSeats,
+                      }).label}`}
                 </span>
               </p>
               {slot.minSeatsToConfirm !== null ? (
@@ -223,6 +228,12 @@ export function OperatorBlockUi({ listing }: { listing: ListingDetailData }) {
           <div className="break-words text-[13px] text-mist">
             {op.baseCity} ·{" "}
             {op.isVerified ? "Verified on Bhraman" : "Verification pending"}
+          </div>
+          <div className="mt-2">
+            <TrustScoreRow
+              experienceScore={op.experienceScore}
+              safetyScore={op.safetyScore}
+            />
           </div>
         </div>
       </div>

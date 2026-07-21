@@ -24,6 +24,7 @@ import {
 import { useToast } from "@/components/ui/ToastProvider";
 import { SlotPickerUi } from "@/components/booking/slot-picker-ui";
 import { formatInr } from "@/lib/format";
+import { formatGenderMix } from "@/lib/gender-mix";
 import { brandEase, slideStep, softSpring, springTap } from "@/lib/motion";
 import { listingImageStyle } from "@/lib/ui-present";
 import type { BookingCheckoutResponse } from "@/types/booking";
@@ -149,6 +150,12 @@ function BookingFlowContent({
   const [submitting, setSubmitting] = useState(false);
   const [checkoutReady, setCheckoutReady] = useState(false);
   const [bookingRef, setBookingRef] = useState<string | null>(null);
+  const [couponInput, setCouponInput] = useState("");
+  const [couponApplied, setCouponApplied] = useState<{
+    code: string;
+    discountInr: number;
+  } | null>(null);
+  const [couponBusy, setCouponBusy] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -259,7 +266,50 @@ function BookingFlowContent({
 
   const pricePerHead = selectedSlot?.priceOverride ?? listing.basePrice;
   const subtotal = pricePerHead * group;
-  const total = subtotal;
+  const discountInr = couponApplied?.discountInr ?? 0;
+  const total = Math.max(0, subtotal - discountInr);
+
+  async function applyCoupon() {
+    if (!couponInput.trim()) return;
+    setCouponBusy(true);
+    try {
+      const response = await fetch("/api/coupons/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code: couponInput,
+          listingId: listing.id,
+          groupSize: group,
+        }),
+      });
+      const data = (await response.json()) as {
+        ok?: boolean;
+        code?: string;
+        discountInr?: number;
+        message?: string;
+        error?: string;
+      };
+      if (!response.ok || !data.ok || !data.code || !data.discountInr) {
+        throw new Error(data.message || data.error || "Invalid coupon");
+      }
+      setCouponApplied({ code: data.code, discountInr: data.discountInr });
+      pushToast({
+        tone: "ok",
+        title: "Coupon applied",
+        description: data.message ?? `Saved ${formatInr(data.discountInr)}`,
+      });
+    } catch (error) {
+      setCouponApplied(null);
+      pushToast({
+        tone: "err",
+        title: "Coupon not applied",
+        description:
+          error instanceof Error ? error.message : "Check the code and try again.",
+      });
+    } finally {
+      setCouponBusy(false);
+    }
+  }
 
   const seatLabel = useMemo(() => {
     if (!selectedSlot) return "Select a date";
@@ -341,6 +391,7 @@ function BookingFlowContent({
             gender: p.gender || safety.customerGender,
             ageBand: p.ageBand || null,
           })),
+          couponCode: couponApplied?.code ?? null,
         }),
       });
 
@@ -557,7 +608,12 @@ function BookingFlowContent({
                           selectedSlot.otherCount ===
                         0
                           ? "Be the first to book this departure"
-                          : `${selectedSlot.femaleCount} women · ${selectedSlot.maleCount} men confirmed`}
+                          : formatGenderMix({
+                              female: selectedSlot.femaleCount,
+                              male: selectedSlot.maleCount,
+                              other: selectedSlot.otherCount,
+                              booked: selectedSlot.bookedSeats,
+                            }).label}
                       </span>
                       {selectedSlot.minSeatsToConfirm !== null ? (
                         <span>
@@ -1049,12 +1105,45 @@ function BookingFlowContent({
         {step < 4 ? (
           <>
             <div className="border-t border-dashed border-line mt-6 pt-5 text-sm space-y-2">
+              <details className="group rounded-[12px] border border-line/80 bg-paper-2/50 px-3 py-2">
+                <summary className="cursor-pointer text-xs font-bold uppercase tracking-wide text-mist">
+                  Have a coupon?
+                </summary>
+                <div className="mt-3 flex gap-2">
+                  <input
+                    type="text"
+                    value={couponInput}
+                    onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                    placeholder="Operator code"
+                    className="flex-1 rounded-full border border-line px-3 py-2 text-sm uppercase"
+                  />
+                  <button
+                    type="button"
+                    disabled={couponBusy}
+                    onClick={() => void applyCoupon()}
+                    className="rounded-full bg-ink px-4 py-2 text-xs font-bold text-paper disabled:opacity-60"
+                  >
+                    Apply
+                  </button>
+                </div>
+                {couponApplied ? (
+                  <p className="mt-2 text-xs font-semibold text-forest">
+                    {couponApplied.code} applied · −{formatInr(couponApplied.discountInr)}
+                  </p>
+                ) : null}
+              </details>
               <div className="flex justify-between text-[#54635A]">
                 <span>
                   {formatInr(pricePerHead)} × {group}
                 </span>
                 <span>{formatInr(subtotal)}</span>
               </div>
+              {discountInr > 0 ? (
+                <div className="flex justify-between text-forest">
+                  <span>Coupon discount</span>
+                  <span>−{formatInr(discountInr)}</span>
+                </div>
+              ) : null}
               <div className="flex justify-between font-bold text-base pt-2 border-t border-line">
                 <span>Total</span>
                 <span>{formatInr(total)}</span>

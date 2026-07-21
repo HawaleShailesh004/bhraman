@@ -90,13 +90,25 @@ const operators = Object.fromEntries(
   ])
 );
 
+const OPERATOR_SCORES: Record<string, { experience: number; safety: number }> = {
+  "Western Ghats Outdoors": { experience: 92, safety: 88 },
+  "Konkan Wave Adventures": { experience: 89, safety: 91 },
+  "Maval Adventure Co.": { experience: 85, safety: 86 },
+  "Sahyadri Trails": { experience: 88, safety: 84 },
+  "Deccan Ascents": { experience: 82, safety: 83 },
+  "Tamhini Trekkers": { experience: 86, safety: 85 },
+};
+
 function operatorStats(name: string) {
   const hash = name.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const scores = OPERATOR_SCORES[name] ?? { experience: 80, safety: 80 };
   return {
     ratingAvg: +(4.5 + (hash % 5) * 0.08).toFixed(1),
     ratingCount: 80 + (hash % 420),
     completedTrips: 200 + (hash % 1100),
     avgResponseMins: 8 + (hash % 28),
+    experienceScore: scores.experience,
+    safetyScore: scores.safety,
   };
 }
 
@@ -212,6 +224,21 @@ function matchesFilters(listing: ListingCardData, filters: ListingFilters) {
     const city = filters.city.toLowerCase();
     const haystack = `${listing.place.city} ${listing.place.district} ${listing.place.name}`.toLowerCase();
     if (!haystack.includes(city)) return false;
+  }
+  if (filters.q) {
+    const q = filters.q.toLowerCase();
+    const haystack = [
+      listing.title,
+      listing.summary,
+      listing.place.name,
+      listing.place.city,
+      listing.place.district,
+      listing.category.name,
+      listing.operator.businessName,
+    ]
+      .join(" ")
+      .toLowerCase();
+    if (!q.split(/\s+/).every((term) => haystack.includes(term))) return false;
   }
   if (filters.minPrice !== undefined && listing.basePrice < filters.minPrice) {
     return false;
