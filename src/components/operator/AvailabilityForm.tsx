@@ -113,7 +113,7 @@ export function AvailabilityForm({ listings }: { listings: ListingOption[] }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-xl rounded-lg border border-line bg-white p-6 shadow-md"
+      className="max-w-xl rounded-lg border border-line bg-white p-4 shadow-md sm:p-6"
     >
       <div className="mb-4">
         <label className="mb-2 block text-sm font-bold">Listing</label>
@@ -139,7 +139,7 @@ export function AvailabilityForm({ listings }: { listings: ListingOption[] }) {
               type="button"
               onClick={() => toggleWeekday(day.value)}
               className={[
-                "rounded-full border px-4 py-2 text-sm font-semibold",
+                "touch-target min-h-[44px] rounded-full border px-4 py-2 text-sm font-semibold",
                 weekdays.includes(day.value)
                   ? "border-ink bg-ink text-paper"
                   : "border-line bg-white text-ink",

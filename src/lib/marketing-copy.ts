@@ -12,7 +12,7 @@ export const COPY = {
     /** @deprecated use headlineLine1 / minusWord / headlineRest */
     headline: "The Sahyadris, minus the guesswork.",
     subline:
-      "Verified operators, honest weather, payment held until you're back. Tell us the vibe — get three real trips.",
+      "Verified operators, honest weather, payment held until you're back. Tell us the vibe - get three real trips.",
     ctaPrimary: "Find this weekend's trips",
     ctaSecondary: "How it works",
   },

@@ -54,7 +54,7 @@ export default async function MarketingHomePage() {
   const categoryItems = buildCategoryDockItems(coverSources);
 
   return (
-    <main className="overflow-x-visible">
+    <main className="overflow-x-clip bg-paper">
       <Navbar onDark />
       <Hero />
       <CategoryDock items={categoryItems} />

@@ -41,7 +41,7 @@ export function TrendingCarousel({ listings }: { listings: ListingCardData[] }) 
           {listings.map((listing, i) => (
             <div
               key={listing.id}
-              className="w-[min(88vw,336px)] shrink-0 snap-start"
+              className="w-[min(calc(100vw-2.5rem),336px)] shrink-0 snap-start"
             >
               <ListingCardUi listing={listing} index={i} />
             </div>

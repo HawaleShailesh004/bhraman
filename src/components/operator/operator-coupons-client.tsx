@@ -113,7 +113,7 @@ export function OperatorCouponsClient() {
 
       <form
         onSubmit={createCoupon}
-        className="mb-8 grid gap-3 rounded-[16px] border border-line bg-white p-5 sm:grid-cols-2 lg:grid-cols-5"
+        className="mb-8 grid grid-cols-1 gap-3 rounded-[16px] border border-line bg-white p-5 sm:grid-cols-2 lg:grid-cols-5"
       >
         <label className="text-sm">
           <span className="text-xs font-bold uppercase tracking-wide text-mist">
@@ -199,8 +199,51 @@ export function OperatorCouponsClient() {
           No coupons yet. Create one for Instagram or walk-in travelers.
         </p>
       ) : (
-        <div className="overflow-x-auto rounded-[16px] border border-line bg-white">
-          <table className="min-w-full text-sm">
+        <>
+          <div className="grid gap-3 md:hidden">
+            {coupons.map((coupon) => (
+              <article
+                key={coupon.id}
+                className="rounded-[16px] border border-line bg-white p-4"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-display text-lg font-bold text-ink">
+                      {coupon.code}
+                    </p>
+                    <p className="mt-1 text-sm text-mist">
+                      {coupon.discountType === "PERCENT"
+                        ? `${coupon.discountValue}% off`
+                        : `₹${coupon.discountValue} off`}
+                    </p>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${
+                      coupon.active
+                        ? "bg-[#EAF1EC] text-forest"
+                        : "bg-paper-2 text-mist"
+                    }`}
+                  >
+                    {coupon.active ? "Active" : "Paused"}
+                  </span>
+                </div>
+                <p className="mt-3 text-xs text-mist">
+                  Used {coupon.usedCount}
+                  {coupon.maxUses ? ` / ${coupon.maxUses}` : ""} times
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void toggleActive(coupon.id, !coupon.active)}
+                  className="touch-target mt-4 inline-flex min-h-[44px] w-full items-center justify-center rounded-full border border-line px-4 py-2.5 text-sm font-bold text-amber-deep"
+                >
+                  {coupon.active ? "Pause coupon" : "Activate coupon"}
+                </button>
+              </article>
+            ))}
+          </div>
+
+          <div className="hidden overflow-x-auto rounded-[16px] border border-line bg-white md:block">
+            <table className="min-w-full text-sm">
             <thead>
               <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-mist">
                 <th className="px-4 py-3">Code</th>
@@ -239,7 +282,8 @@ export function OperatorCouponsClient() {
               ))}
             </tbody>
           </table>
-        </div>
+          </div>
+        </>
       )}
     </>
   );

@@ -606,7 +606,7 @@
           "operatorName": "Konkan Wave Adventures"
         },
         {
-          "title": "Kolad Rafting Express — Sahyadri Trails",
+          "title": "Kolad Rafting Express - Sahyadri Trails",
           "categorySlug": "rafting",
           "difficulty": "MODERATE",
           "durationHours": 3.5,
@@ -621,7 +621,11 @@
             "Certified river guide"
           ],
           "exclusions": ["Transport", "Photos", "Meals"],
-          "thingsToCarry": ["Quick-dry clothes", "Secure footwear", "Change of clothes"],
+          "thingsToCarry": [
+            "Quick-dry clothes",
+            "Secure footwear",
+            "Change of clothes"
+          ],
           "meetingPoint": "Kolad base camp, near Kundalika bridge",
           "itinerary": [
             {
@@ -653,7 +657,7 @@
           "operatorName": "Sahyadri Trails"
         },
         {
-          "title": "Kundalika Rafting — Tamhini Weekend Batch",
+          "title": "Kundalika Rafting - Tamhini Weekend Batch",
           "categorySlug": "rafting",
           "difficulty": "MODERATE",
           "durationHours": 5,

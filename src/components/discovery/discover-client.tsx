@@ -9,6 +9,7 @@ import { ListingCardUi } from "@/components/discovery/listing-card-ui";
 import {
   FilterChips,
   FilterSortBar,
+  DiscoverMobileFiltersSheet,
   SearchBarUi,
 } from "@/components/discovery/search-filters-ui";
 import {
@@ -110,15 +111,24 @@ export function DiscoverClient({
 
       <ComparePlacesStrip places={comparePlaces} />
 
-      <div className="mb-8">
+      <div className="mb-8 hidden md:block">
         <FilterChips
           categories={categories}
           active={category}
           onChange={onCategoryChange}
         />
       </div>
-      <div className="mb-10">
-        <FilterSortBar count={results.length} sort={sort} onSort={setSort} />
+      <div className="mb-10 flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <DiscoverMobileFiltersSheet
+          categories={categories}
+          activeCategory={category}
+          onCategoryChange={onCategoryChange}
+          sort={sort}
+          onSort={setSort}
+        />
+        <div className="min-w-0 w-full sm:w-auto">
+          <FilterSortBar count={results.length} sort={sort} onSort={setSort} />
+        </div>
       </div>
 
       {results.length === 0 ? (

@@ -24,7 +24,7 @@ export function FloatingCarouselRail({
 }) {
   return (
     <div
-      className={`relative mx-auto w-full max-w-[min(100%,calc(72rem+8rem))] ${className}`}
+      className={`relative mx-auto w-full min-w-0 max-w-full ${className}`}
     >
       <CarouselNavButton
         side="left"
@@ -40,7 +40,7 @@ export function FloatingCarouselRail({
       />
 
       {/* Same width + padding as .page-shell - cards flush with headings */}
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full min-w-0 max-w-6xl px-3 sm:px-6 lg:px-8">
         <div
           ref={scrollRef}
           className="flex w-full min-w-0 snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2 pt-1 scrollbar-hide"

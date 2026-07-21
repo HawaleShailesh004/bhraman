@@ -1,10 +1,16 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ToastProvider } from "@/components/ui/ToastProvider";
 import { SmoothScroll } from "@/components/layout/smooth-scroll";
 import { fontVariables } from "@/lib/fonts";
 import { isClerkEnabled } from "@/lib/auth";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Bhraman - The Sahyadris, minus the guesswork",
@@ -18,14 +24,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const body = (
-    <body className={`${fontVariables} font-body antialiased`}>
+    <body
+      className={`${fontVariables} font-body antialiased w-full max-w-full overflow-x-clip`}
+    >
       <SmoothScroll />
       <ToastProvider>{children}</ToastProvider>
     </body>
   );
 
   return (
-    <html lang="en">
+    <html lang="en" className="w-full overflow-x-clip">
       <head>
         {/* Satoshi - body UI (Fontshare / Indian Type Foundry) */}
         <link

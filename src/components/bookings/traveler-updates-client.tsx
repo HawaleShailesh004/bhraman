@@ -12,7 +12,9 @@ export function TravelerUpdatesClient({
   const [items, setItems] = useState(initialItems);
 
   const refresh = useCallback(async () => {
-    const response = await fetch("/api/bookings/updates", { cache: "no-store" });
+    const response = await fetch("/api/bookings/updates", {
+      cache: "no-store",
+    });
     if (response.ok) {
       setItems((await response.json()) as TravelerUpdateFeedItem[]);
     }
@@ -30,7 +32,7 @@ export function TravelerUpdatesClient({
           Trip updates
         </h1>
         <p className="mt-2 text-sm text-mist">
-          Live notes from your operators — timing, pickup, weather, and urgent
+          Live notes from your operators - timing, pickup, weather, and urgent
           changes.
         </p>
       </div>

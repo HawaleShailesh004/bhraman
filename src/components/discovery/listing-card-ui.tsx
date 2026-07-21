@@ -63,7 +63,7 @@ export function ListingCardUi({
             }
       }
       whileTap={reduce ? undefined : { scale: 0.985, transition: softSpring }}
-      className="h-full [perspective:1100px]"
+      className="h-full min-w-0 overflow-hidden [perspective:1100px]"
     >
       <TiltShell
         enabled={!reduce}

@@ -122,21 +122,21 @@ export function TeamFleetClient({
 
       <section className="rounded-[16px] border border-line bg-white p-5">
         <h3 className="font-display text-lg font-medium">Guides</h3>
-        <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
           <input
-            className="rounded-[12px] border border-line px-3 py-2 text-sm"
+            className="w-full rounded-[12px] border border-line px-3 py-2.5 text-sm"
             placeholder="Name"
             value={gName}
             onChange={(e) => setGName(e.target.value)}
           />
           <input
-            className="rounded-[12px] border border-line px-3 py-2 text-sm"
+            className="w-full rounded-[12px] border border-line px-3 py-2.5 text-sm"
             placeholder="Phone"
             value={gPhone}
             onChange={(e) => setGPhone(e.target.value)}
           />
           <input
-            className="rounded-[12px] border border-line px-3 py-2 text-sm"
+            className="w-full rounded-[12px] border border-line px-3 py-2.5 text-sm"
             placeholder="Role"
             value={gRole}
             onChange={(e) => setGRole(e.target.value)}
@@ -188,21 +188,21 @@ export function TeamFleetClient({
 
       <section className="rounded-[16px] border border-line bg-white p-5">
         <h3 className="font-display text-lg font-medium">Vehicles</h3>
-        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-3">
           <input
-            className="rounded-[12px] border border-line px-3 py-2 text-sm"
+            className="w-full rounded-[12px] border border-line px-3 py-2.5 text-sm"
             placeholder="Type (Tempo, Innova…)"
             value={vType}
             onChange={(e) => setVType(e.target.value)}
           />
           <input
-            className="rounded-[12px] border border-line px-3 py-2 text-sm"
+            className="w-full rounded-[12px] border border-line px-3 py-2.5 text-sm"
             placeholder="Plate"
             value={vPlate}
             onChange={(e) => setVPlate(e.target.value)}
           />
           <input
-            className="rounded-[12px] border border-line px-3 py-2 text-sm"
+            className="w-full rounded-[12px] border border-line px-3 py-2.5 text-sm"
             placeholder="Capacity"
             value={vCapacity}
             onChange={(e) => setVCapacity(e.target.value)}

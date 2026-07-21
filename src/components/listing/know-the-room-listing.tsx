@@ -234,12 +234,16 @@ export function KnowTheRoomListing({
       <div className="mt-6 flex flex-wrap gap-8">
         <div>
           <p className="font-display text-[32px] font-medium tabular-nums leading-none text-warm-white">
-            {totalBooked > 0 && !genderMix.privacyMode && genderMix.womenPct !== null ? (
+            {totalBooked > 0 &&
+            !genderMix.privacyMode &&
+            genderMix.womenPct !== null ? (
               <>
-                <em className="not-italic text-[#E8A0C0]">{genderMix.womenPct}%</em>
+                <em className="not-italic text-[#E8A0C0]">
+                  {genderMix.womenPct}%
+                </em>
               </>
             ) : totalBooked > 0 ? (
-              <em className="not-italic text-[#E8A0C0]">—</em>
+              <em className="not-italic text-[#E8A0C0]">-</em>
             ) : (
               <em className="not-italic text-[#E8A0C0]">-</em>
             )}

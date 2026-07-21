@@ -49,7 +49,7 @@ export function OperatorShell({
   const path = usePathname();
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-[230px_1fr]">
+    <div className="grid min-h-screen w-full max-w-full overflow-x-clip lg:grid-cols-[230px_1fr]">
       <aside className="hidden bg-ink p-5 text-paper lg:flex lg:flex-col">
         <Link href="/" className="mb-8 flex items-center gap-2 px-1.5">
           <Logo size={26} dark />
@@ -119,7 +119,7 @@ export function OperatorShell({
         </div>
       </aside>
 
-      <main className="min-w-0 bg-paper px-4 py-5 sm:p-6 lg:p-8">
+      <main className="min-w-0 w-full max-w-full overflow-x-clip bg-paper px-3 py-5 sm:p-6 lg:p-8">
         <div className="mb-4 flex items-center justify-between gap-3 lg:hidden">
           <Link href="/" className="flex items-center gap-2">
             <Logo size={25} />
@@ -143,7 +143,7 @@ export function OperatorShell({
         </div>
         <nav
           aria-label="Operator dashboard"
-          className="scrollbar-hide -mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden"
+          className="scrollbar-hide mb-5 flex w-full gap-2 overflow-x-auto pb-1 lg:hidden"
         >
           {NAV.map((n) => {
             const active =
@@ -165,6 +165,18 @@ export function OperatorShell({
             );
           })}
         </nav>
+        {clerkConfigured ? (
+          <div className="mb-5 lg:hidden">
+            <SignOutButton>
+              <button
+                type="button"
+                className="touch-target inline-flex min-h-[44px] w-full items-center justify-center rounded-full border border-line bg-white px-4 py-2.5 text-sm font-semibold text-mist transition-colors hover:border-mist hover:text-ink"
+              >
+                Sign out
+              </button>
+            </SignOutButton>
+          </div>
+        ) : null}
         {children}
       </main>
     </div>

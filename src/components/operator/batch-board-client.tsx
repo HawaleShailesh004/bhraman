@@ -460,8 +460,8 @@ export function BatchBoardClient({
           Bulk import
         </h3>
         <p className="mt-1 text-sm text-mist">
-          Paste CSV/TSV with columns: name, gender, age, phone, email
-          (header row optional).
+          Paste CSV/TSV with columns: name, gender, age, phone, email (header
+          row optional).
         </p>
         <textarea
           className="mt-3 w-full rounded-[12px] border border-line px-3 py-2 font-mono text-xs"
@@ -506,7 +506,7 @@ export function BatchBoardClient({
                     <td className="py-1.5 pr-3">{p.name}</td>
                     <td className="py-1.5 pr-3">{p.action}</td>
                     <td className="py-1.5 text-clay">
-                      {p.errors.join(", ") || "—"}
+                      {p.errors.join(", ") || "-"}
                     </td>
                   </tr>
                 ))}
@@ -542,9 +542,7 @@ export function BatchBoardClient({
             <select
               className="rounded-[12px] border border-line px-3 py-2 text-sm"
               value={updateType}
-              onChange={(e) =>
-                setUpdateType(e.target.value as TripUpdateType)
-              }
+              onChange={(e) => setUpdateType(e.target.value as TripUpdateType)}
             >
               {UPDATE_TYPES.map((t) => (
                 <option key={t} value={t}>

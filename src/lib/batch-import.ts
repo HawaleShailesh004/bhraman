@@ -254,7 +254,7 @@ export async function commitBatchImport(
         continue;
       }
 
-      // CREATE_BOOKING — use operator user as placeholder holder for import seats
+      // CREATE_BOOKING - use operator user as placeholder holder for import seats
       const email =
         row.email?.trim().toLowerCase() ||
         `import+${Date.now()}-${created}@bhraman.local`;
@@ -319,8 +319,12 @@ export async function commitBatchImport(
     await recomputeSlotComposition(slotId, tx);
   });
 
-  // Silence unused — operatorUserId reserved for future audit
+  // Silence unused - operatorUserId reserved for future audit
   void operatorUserId;
 
-  return { created, attached, skipped: preview.filter((p) => p.action === "SKIP").length };
+  return {
+    created,
+    attached,
+    skipped: preview.filter((p) => p.action === "SKIP").length,
+  };
 }

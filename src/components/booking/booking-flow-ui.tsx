@@ -474,8 +474,11 @@ function BookingFlowContent({
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28">
-      <nav className="mb-3 flex items-center" aria-label="Booking progress">
+    <div className="mx-auto max-w-2xl px-4 pb-[max(4rem,env(safe-area-inset-bottom))] pt-24 sm:px-6 sm:pb-20 sm:pt-28">
+      <nav
+        className="mb-3 flex items-center overflow-x-auto pb-1 scrollbar-hide"
+        aria-label="Booking progress"
+      >
         {STEPS.map((label, i) => (
           <div
             key={label}

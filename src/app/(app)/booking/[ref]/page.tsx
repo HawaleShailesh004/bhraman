@@ -95,7 +95,7 @@ export default async function BookingConfirmationPage({
                 Your trip hub
               </h1>
               <p className="mt-2 text-sm leading-relaxed text-mast-sub">
-                Logistics, batch mix, and operator updates live here — reference{" "}
+                Logistics, batch mix, and operator updates live here - reference{" "}
                 <strong className="break-all text-paper">
                   {display.bookingRef}
                 </strong>

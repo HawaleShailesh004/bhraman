@@ -11,11 +11,7 @@ export type ComparePlaceRow = {
   operatorCount: number;
 };
 
-export function ComparePlacesStrip({
-  places,
-}: {
-  places: ComparePlaceRow[];
-}) {
+export function ComparePlacesStrip({ places }: { places: ComparePlaceRow[] }) {
   if (places.length === 0) return null;
 
   return (
@@ -27,7 +23,7 @@ export function ComparePlacesStrip({
         </h2>
       </div>
       <p className="mb-3 text-sm text-body-muted">
-        Compare price, safety scores, and batch mix side by side — then book the
+        Compare price, safety scores, and batch mix side by side - then book the
         operator you prefer.
       </p>
       <div className="flex flex-wrap gap-2">

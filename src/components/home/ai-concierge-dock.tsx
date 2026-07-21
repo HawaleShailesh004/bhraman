@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MessageCircle, Sparkles, X } from "lucide-react";
 import { COPY } from "@/lib/marketing-copy";
@@ -128,7 +129,27 @@ function ChatBubbleMessage({
   );
 }
 
+function shouldHideDock(pathname: string) {
+  return (
+    pathname.startsWith("/listings/") ||
+    pathname.startsWith("/book/") ||
+    pathname.startsWith("/booking/") ||
+    pathname === "/discover" ||
+    pathname.startsWith("/discover/") ||
+    pathname === "/operators" ||
+    pathname.startsWith("/operators/") ||
+    pathname === "/bookings" ||
+    pathname.startsWith("/bookings/")
+  );
+}
+
+export function useAiConciergeDockVisible() {
+  const pathname = usePathname();
+  return useMemo(() => !shouldHideDock(pathname), [pathname]);
+}
+
 export function AiConciergeDock() {
+  const visible = useAiConciergeDockVisible();
   const reduce = Boolean(useReducedMotion());
   const [open, setOpen] = useState(false);
   const [showHello, setShowHello] = useState(false);
@@ -172,6 +193,15 @@ export function AiConciergeDock() {
     setOpen(true);
     dismissHello();
   }
+
+  useEffect(() => {
+    if (!visible) {
+      setOpen(false);
+      setShowHello(false);
+    }
+  }, [visible]);
+
+  if (!visible) return null;
 
   return (
     <div className="pointer-events-none fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-4 z-[80] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">

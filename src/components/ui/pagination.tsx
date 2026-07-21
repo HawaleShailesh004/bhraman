@@ -78,14 +78,14 @@ export function PaginationControls({
   return (
     <>
       {/* Keeps page content clear of the floating bar */}
-      <div className="h-28 shrink-0" aria-hidden />
+      <div className="h-28 shrink-0 md:h-24" aria-hidden />
 
       <div
-        className={`pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 ${className}`}
+        className={`pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-3 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 sm:px-4 ${className}`}
       >
         <nav
           aria-label="Pagination"
-          className="pointer-events-auto flex max-w-[calc(100vw-2rem)] flex-col items-center gap-2.5 rounded-2xl border border-line/90 bg-white/95 px-4 py-3 shadow-[0_12px_40px_rgba(26,46,34,0.16)] backdrop-blur-md sm:flex-row sm:gap-4 sm:rounded-full sm:px-5 sm:py-2.5"
+          className="pointer-events-auto flex w-full max-w-lg flex-col items-center gap-2.5 rounded-2xl border border-line/90 bg-white/95 px-3 py-3 shadow-[0_12px_40px_rgba(26,46,34,0.16)] backdrop-blur-md sm:max-w-none sm:flex-row sm:gap-4 sm:rounded-full sm:px-5 sm:py-2.5"
         >
           <p className="whitespace-nowrap text-xs text-mist sm:text-sm">
             <span className="font-semibold text-ink">
@@ -100,10 +100,10 @@ export function PaginationControls({
           />
 
           <div className="flex items-center gap-1.5">
-            <span className="sr-only sm:not-sr-only sm:mr-1 sm:text-xs sm:font-medium sm:text-mist">
+            <span className="hidden text-xs font-medium text-mist sm:inline sm:mr-1">
               Per page
             </span>
-            <div className="flex gap-1 rounded-full border border-line bg-paper-2 p-1">
+            <div className="hidden gap-1 rounded-full border border-line bg-paper-2 p-1 sm:flex">
               {PAGE_SIZES.map((size) => (
                 <button
                   key={size}
@@ -132,7 +132,7 @@ export function PaginationControls({
                   type="button"
                   disabled={page <= 1}
                   onClick={() => onPageChange(Math.max(1, page - 1))}
-                  className="inline-flex items-center gap-1 rounded-full border border-line bg-white px-3 py-1.5 text-xs font-semibold transition-colors hover:border-mist disabled:cursor-not-allowed disabled:opacity-40"
+                  className="touch-target inline-flex min-h-[44px] items-center gap-1 rounded-full border border-line bg-white px-3 py-2 text-xs font-semibold transition-colors hover:border-mist disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ChevronLeft size={14} /> Prev
                 </button>
@@ -143,7 +143,7 @@ export function PaginationControls({
                   type="button"
                   disabled={page >= totalPages}
                   onClick={() => onPageChange(Math.min(totalPages, page + 1))}
-                  className="inline-flex items-center gap-1 rounded-full border border-line bg-white px-3 py-1.5 text-xs font-semibold transition-colors hover:border-mist disabled:cursor-not-allowed disabled:opacity-40"
+                  className="touch-target inline-flex min-h-[44px] items-center gap-1 rounded-full border border-line bg-white px-3 py-2 text-xs font-semibold transition-colors hover:border-mist disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Next <ChevronRight size={14} />
                 </button>

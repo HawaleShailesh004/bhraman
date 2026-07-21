@@ -118,8 +118,8 @@ export function PlannerClientUi() {
   const busy = phase === "thinking" || phase === "reasoning";
 
   return (
-    <div className="max-w-3xl mx-auto px-6 pt-28 pb-20">
-      <div className="text-center mb-8">
+    <div className="mx-auto max-w-3xl px-4 pb-[max(5rem,env(safe-area-inset-bottom))] pt-28 sm:px-6 sm:pb-20">
+      <div className="mb-8 text-center">
         <span className="inline-flex items-center gap-2 text-amber-deep text-xs font-bold uppercase tracking-[0.12em] mb-3">
           <Sparkles size={15} /> AI Trip Planner
         </span>
@@ -159,13 +159,13 @@ export function PlannerClientUi() {
             </button>
           </div>
           {phase === "idle" || phase === "results" ? (
-            <div className="flex gap-2 flex-wrap mt-4">
+            <div className="scrollbar-hide -mx-1 mt-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-1 pb-1 sm:flex-wrap sm:overflow-visible">
               {SUGGESTIONS.map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => fillInput(s)}
-                  className="text-[13px] bg-white/10 border border-white/12 text-[#C9D2CB] px-3.5 py-2 rounded-full hover:bg-white/15 transition-colors text-left"
+                  className="max-w-[85vw] shrink-0 snap-start text-left text-[13px] rounded-full border border-white/12 bg-white/10 px-3.5 py-2 text-[#C9D2CB] transition-colors hover:bg-white/15 sm:max-w-none"
                 >
                   {s}
                 </button>
@@ -220,7 +220,7 @@ export function PlannerClientUi() {
                         >
                           <Link
                             href={`/listings/${listing.slug}`}
-                            className="group flex gap-4 items-center bg-white border border-line rounded-[14px] p-4 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:translate-x-1 transition-all relative overflow-hidden"
+                            className="group relative flex flex-col gap-3 overflow-hidden rounded-[14px] border border-line bg-white p-4 shadow-[var(--shadow-sm)] transition-all hover:shadow-[var(--shadow-md)] sm:flex-row sm:items-center sm:gap-4 sm:hover:translate-x-1"
                           >
                             {i === 0 ? (
                               <span className="absolute top-0 left-0 bg-amber text-[#3A2406] font-display font-extrabold text-[11px] px-2.5 py-1 rounded-br-[10px]">
@@ -232,7 +232,7 @@ export function PlannerClientUi() {
                               </span>
                             )}
                             <div
-                              className="w-20 h-20 rounded-lg shrink-0 mt-2"
+                              className="mt-2 h-20 w-full shrink-0 rounded-lg sm:mt-0 sm:h-20 sm:w-20"
                               style={listingImageStyle(
                                 listing.category.slug,
                                 listing.heroImageUrl,

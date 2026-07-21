@@ -50,7 +50,7 @@
 
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --font-body: "Satoshi", system-ui, sans-serif;
-  /* Slightly open tracking sitewide — subs more open than display */
+  /* Slightly open tracking sitewide - subs more open than display */
   --tracking-display: -0.01em;
   --tracking-sub: 0.02em;
   --tracking-body: 0.012em;
@@ -60,6 +60,8 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: rgba(26, 46, 34, 0.28) transparent;
+  width: 100%;
+  overflow-x: clip;
 }
 
 /* Thin themed scrollbars (WebKit) */
@@ -1003,7 +1005,7 @@ html {
   }
 
   .page-shell {
-    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full min-w-0 max-w-6xl px-3 sm:px-6 lg:px-8;
   }
 
   .section-y {
@@ -1017,6 +1019,10 @@ html {
 
   .safe-pt {
     padding-top: max(0px, env(safe-area-inset-top));
+  }
+
+  .pb-dock-safe {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom));
   }
 
   .touch-target {

@@ -120,7 +120,7 @@ export function MaharashtraMapSection({ pins }: { pins: AdventureMapPin[] }) {
                     role="radio"
                     aria-checked={selected}
                     onClick={() => chooseLook(look.id)}
-                    className={`px-1 py-0.5 text-[9px] font-medium tracking-wide transition-colors ${
+                    className={`touch-target min-h-[44px] min-w-[44px] px-2 py-1.5 text-[10px] font-medium tracking-wide transition-colors sm:min-h-0 sm:min-w-0 sm:px-1 sm:py-0.5 sm:text-[9px] ${
                       selected
                         ? "text-ink"
                         : "text-mist/80 hover:text-mist"
@@ -185,7 +185,7 @@ export function MaharashtraMapSection({ pins }: { pins: AdventureMapPin[] }) {
                   <button
                     type="button"
                     onClick={() => setActive(pin.placeSlug)}
-                    className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                    className={`touch-target flex min-h-[44px] w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
                       pin.placeSlug === activePin?.placeSlug
                         ? "bg-white font-semibold text-ink shadow-sm"
                         : "text-body hover:bg-white/70"

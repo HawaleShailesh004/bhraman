@@ -3,10 +3,11 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   FormEvent,
+  useEffect,
   useState,
   type ReactNode,
 } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
   MapPin,
@@ -14,6 +15,7 @@ import {
   Calendar,
   Users,
   SlidersHorizontal,
+  X,
 } from "lucide-react";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { CarouselNavButton } from "@/components/ui/carousel-nav-button";
@@ -58,7 +60,7 @@ export function SearchBarUi() {
         />
       </div>
 
-      <div className="flex flex-col items-stretch rounded-[20px] border border-line/80 bg-white p-1.5 shadow-[var(--shadow-sm)] sm:flex-row">
+      <div className="hidden flex-col items-stretch rounded-[20px] border border-line/80 bg-white p-1.5 shadow-[var(--shadow-sm)] md:flex sm:flex-row">
       <div className="flex-1 px-4 py-2.5 sm:border-r sm:border-line/80">
         <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-mist">
           Where
@@ -119,6 +121,223 @@ export function SearchBarUi() {
   );
 }
 
+export function DiscoverMobileFiltersSheet({
+  categories,
+  activeCategory,
+  onCategoryChange,
+  sort,
+  onSort,
+}: {
+  categories: { slug: string; name: string; icon: string | null }[];
+  activeCategory: string;
+  onCategoryChange: (slug: string) => void;
+  sort: SortOption;
+  onSort: (s: SortOption) => void;
+}) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [open, setOpen] = useState(false);
+  const [city, setCity] = useState(searchParams.get("city") ?? "All Maharashtra");
+  const [groupSize, setGroupSize] = useState(searchParams.get("group") ?? "2 people");
+  const [date, setDate] = useState(searchParams.get("date") ?? "");
+
+  useEffect(() => {
+    if (!open) return;
+    setCity(searchParams.get("city") ?? "All Maharashtra");
+    setGroupSize(searchParams.get("group") ?? "2 people");
+    setDate(searchParams.get("date") ?? "");
+  }, [open, searchParams]);
+
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  function applyFilters(event?: FormEvent) {
+    event?.preventDefault();
+    const params = new URLSearchParams(searchParams.toString());
+    if (city && city !== "All Maharashtra") params.set("city", city);
+    else params.delete("city");
+    params.set("group", groupSize);
+    if (date) params.set("date", date);
+    else params.delete("date");
+    params.delete("page");
+    router.push(`/discover?${params.toString()}`);
+    setOpen(false);
+  }
+
+  const chips = [
+    { slug: "all", name: "All" },
+    ...categories.map((c) => ({ slug: c.slug, name: c.name })),
+  ];
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="touch-target inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border border-line bg-white px-4 py-2.5 text-sm font-semibold text-ink md:hidden"
+      >
+        <SlidersHorizontal size={16} /> Filters
+      </button>
+
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            className="fixed inset-0 z-[70] md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <button
+              type="button"
+              aria-label="Close filters"
+              className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+            />
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Discover filters"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 380, damping: 32 }}
+              className="absolute inset-x-0 bottom-0 max-h-[90dvh] overflow-y-auto rounded-t-[22px] border border-line bg-white p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-[var(--shadow-lg)]"
+            >
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h2 className="font-display text-lg font-bold">Filters</h2>
+                <button
+                  type="button"
+                  aria-label="Close"
+                  onClick={() => setOpen(false)}
+                  className="grid h-9 w-9 place-items-center rounded-full border border-line text-mist"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              <form onSubmit={applyFilters} className="space-y-5">
+                <label className="block text-sm">
+                  <span className="text-xs font-bold uppercase tracking-wide text-mist">
+                    Where
+                  </span>
+                  <div className="mt-1 flex items-center gap-2 rounded-[12px] border border-line px-3 py-2.5">
+                    <MapPin size={14} className="shrink-0 text-mist" />
+                    <input
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className="w-full border-none bg-transparent outline-none"
+                    />
+                  </div>
+                </label>
+
+                <label className="block text-sm">
+                  <span className="text-xs font-bold uppercase tracking-wide text-mist">
+                    When
+                  </span>
+                  <div className="mt-1 flex items-center gap-2 rounded-[12px] border border-line px-3 py-2.5">
+                    <Calendar size={14} className="shrink-0 text-mist" />
+                    <input
+                      type="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full border-none bg-transparent outline-none"
+                    />
+                  </div>
+                </label>
+
+                <label className="block text-sm">
+                  <span className="text-xs font-bold uppercase tracking-wide text-mist">
+                    Group
+                  </span>
+                  <div className="mt-1 flex items-center gap-2 rounded-[12px] border border-line px-3 py-2.5">
+                    <Users size={14} className="shrink-0 text-mist" />
+                    <input
+                      value={groupSize}
+                      onChange={(e) => setGroupSize(e.target.value)}
+                      className="w-full border-none bg-transparent outline-none"
+                    />
+                  </div>
+                </label>
+
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-mist">
+                    Activity
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {chips.map((c) => (
+                      <button
+                        key={c.slug}
+                        type="button"
+                        onClick={() => onCategoryChange(c.slug)}
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-medium ${
+                          activeCategory === c.slug
+                            ? "border-ink bg-ink text-paper"
+                            : "border-line bg-white text-ink"
+                        }`}
+                      >
+                        {c.slug !== "all" ? (
+                          <CategoryIcon
+                            slug={c.slug}
+                            size={12}
+                            className={
+                              activeCategory === c.slug ? "text-paper" : "text-forest"
+                            }
+                          />
+                        ) : null}
+                        {c.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-mist">
+                    Sort
+                  </p>
+                  <div className="mt-2 grid gap-1">
+                    {(
+                      [
+                        ["recommended", "Recommended"],
+                        ["price-low", "Price: low to high"],
+                        ["price-high", "Price: high to low"],
+                      ] as const
+                    ).map(([value, label]) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => onSort(value)}
+                        className={`rounded-xl px-3 py-2.5 text-left text-sm font-medium ${
+                          sort === value
+                            ? "bg-amber/15 font-bold text-amber-deep"
+                            : "hover:bg-paper-2"
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="touch-target w-full rounded-full bg-amber py-3 text-sm font-bold text-amber-text"
+                >
+                  Apply filters
+                </button>
+              </form>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </>
+  );
+}
+
 function HorizontalScrollRow({
   children,
   itemCount,
@@ -131,12 +350,12 @@ function HorizontalScrollRow({
   ]);
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex min-w-0 items-center gap-2">
       <CarouselNavButton
         side="left"
         disabled={!canLeft}
         onClick={() => scrollByDir(-1)}
-        className="!h-9 !w-9"
+        className="!h-9 !w-9 max-md:hidden"
       />
 
       <div
@@ -150,7 +369,7 @@ function HorizontalScrollRow({
         side="right"
         disabled={!canRight}
         onClick={() => scrollByDir(1)}
-        className="!h-9 !w-9"
+        className="!h-9 !w-9 max-md:hidden"
       />
     </div>
   );
@@ -209,15 +428,15 @@ export function FilterSortBar({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between gap-4 flex-wrap">
-      <p className="text-sm text-mist">
+    <div className="flex w-full items-center justify-between gap-4 flex-wrap">
+      <p className="min-w-0 text-sm text-mist">
         <span className="font-semibold text-ink">{count}</span> experiences found
       </p>
-      <div className="relative">
+      <div className="relative max-md:hidden">
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3.5 py-2 text-xs font-medium hover:border-mist"
+          className="touch-target inline-flex min-h-[44px] items-center gap-2 rounded-full border border-line bg-white px-3.5 py-2 text-xs font-medium hover:border-mist"
         >
           <SlidersHorizontal size={15} /> Sort:{" "}
           {sort === "recommended"
@@ -230,7 +449,7 @@ export function FilterSortBar({
           <motion.div
             initial={{ opacity: 0, y: -6, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            className="absolute right-0 mt-2 bg-white rounded-2xl border border-line shadow-[var(--shadow-lg)] p-1.5 z-20 w-48"
+            className="absolute right-0 z-20 mt-2 w-48 rounded-2xl border border-line bg-white p-1.5 shadow-[var(--shadow-lg)]"
           >
             {(
               [
@@ -246,8 +465,8 @@ export function FilterSortBar({
                   onSort(v);
                   setOpen(false);
                 }}
-                className={`block w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium hover:bg-paper-2 ${
-                  sort === v ? "text-amber-deep font-bold" : ""
+                className={`block w-full rounded-xl px-3 py-2.5 text-left text-sm font-medium hover:bg-paper-2 ${
+                  sort === v ? "font-bold text-amber-deep" : ""
                 }`}
               >
                 {l}

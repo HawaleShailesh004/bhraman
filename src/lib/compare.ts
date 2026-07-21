@@ -53,7 +53,7 @@ function mapListingRow(
         other: slot.otherCount,
         booked: slot.bookedSeats,
       })
-    : { label: "—" };
+    : { label: "-" };
 
   const { operator } = listing;
   const policy = listing.cancellationPolicy as CancellationPolicy;

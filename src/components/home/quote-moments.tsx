@@ -85,7 +85,7 @@ export function WhyWeBuiltQuote() {
     <section className="bg-paper py-[clamp(4.5rem,12vw,7rem)]">
       <div className="page-shell max-w-[1000px]">
         <p
-          className="font-display text-[90px] leading-[0.5] text-amber/50"
+          className="font-display text-[clamp(3rem,12vw,90px)] leading-[0.5] text-amber/50"
           aria-hidden
         >
           &ldquo;

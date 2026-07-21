@@ -82,11 +82,15 @@ export function safetyBreakdown(
     {
       label: "Verification",
       value:
-        operator.verificationStatus === "VERIFIED" ? "Verified operator" : "Unverified",
+        operator.verificationStatus === "VERIFIED"
+          ? "Verified operator"
+          : "Unverified",
     },
     {
       label: "Years operating",
-      value: operator.yearsOperating ? `${operator.yearsOperating}+ years` : "—",
+      value: operator.yearsOperating
+        ? `${operator.yearsOperating}+ years`
+        : "-",
     },
   ];
 }

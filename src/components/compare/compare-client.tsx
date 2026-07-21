@@ -83,6 +83,96 @@ function OperatorHeader({ row }: { row: CompareListingRow }) {
   );
 }
 
+function CompareMobileCard({
+  row,
+  lowestPrice,
+  onOpen,
+}: {
+  row: CompareListingRow;
+  lowestPrice: number;
+  onOpen: (row: CompareListingRow) => void;
+}) {
+  const isBestPrice = row.basePrice === lowestPrice;
+  const imageStyle = listingImageStyle(row.category.slug, row.heroImageUrl);
+
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(row)}
+      className="w-full overflow-hidden rounded-[var(--radius-card)] border border-line/80 bg-white text-left transition-colors hover:bg-paper/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+      aria-label={`Compare details for ${row.operator.businessName}`}
+    >
+      <div className="relative h-32 overflow-hidden">
+        <div className="absolute inset-0" style={imageStyle} />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+        <div className="absolute bottom-3 left-3 right-3">
+          <p className="flex items-start gap-1 font-display text-sm font-bold leading-snug text-white">
+            {row.operator.isVerified ? (
+              <BadgeCheck size={14} className="mt-0.5 shrink-0 text-emerald-300" />
+            ) : null}
+            <span className="line-clamp-2">{row.operator.businessName}</span>
+          </p>
+          <div className="mt-1">
+            <StarRating rating={row.ratingAvg} count={row.ratingCount} />
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-3 p-4">
+        <div>
+          <p className="line-clamp-2 text-sm font-semibold leading-snug text-ink">
+            {row.title}
+          </p>
+          <p className="mt-1 text-xs text-mist">
+            {row.durationHours}h ·{" "}
+            <DifficultyMeter difficulty={row.difficulty} showLabel={false} />
+          </p>
+        </div>
+
+        <div
+          className={`flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 ${
+            isBestPrice ? "bg-amber/10" : "bg-paper-2"
+          }`}
+        >
+          <div>
+            <p className="font-display text-xl font-bold tracking-tight text-ink">
+              {formatInr(row.basePrice)}
+            </p>
+            <p className="text-[10px] text-mist">
+              {isBestPrice ? "Best price · per person" : "per person"}
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-end gap-1">
+            <ExperienceBadge score={row.operator.experienceScore} compact />
+            <SafetyBadge score={row.operator.safetyScore} compact />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 text-[11px] text-body">
+          <div className="rounded-lg bg-paper-2 px-2.5 py-2">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-mist">
+              Mix
+            </p>
+            <p className="mt-0.5">{row.womenPctLabel}</p>
+          </div>
+          <div className="rounded-lg bg-paper-2 px-2.5 py-2">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-mist">
+              Cancel
+            </p>
+            <p className="mt-0.5 line-clamp-2">{row.cancellationLabel}</p>
+          </div>
+        </div>
+
+        <p className="text-[11px] text-mist">{formatWhen(row.nextDeparture)}</p>
+
+        <span className="inline-flex w-full items-center justify-center rounded-full bg-amber/15 px-3 py-2.5 text-xs font-bold text-amber-deep">
+          Compare details
+        </span>
+      </div>
+    </button>
+  );
+}
+
 function CompareColumn({
   row,
   lowestPrice,
@@ -165,8 +255,8 @@ export function CompareClient({ bundle }: { bundle: PlaceCompareBundle }) {
   const [selected, setSelected] = useState<CompareListingRow | null>(null);
 
   return (
-    <div className="page-shell pt-28 pb-24">
-      <div className="mx-auto max-w-6xl">
+    <div className="page-shell w-full min-w-0 pt-28 pb-24">
+      <div className="w-full min-w-0">
         <div className="mb-8 max-w-2xl">
           <p className="text-[10px] font-bold uppercase tracking-eyebrow text-amber-deep">
             Compare operators
@@ -178,8 +268,11 @@ export function CompareClient({ bundle }: { bundle: PlaceCompareBundle }) {
             <MapPin size={14} />
             {place.city}, {place.district} · {listings.length} operators
           </p>
-          <p className="mt-2 text-sm text-mist">
-            Tap any column for full trip and operator details.
+          <p className="mt-2 text-balance text-sm text-mist">
+            <span className="md:hidden">Tap a card for full trip and operator details.</span>
+            <span className="hidden md:inline">
+              Tap any column for full trip and operator details.
+            </span>
           </p>
         </div>
 
@@ -187,7 +280,23 @@ export function CompareClient({ bundle }: { bundle: PlaceCompareBundle }) {
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={reduce ? { duration: 0 } : { duration: 0.4, ease: brandEase }}
-          className="flex w-full gap-x-2 sm:gap-x-3"
+          className="grid gap-4 md:hidden"
+        >
+          {listings.map((row) => (
+            <CompareMobileCard
+              key={row.id}
+              row={row}
+              lowestPrice={lowestPrice}
+              onOpen={setSelected}
+            />
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={reduce ? { duration: 0 } : { duration: 0.4, ease: brandEase }}
+          className="hidden w-full gap-x-2 md:flex sm:gap-x-3"
         >
           <div className="w-[3.25rem] shrink-0 sm:w-[5.5rem]">
             <LabelCell className="min-h-[9rem] border-b-0 sm:min-h-[10rem]">

@@ -29,7 +29,7 @@ export function formatGenderMix(input: GenderMixInput): GenderMixResult {
       womenPct: null,
       menPct: null,
       label: "No bookings yet",
-      shortLabel: "—",
+      shortLabel: "-",
       privacyMode: false,
     };
   }
