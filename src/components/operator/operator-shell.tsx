@@ -119,7 +119,7 @@ export function OperatorShell({
         </div>
       </aside>
 
-      <main className="min-w-0 w-full max-w-full overflow-x-clip bg-paper px-3 py-5 sm:p-6 lg:p-8">
+      <main className="min-w-0 w-full max-w-full overflow-x-clip bg-paper px-4 py-5 sm:p-6 lg:p-8">
         <div className="mb-4 flex items-center justify-between gap-3 lg:hidden">
           <Link href="/" className="flex items-center gap-2">
             <Logo size={25} />

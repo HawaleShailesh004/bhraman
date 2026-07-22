@@ -40,7 +40,7 @@ export function Navbar({ onDark = false }: { onDark?: boolean }) {
     <>
       <motion.header
         initial={false}
-        className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6"
+        className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6"
         animate={{
           paddingTop: scrolled ? 10 : 18,
           paddingBottom: scrolled ? 10 : 18,
