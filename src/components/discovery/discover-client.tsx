@@ -111,22 +111,22 @@ export function DiscoverClient({
 
       <ComparePlacesStrip places={comparePlaces} />
 
-      <div className="mb-8 hidden md:block">
+      <div className="mb-8 max-md:hidden">
         <FilterChips
           categories={categories}
           active={category}
           onChange={onCategoryChange}
         />
       </div>
-      <div className="mb-10 flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <DiscoverMobileFiltersSheet
-          categories={categories}
-          activeCategory={category}
-          onCategoryChange={onCategoryChange}
-          sort={sort}
-          onSort={setSort}
-        />
-        <div className="min-w-0 w-full sm:w-auto">
+      <div className="mb-10">
+        <div className="max-md:space-y-3">
+          <DiscoverMobileFiltersSheet
+            categories={categories}
+            activeCategory={category}
+            onCategoryChange={onCategoryChange}
+            sort={sort}
+            onSort={setSort}
+          />
           <FilterSortBar count={results.length} sort={sort} onSort={setSort} />
         </div>
       </div>

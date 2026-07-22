@@ -60,7 +60,7 @@ export function SearchBarUi() {
         />
       </div>
 
-      <div className="hidden flex-col items-stretch rounded-[20px] border border-line/80 bg-white p-1.5 shadow-[var(--shadow-sm)] md:flex sm:flex-row">
+      <div className="max-md:hidden flex flex-col items-stretch rounded-[20px] border border-line/80 bg-white p-1.5 shadow-[var(--shadow-sm)] sm:flex-row">
       <div className="flex-1 px-4 py-2.5 sm:border-r sm:border-line/80">
         <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-mist">
           Where
@@ -179,7 +179,7 @@ export function DiscoverMobileFiltersSheet({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="touch-target inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border border-line bg-white px-4 py-2.5 text-sm font-semibold text-ink md:hidden"
+        className="touch-target inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border border-line bg-white px-4 py-2.5 text-sm font-semibold text-ink max-md:inline-flex md:hidden"
       >
         <SlidersHorizontal size={16} /> Filters
       </button>
@@ -187,7 +187,7 @@ export function DiscoverMobileFiltersSheet({
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-[70] md:hidden"
+            className="fixed inset-0 z-[70] max-md:block md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -355,7 +355,7 @@ function HorizontalScrollRow({
         side="left"
         disabled={!canLeft}
         onClick={() => scrollByDir(-1)}
-        className="!h-9 !w-9 max-md:hidden"
+        className="!h-9 !w-9"
       />
 
       <div
@@ -369,7 +369,7 @@ function HorizontalScrollRow({
         side="right"
         disabled={!canRight}
         onClick={() => scrollByDir(1)}
-        className="!h-9 !w-9 max-md:hidden"
+        className="!h-9 !w-9"
       />
     </div>
   );
@@ -428,15 +428,15 @@ export function FilterSortBar({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex w-full items-center justify-between gap-4 flex-wrap">
-      <p className="min-w-0 text-sm text-mist">
+    <div className="flex items-center justify-between gap-4 flex-wrap">
+      <p className="text-sm text-mist">
         <span className="font-semibold text-ink">{count}</span> experiences found
       </p>
       <div className="relative max-md:hidden">
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="touch-target inline-flex min-h-[44px] items-center gap-2 rounded-full border border-line bg-white px-3.5 py-2 text-xs font-medium hover:border-mist"
+          className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3.5 py-2 text-xs font-medium hover:border-mist"
         >
           <SlidersHorizontal size={15} /> Sort:{" "}
           {sort === "recommended"
